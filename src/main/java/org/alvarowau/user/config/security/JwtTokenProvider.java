@@ -1,4 +1,4 @@
-package org.alvarowau.config.util;
+package org.alvarowau.user.config.security;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
  * Utility class for handling JWT (JSON Web Tokens) operations such as creation and validation.
  */
 @Component
-public class JwtUtils {
+public class JwtTokenProvider {
 
     @Value("${security.jwt.key.private}")
     private String privateKey;

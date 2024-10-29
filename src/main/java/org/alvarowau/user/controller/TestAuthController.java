@@ -1,4 +1,4 @@
-package org.alvarowau.controller;
+package org.alvarowau.user.controller;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
  * Controller that provides endpoints for user data based on roles.
  */
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/test")
 public class TestAuthController {
 
     /**

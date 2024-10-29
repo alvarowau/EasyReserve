@@ -1,7 +1,7 @@
-package org.alvarowau.config.security;
+package org.alvarowau.user.config;
 
-import org.alvarowau.config.security.filter.JwtTokenValidator;
-import org.alvarowau.config.util.JwtUtils;
+import org.alvarowau.user.config.security.filter.JwtAuthenticationFilter;
+import org.alvarowau.user.config.security.JwtTokenProvider;
 import org.alvarowau.user.service.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -23,22 +23,22 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
-public class SecurityConfig {
+public class UserSecurityConfig {
 
     @Autowired
-    private JwtUtils jwtUtils;
+    private JwtTokenProvider jwtTokenProvider;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(http -> {
-                    http.requestMatchers("/user/public-data", "/auth/**").permitAll(); // Público sin autenticación
-                    http.requestMatchers("/user/**").authenticated(); // Rutas que requieren autenticación
+                    http.requestMatchers("/user/public-data", "/auth/**","/user/**").permitAll(); // Público sin autenticación
+                    http.requestMatchers("/test/**").authenticated(); // Rutas que requieren autenticación
                 })
                 .httpBasic(Customizer.withDefaults())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .addFilterBefore(new JwtTokenValidator(jwtUtils), BasicAuthenticationFilter.class)
+                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), BasicAuthenticationFilter.class)
                 .build();
     }
 

@@ -2,7 +2,7 @@ package org.alvarowau.user.service;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.alvarowau.config.util.JwtUtils;
+import org.alvarowau.user.config.security.JwtTokenProvider;
 import org.alvarowau.user.model.dto.AuthCreateUser;
 import org.alvarowau.user.model.dto.AuthLoginRequest;
 import org.alvarowau.user.model.dto.AuthResponse;
@@ -13,7 +13,6 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -31,7 +30,7 @@ import java.util.List;
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     private final UserRepository userRepository; // Repositorio para interactuar con la base de datos de usuarios
-    private final JwtUtils utils; // Utilidad para manejar tokens JWT
+    private final JwtTokenProvider utils; // Utilidad para manejar tokens JWT
     private final PasswordEncoder passwordEncoder; // Codificador de contraseñas
 
     /**

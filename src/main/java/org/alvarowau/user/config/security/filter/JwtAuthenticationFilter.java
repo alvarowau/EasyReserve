@@ -1,4 +1,4 @@
-package org.alvarowau.config.security.filter;
+package org.alvarowau.user.config.security.filter;
 
 import com.auth0.jwt.interfaces.DecodedJWT;
 import jakarta.servlet.FilterChain;
@@ -6,7 +6,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.alvarowau.config.util.JwtUtils;
+import org.alvarowau.user.config.security.JwtTokenProvider;
 import org.springframework.http.HttpHeaders;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -23,9 +23,9 @@ import java.util.Collection;
  * Filter for validating JWT tokens and setting the authentication in the security context.
  */
 @RequiredArgsConstructor
-public class JwtTokenValidator extends OncePerRequestFilter {
+public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
-    private final JwtUtils jwtUtils;
+    private final JwtTokenProvider jwtTokenProvider;
 
     /**
      * Validates the JWT token from the request header and sets the authentication in the security context.
@@ -44,10 +44,10 @@ public class JwtTokenValidator extends OncePerRequestFilter {
         String jwtToken = request.getHeader(HttpHeaders.AUTHORIZATION);
         if (jwtToken != null && jwtToken.startsWith("Bearer ")) {
             jwtToken = jwtToken.substring(7); // Eliminar "Bearer " del token
-            DecodedJWT decodedJWT = jwtUtils.validateToken(jwtToken); // Validar el token
+            DecodedJWT decodedJWT = jwtTokenProvider.validateToken(jwtToken); // Validar el token
 
-            String username = jwtUtils.extractUsername(decodedJWT); // Extraer el nombre de usuario
-            String stringAuthorities = jwtUtils.getSpecificClaim(decodedJWT, "authorities").asString(); // Extraer autoridades
+            String username = jwtTokenProvider.extractUsername(decodedJWT); // Extraer el nombre de usuario
+            String stringAuthorities = jwtTokenProvider.getSpecificClaim(decodedJWT, "authorities").asString(); // Extraer autoridades
 
             Collection<? extends GrantedAuthority> authorities = AuthorityUtils.commaSeparatedStringToAuthorityList(stringAuthorities); // Convertir a GrantedAuthority
 
