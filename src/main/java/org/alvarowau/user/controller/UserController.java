@@ -2,9 +2,9 @@ package org.alvarowau.user.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.alvarowau.user.exception.AuthenticationFailedException;
-import org.alvarowau.user.exception.InvalidRoleException;
-import org.alvarowau.user.exception.PasswordsDoNotMatchException;
+import org.alvarowau.exception.user.AuthenticationFailedException;
+import org.alvarowau.exception.user.InvalidRoleException;
+import org.alvarowau.exception.user.PasswordsDoNotMatchException;
 import org.alvarowau.user.model.dto.UserRegistrationRequest;
 import org.alvarowau.user.model.dto.LoginResponse;
 import org.alvarowau.user.model.entity.enums.RoleEnum;

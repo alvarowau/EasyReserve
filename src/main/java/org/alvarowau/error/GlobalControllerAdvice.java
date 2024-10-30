@@ -1,9 +1,9 @@
 package org.alvarowau.error;
 
 import org.alvarowau.error.model.ApiError;
-import org.alvarowau.user.exception.InvalidRoleException;
-import org.alvarowau.user.exception.PasswordsDoNotMatchException;
-import org.alvarowau.user.exception.AuthenticationFailedException; // Importar la excepción
+import org.alvarowau.exception.user.InvalidRoleException;
+import org.alvarowau.exception.user.PasswordsDoNotMatchException;
+import org.alvarowau.exception.user.AuthenticationFailedException; // Importar la excepción
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
