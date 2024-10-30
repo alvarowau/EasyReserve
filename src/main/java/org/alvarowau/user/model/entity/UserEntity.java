@@ -1,40 +1,35 @@
 package org.alvarowau.user.model.entity;
 
-
 import jakarta.persistence.*;
 import lombok.*;
+import org.alvarowau.user.model.entity.enums.RoleEnum;
+import org.alvarowau.user.model.value.UserProfile;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import java.time.LocalDateTime;
 
 @Setter
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-@Entity
-@Table(name = "users")
-public class UserEntity {
+@MappedSuperclass
+@EntityListeners(AuditingEntityListener.class)
+public abstract class UserEntity extends BaseUser {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(unique = true, nullable = false)
+    private String email;
 
-    @Column(unique = true)
-    private String username;
-    private String password;
+    @Embedded
+    private UserProfile userProfile;
 
-    @Column(name = "is_enabled")
-    private boolean isEnabled;
+    @CreatedDate
+    @Column(updatable = false)
+    private LocalDateTime createdAt;
 
-    @Column(name = "account_No_Expired")
-    private boolean accountNoExpired;
-
-    @Column(name = "account_No_Locked")
-    private boolean accountNoLocked;
-
-    @Column(name = "credential_No_Expired")
-    private boolean credentialNoExpired;
-
-
-    @Enumerated(EnumType.STRING)
-    private RoleEnum role;
-
+    public UserEntity(String username, String password, RoleEnum role, String email, UserProfile userProfile) {
+        super(username, password, role);
+        this.email = email;
+        this.userProfile = userProfile;
+    }
 }

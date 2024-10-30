@@ -2,7 +2,7 @@ package org.alvarowau.user.config;
 
 import org.alvarowau.user.config.security.filter.JwtAuthenticationFilter;
 import org.alvarowau.user.config.security.JwtTokenProvider;
-import org.alvarowau.user.service.UserDetailsServiceImpl;
+import org.alvarowau.user.service.UserAuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -48,7 +48,7 @@ public class UserSecurityConfig {
     }
 
     @Bean
-    public AuthenticationProvider authenticationProvider(UserDetailsServiceImpl service) {
+    public AuthenticationProvider authenticationProvider(UserAuthService service) {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         provider.setUserDetailsService(service);
         provider.setPasswordEncoder(passwordEncoder());
