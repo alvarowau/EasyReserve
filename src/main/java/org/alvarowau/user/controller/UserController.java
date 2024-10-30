@@ -27,6 +27,8 @@ public class UserController {
     @PostMapping("/sign-up/{role}")
     public ResponseEntity<AuthResponse> registerUser(@PathVariable String role, @Valid @RequestBody AuthCreateUser createUser) {
         RoleEnum roleEnum;
+        System.out.println("Entro aqui");
+        System.out.println(role.toUpperCase());
         switch (role.toUpperCase()) {
             case "ADMIN":
                 roleEnum = RoleEnum.ADMIN;

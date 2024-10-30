@@ -33,7 +33,7 @@ public class UserSecurityConfig {
         return httpSecurity
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(http -> {
-                    http.requestMatchers("/user/public-data", "/auth/**","/user/**").permitAll(); // Público sin autenticación
+                    http.requestMatchers("/user/**","/test/public-data", "/auth/**").permitAll(); // Público sin autenticación
                     http.requestMatchers("/test/**").authenticated(); // Rutas que requieren autenticación
                 })
                 .httpBasic(Customizer.withDefaults())
