@@ -3,6 +3,9 @@ package org.alvarowau.user.service;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.alvarowau.user.config.security.JwtTokenProvider;
+import org.alvarowau.user.exception.AuthenticationFailedException;
+import org.alvarowau.user.exception.InvalidRoleException;
+import org.alvarowau.user.exception.PasswordsDoNotMatchException;
 import org.alvarowau.user.model.dto.UserRegistrationRequest;
 import org.alvarowau.user.model.dto.AuthLoginRequest;
 import org.alvarowau.user.model.dto.LoginResponse;
@@ -49,7 +52,7 @@ public class UserAuthService implements UserDetailsService {
 
     private void ensurePasswordsMatch(String password, String passwordRepeat) {
         if (!password.contentEquals(passwordRepeat)) {
-            throw new IllegalArgumentException("Las contraseñas no coinciden.");
+            throw new PasswordsDoNotMatchException("Las contraseñas no coinciden.");
         }
     }
 
@@ -57,9 +60,8 @@ public class UserAuthService implements UserDetailsService {
         UserDetails userDetails = loadUserByUsername(username);
 
         if (userDetails == null || !passwordEncoder.matches(password, userDetails.getPassword())) {
-            throw new BadCredentialsException("Invalid username or password.");
+            throw new AuthenticationFailedException("Credenciales inválidas. No se pudo iniciar sesión.");
         }
-
         return new UsernamePasswordAuthenticationToken(userDetails, password, userDetails.getAuthorities());
     }
 
@@ -78,7 +80,7 @@ public class UserAuthService implements UserDetailsService {
                 userEntity = staffService.save(userEntityMapper.convertToStaff(request));
                 break;
             default:
-                throw new IllegalArgumentException("Rol no válido para crear el usuario");
+                throw new InvalidRoleException("Rol no válido para crear el usuario");
         }
 
         return buildAuthResponse(userEntity);

@@ -2,6 +2,9 @@ package org.alvarowau.user.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.alvarowau.user.exception.AuthenticationFailedException;
+import org.alvarowau.user.exception.InvalidRoleException;
+import org.alvarowau.user.exception.PasswordsDoNotMatchException;
 import org.alvarowau.user.model.dto.UserRegistrationRequest;
 import org.alvarowau.user.model.dto.LoginResponse;
 import org.alvarowau.user.model.entity.enums.RoleEnum;
@@ -20,27 +23,37 @@ public class UserController {
     /**
      * Endpoint for user registration.
      *
-     * @param role     The role of the user (ADMIN, CUSTOMER, PROVIDER).
-     * @param createUser The user data for registration.
+     * @param role        The role of the user (ADMIN, CUSTOMER, PROVIDER).
+     * @param createUser  The user data for registration.
      * @return Response entity containing authentication response.
      */
     @PostMapping("/sign-up/{role}")
     public ResponseEntity<LoginResponse> registerUser(@PathVariable String role, @Valid @RequestBody UserRegistrationRequest createUser) {
         LoginResponse response;
-        System.out.println("Entro aqui");
-        System.out.println(role.toUpperCase());
-        switch (role.toUpperCase()) {
-            case "STAFF":
-                response = userAuthService.registerUser(createUser, RoleEnum.STAFF);
-                break;
-            case "CUSTOMER":
-                response = userAuthService.registerUser(createUser, RoleEnum.CUSTOMER);
-                break;
-            case "PROVIDER":
-                response = userAuthService.registerUser(createUser, RoleEnum.PROVIDER);
-                break;
-            default:
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null); // Invalid role
+
+        try {
+            switch (role.toUpperCase()) {
+                case "STAFF":
+                    response = userAuthService.registerUser(createUser, RoleEnum.STAFF);
+                    break;
+                case "CUSTOMER":
+                    response = userAuthService.registerUser(createUser, RoleEnum.CUSTOMER);
+                    break;
+                case "PROVIDER":
+                    response = userAuthService.registerUser(createUser, RoleEnum.PROVIDER);
+                    break;
+                default:
+                    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null); // Rol no válido
+            }
+        } catch (PasswordsDoNotMatchException | InvalidRoleException ex) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new LoginResponse(null, ex.getMessage(), null, false));
+        } catch (AuthenticationFailedException ex) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(new LoginResponse(null, ex.getMessage(), null, false));
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new LoginResponse(null, "Error interno del servidor.", null, false));
         }
 
         return new ResponseEntity<>(response, HttpStatus.CREATED);
