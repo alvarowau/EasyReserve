@@ -6,6 +6,8 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.auth0.jwt.interfaces.JWTVerifier;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -21,6 +23,8 @@ import java.util.stream.Collectors;
  */
 @Component
 public class JwtTokenProvider {
+
+    private static final Logger logger = LoggerFactory.getLogger(JwtTokenProvider.class);
 
     @Value("${security.jwt.key.private}")
     private String privateKey;
@@ -38,14 +42,16 @@ public class JwtTokenProvider {
      * @return a signed JWT token as a String
      */
     public String createToken(Authentication authentication) {
+        logger.info("Creando token JWT para el usuario: {}", authentication.getName());
+
         Algorithm algorithm = Algorithm.HMAC256(privateKey);
-        String username = authentication.getName(); // Get the username
+        String username = authentication.getName();
         String authorities = authentication.getAuthorities()
                 .stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
 
-        return JWT.create()
+        String token = JWT.create()
                 .withIssuer(userGenerator)
                 .withSubject(username)
                 .withClaim(AUTHORITIES_CLAIM, authorities)
@@ -54,6 +60,9 @@ public class JwtTokenProvider {
                 .withJWTId(UUID.randomUUID().toString())
                 .withNotBefore(new Date(System.currentTimeMillis()))
                 .sign(algorithm);
+
+        logger.info("Token JWT creado exitosamente: {}", token);
+        return token;
     }
 
     /**
@@ -64,13 +73,17 @@ public class JwtTokenProvider {
      * @throws JWTVerificationException if the token is invalid
      */
     public DecodedJWT validateToken(String token) {
+        logger.info("Validando token JWT...");
         try {
             Algorithm algorithm = Algorithm.HMAC256(privateKey);
             JWTVerifier verifier = JWT.require(algorithm)
                     .withIssuer(userGenerator)
                     .build();
-            return verifier.verify(token); // Validate and decode the token
+            DecodedJWT decodedJWT = verifier.verify(token);
+            logger.info("Token JWT validado correctamente.");
+            return decodedJWT;
         } catch (JWTVerificationException ex) {
+            logger.error("Error al validar el token JWT: {}", ex.getMessage());
             throw new JWTVerificationException("Token inválido, no autorizado");
         }
     }
@@ -82,7 +95,9 @@ public class JwtTokenProvider {
      * @return the username as a String
      */
     public String extractUsername(DecodedJWT decodedJWT) {
-        return decodedJWT.getSubject();
+        String username = decodedJWT.getSubject();
+        logger.info("Usuario extraído del token: {}", username);
+        return username;
     }
 
     /**
@@ -93,7 +108,9 @@ public class JwtTokenProvider {
      * @return the specified claim
      */
     public Claim getSpecificClaim(DecodedJWT decodedJWT, String claimName) {
-        return decodedJWT.getClaim(claimName);
+        Claim claim = decodedJWT.getClaim(claimName);
+        logger.info("Claim '{}' extraído del token: {}", claimName, claim.asString());
+        return claim;
     }
 
     /**
@@ -103,6 +120,8 @@ public class JwtTokenProvider {
      * @return a map of claims
      */
     public Map<String, Claim> returnAllClaims(DecodedJWT decodedJWT) {
-        return decodedJWT.getClaims();
+        Map<String, Claim> claims = decodedJWT.getClaims();
+        logger.info("Todos los claims extraídos del token: {}", claims);
+        return claims;
     }
 }

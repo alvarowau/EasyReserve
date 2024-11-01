@@ -7,6 +7,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.alvarowau.user.config.security.JwtTokenProvider;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -25,6 +27,7 @@ import java.util.Collection;
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
+    private static final Logger logger = LoggerFactory.getLogger(JwtAuthenticationFilter.class);
     private final JwtTokenProvider jwtTokenProvider;
 
     /**
@@ -44,16 +47,28 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String jwtToken = request.getHeader(HttpHeaders.AUTHORIZATION);
         if (jwtToken != null && jwtToken.startsWith("Bearer ")) {
             jwtToken = jwtToken.substring(7); // Eliminar "Bearer " del token
-            DecodedJWT decodedJWT = jwtTokenProvider.validateToken(jwtToken); // Validar el token
+            logger.info("Token JWT recibido: {}", jwtToken);
 
-            String username = jwtTokenProvider.extractUsername(decodedJWT); // Extraer el nombre de usuario
-            String stringAuthorities = jwtTokenProvider.getSpecificClaim(decodedJWT, "authorities").asString(); // Extraer autoridades
+            try {
+                DecodedJWT decodedJWT = jwtTokenProvider.validateToken(jwtToken); // Validar el token
+                logger.info("Token JWT validado exitosamente.");
 
-            Collection<? extends GrantedAuthority> authorities = AuthorityUtils.commaSeparatedStringToAuthorityList(stringAuthorities); // Convertir a GrantedAuthority
+                String username = jwtTokenProvider.extractUsername(decodedJWT); // Extraer el nombre de usuario
+                logger.info("Usuario extraído del token: {}", username);
 
-            // Configurar la autenticación en el contexto de seguridad
-            Authentication authentication = new UsernamePasswordAuthenticationToken(username, null, authorities);
-            SecurityContextHolder.getContext().setAuthentication(authentication);
+                String stringAuthorities = jwtTokenProvider.getSpecificClaim(decodedJWT, "authorities").asString(); // Extraer autoridades
+                logger.info("Autoridades extraídas del token: {}", stringAuthorities);
+
+                Collection<? extends GrantedAuthority> authorities = AuthorityUtils.commaSeparatedStringToAuthorityList(stringAuthorities); // Convertir a GrantedAuthority
+
+                // Configurar la autenticación en el contexto de seguridad
+                Authentication authentication = new UsernamePasswordAuthenticationToken(username, null, authorities);
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+            } catch (Exception e) {
+                logger.error("Error al validar el token JWT: {}", e.getMessage(), e);
+            }
+        } else {
+            logger.warn("Token JWT no proporcionado o malformado.");
         }
 
         filterChain.doFilter(request, response); // Continuar con la cadena de filtros

@@ -2,6 +2,7 @@ package org.alvarowau.user.service;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.alvarowau.user.config.security.JwtTokenProvider;
 import org.alvarowau.user.model.dto.AuthCreateUser;
 import org.alvarowau.user.model.dto.AuthLoginRequest;
@@ -22,36 +23,30 @@ import org.springframework.stereotype.Service;
 import java.util.Collections;
 import java.util.List;
 
-/**
- * Implementación del servicio de detalles de usuario que maneja la autenticación y la creación de usuarios.
- */
+@Slf4j // Agrega soporte para logging con Lombok
 @Service
 @RequiredArgsConstructor
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    private final UserRepository userRepository; // Repositorio para interactuar con la base de datos de usuarios
-    private final JwtTokenProvider utils; // Utilidad para manejar tokens JWT
-    private final PasswordEncoder passwordEncoder; // Codificador de contraseñas
+    private final UserRepository userRepository;
+    private final JwtTokenProvider utils;
+    private final PasswordEncoder passwordEncoder;
 
-    /**
-     * Carga un usuario por su nombre de usuario.
-     *
-     * @param username el nombre de usuario
-     * @return un objeto UserDetails que contiene los detalles del usuario
-     * @throws UsernameNotFoundException si el usuario no se encuentra
-     */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        // Obtiene el usuario de la base de datos o lanza una excepción si no se encuentra
+        log.info("Cargando usuario por nombre de usuario: {}", username);
         UserEntity user = userRepository.findUserEntityByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado: " + username));
+                .orElseThrow(() -> {
+                    log.error("Usuario no encontrado: {}", username);
+                    return new UsernameNotFoundException("Usuario no encontrado: " + username);
+                });
 
-        // Configura los roles del usuario con el prefijo "ROLE_"
+        log.debug("Usuario encontrado: {} con rol: {}", username, user.getRole().name());
+
         List<SimpleGrantedAuthority> authorities = Collections.singletonList(
                 new SimpleGrantedAuthority("ROLE_" + user.getRole().name())
         );
 
-        // Retorna un objeto UserDetails con la información del usuario
         return new org.springframework.security.core.userdetails.User(
                 user.getUsername(),
                 user.getPassword(),
@@ -63,94 +58,67 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         );
     }
 
-    /**
-     * Autentica a un usuario con el nombre de usuario y la contraseña proporcionados.
-     *
-     * @param request el objeto de solicitud de inicio de sesión que contiene el nombre de usuario y la contraseña
-     * @return la respuesta de autenticación que contiene el token de acceso
-     */
     public AuthResponse loginUser(AuthLoginRequest request) {
-        // Valida que las contraseñas coincidan
+        log.info("Intentando autenticar usuario: {}", request.username());
         validatePasswordsMatch(request.password(), request.passwordRepeat());
 
-        // Autentica al usuario y genera el token JWT
-        Authentication authentication = authenticate(request.username(), request.password());
-        String accessToken = utils.createToken(authentication);
-
-        // Retorna la respuesta de autenticación
-        return new AuthResponse(request.username(), "Usuario autenticado con éxito", accessToken, true);
+        try {
+            Authentication authentication = authenticate(request.username(), request.password());
+            String accessToken = utils.createToken(authentication);
+            log.info("Autenticación exitosa para el usuario: {}", request.username());
+            return new AuthResponse(request.username(), "Usuario autenticado con éxito", accessToken, true);
+        } catch (BadCredentialsException e) {
+            log.error("Error de autenticación para el usuario: {}", request.username(), e);
+            throw e;
+        }
     }
 
-    /**
-     * Crea un nuevo usuario en la base de datos.
-     *
-     * @param request el objeto de solicitud que contiene los datos del nuevo usuario
-     * @param rol     el rol del nuevo usuario
-     * @return la respuesta que contiene el nombre de usuario y el token de acceso
-     */
     public AuthResponse createUser(@Valid AuthCreateUser request, RoleEnum rol) {
-        // Valida que las contraseñas coincidan
+        log.info("Creando nuevo usuario con nombre: {}", request.username());
         validatePasswordsMatch(request.password(), request.passwordRepeat());
-        String username = request.username();
-        String password = request.password();
 
-        // Crea un nuevo objeto UserEntity y establece sus propiedades
+        String username = request.username();
         UserEntity userEntity = new UserEntity();
         userEntity.setUsername(username);
-        userEntity.setPassword(passwordEncoder.encode(password)); // Codifica la contraseña
+        userEntity.setPassword(passwordEncoder.encode(request.password()));
         userEntity.setRole(rol);
         userEntity.setEnabled(true);
         userEntity.setAccountNoExpired(true);
         userEntity.setCredentialNoExpired(true);
         userEntity.setAccountNoLocked(true);
 
-        // Guarda el nuevo usuario en la base de datos
         UserEntity entity = userRepository.save(userEntity);
+        log.info("Usuario {} creado exitosamente con rol {}", username, rol);
 
-        // Configura las autoridades del usuario
         List<SimpleGrantedAuthority> authorities = Collections.singletonList(
                 new SimpleGrantedAuthority("ROLE_" + entity.getRole().name())
         );
 
-        // Crea un objeto de autenticación y genera el token JWT
         Authentication authentication = new UsernamePasswordAuthenticationToken(
                 entity.getUsername(), entity.getPassword(), authorities);
         String accessToken = utils.createToken(authentication);
 
-        // Retorna la respuesta de creación del usuario
+        log.debug("Token JWT generado para el nuevo usuario: {}", username);
         return new AuthResponse(entity.getUsername(), "Usuario creado con éxito", accessToken, true);
     }
 
-    /**
-     * Valida que las contraseñas proporcionadas coincidan.
-     *
-     * @param password       la contraseña
-     * @param passwordRepeat la contraseña repetida para comparación
-     * @throws IllegalArgumentException si las contraseñas no coinciden
-     */
     private void validatePasswordsMatch(String password, String passwordRepeat) {
         if (!password.contentEquals(passwordRepeat)) {
+            log.warn("Las contraseñas no coinciden.");
             throw new IllegalArgumentException("Las contraseñas no coinciden.");
         }
     }
 
-    /**
-     * Autentica al usuario usando su nombre de usuario y contraseña.
-     *
-     * @param username el nombre de usuario
-     * @param password la contraseña
-     * @return el objeto de autenticación del usuario
-     * @throws BadCredentialsException si las credenciales son inválidas
-     */
     private Authentication authenticate(String username, String password) {
-        UserDetails userDetails = loadUserByUsername(username); // Carga el usuario
+        log.debug("Autenticando usuario: {}", username);
+        UserDetails userDetails = loadUserByUsername(username);
 
-        // Verifica si las credenciales son válidas
         if (userDetails == null || !passwordEncoder.matches(password, userDetails.getPassword())) {
+            log.error("Credenciales inválidas para el usuario: {}", username);
             throw new BadCredentialsException("Invalid username or password.");
         }
 
-        // Retorna un objeto de autenticación
+        log.info("Usuario autenticado correctamente: {}", username);
         return new UsernamePasswordAuthenticationToken(username, userDetails.getPassword(), userDetails.getAuthorities());
     }
 }
