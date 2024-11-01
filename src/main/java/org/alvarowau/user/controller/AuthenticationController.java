@@ -29,12 +29,14 @@ public class AuthenticationController {
         logger.info("Inicio de sesión para el usuario: {}", request.username());
 
         try {
+            // Intenta iniciar sesión y generar el token JWT
             AuthResponse response = userDetailsService.loginUser(request);
             logger.info("Login exitoso. Token generado: {}", response.jwt());
             return ResponseEntity.ok(response);
         } catch (Exception e) {
+            // Maneja cualquier error durante el proceso de inicio de sesión
             logger.error("Error durante el inicio de sesión para el usuario: {}", request.username(), e);
-            return ResponseEntity.status(401).body(null);
+            return ResponseEntity.status(401).body(null); // Retorna un estado 401 en caso de error
         }
     }
 }

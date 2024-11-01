@@ -59,7 +59,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 String stringAuthorities = jwtTokenProvider.getSpecificClaim(decodedJWT, "authorities").asString(); // Extraer autoridades
                 logger.info("Autoridades extraídas del token: {}", stringAuthorities);
 
-                Collection<? extends GrantedAuthority> authorities = AuthorityUtils.commaSeparatedStringToAuthorityList(stringAuthorities); // Convertir a GrantedAuthority
+                // Convertir las autoridades a GrantedAuthority
+                Collection<? extends GrantedAuthority> authorities = AuthorityUtils.commaSeparatedStringToAuthorityList(stringAuthorities);
 
                 // Configurar la autenticación en el contexto de seguridad
                 Authentication authentication = new UsernamePasswordAuthenticationToken(username, null, authorities);
@@ -71,6 +72,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             logger.warn("Token JWT no proporcionado o malformado.");
         }
 
-        filterChain.doFilter(request, response); // Continuar con la cadena de filtros
+        // Continuar con la cadena de filtros
+        filterChain.doFilter(request, response);
     }
 }

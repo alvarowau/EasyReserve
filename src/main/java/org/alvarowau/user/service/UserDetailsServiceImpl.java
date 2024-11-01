@@ -37,8 +37,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         log.info("Cargando usuario por nombre de usuario: {}", username);
         UserEntity user = userRepository.findUserEntityByUsername(username)
                 .orElseThrow(() -> {
-                    log.error("Usuario no encontrado: {}", username);
-                    return new UsernameNotFoundException("Usuario no encontrado: " + username);
+                    log.error("No se encontró el usuario: {}", username);
+                    return new UsernameNotFoundException("No se encontró el usuario: " + username);
                 });
 
         log.debug("Usuario encontrado: {} con rol: {}", username, user.getRole().name());
@@ -59,7 +59,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     }
 
     public AuthResponse loginUser(AuthLoginRequest request) {
-        log.info("Intentando autenticar usuario: {}", request.username());
+        log.info("Intentando autenticar al usuario: {}", request.username());
         validatePasswordsMatch(request.password(), request.passwordRepeat());
 
         try {
@@ -74,7 +74,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     }
 
     public AuthResponse createUser(@Valid AuthCreateUser request, RoleEnum rol) {
-        log.info("Creando nuevo usuario con nombre: {}", request.username());
+        log.info("Creando un nuevo usuario con nombre: {}", request.username());
         validatePasswordsMatch(request.password(), request.passwordRepeat());
 
         String username = request.username();
@@ -110,12 +110,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     }
 
     private Authentication authenticate(String username, String password) {
-        log.debug("Autenticando usuario: {}", username);
+        log.debug("Autenticando al usuario: {}", username);
         UserDetails userDetails = loadUserByUsername(username);
 
         if (userDetails == null || !passwordEncoder.matches(password, userDetails.getPassword())) {
             log.error("Credenciales inválidas para el usuario: {}", username);
-            throw new BadCredentialsException("Invalid username or password.");
+            throw new BadCredentialsException("Nombre de usuario o contraseña inválidos.");
         }
 
         log.info("Usuario autenticado correctamente: {}", username);

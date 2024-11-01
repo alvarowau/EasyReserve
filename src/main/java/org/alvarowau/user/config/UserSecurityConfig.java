@@ -34,28 +34,28 @@ public class UserSecurityConfig {
 
     public UserSecurityConfig(JwtTokenProvider jwtTokenProvider) {
         this.jwtTokenProvider = jwtTokenProvider;
-        logger.info("UserSecurityConfig initialized with JwtTokenProvider.");
+        logger.info("UserSecurityConfig inicializado con JwtTokenProvider.");
     }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
-        logger.info("Configuring SecurityFilterChain...");
+        logger.info("Configurando SecurityFilterChain...");
         return httpSecurity
                 .csrf(csrf -> {
                     csrf.disable();
-                    logger.debug("CSRF protection disabled.");
+                    logger.debug("Protección CSRF deshabilitada.");
                 })
                 .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(http -> {
                     http.requestMatchers("/user/public-data", "/auth/**", "/user/**").permitAll();
-                    logger.debug("Configured public endpoints: /user/public-data, /auth/**, /user/**.");
+                    logger.debug("Configurados puntos finales públicos: /user/public-data, /auth/**, /user/**.");
                     http.requestMatchers("/test/**").authenticated();
-                    logger.debug("Configured authenticated endpoint: /test/**.");
+                    logger.debug("Configurado punto final autenticado: /test/**.");
                 })
                 .httpBasic(Customizer.withDefaults())
                 .sessionManagement(session -> {
                     session.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-                    logger.debug("Session policy set to STATELESS.");
+                    logger.debug("Política de sesión establecida en STATELESS.");
                 })
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), BasicAuthenticationFilter.class)
                 .build();
@@ -63,29 +63,29 @@ public class UserSecurityConfig {
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
-        logger.info("Creating AuthenticationManager bean...");
+        logger.info("Creando bean AuthenticationManager...");
         return authenticationConfiguration.getAuthenticationManager();
     }
 
     @Bean
     public AuthenticationProvider authenticationProvider(UserDetailsServiceImpl service) {
-        logger.info("Configuring DaoAuthenticationProvider...");
+        logger.info("Configurando DaoAuthenticationProvider...");
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         provider.setUserDetailsService(service);
         provider.setPasswordEncoder(passwordEncoder());
-        logger.debug("DaoAuthenticationProvider configured with UserDetailsServiceImpl and BCryptPasswordEncoder.");
+        logger.debug("DaoAuthenticationProvider configurado con UserDetailsServiceImpl y BCryptPasswordEncoder.");
         return provider;
     }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        logger.info("Creating BCryptPasswordEncoder bean...");
+        logger.info("Creando bean BCryptPasswordEncoder...");
         return new BCryptPasswordEncoder();
     }
 
     @Bean
     public CorsFilter corsFilter() {
-        logger.info("Creating CorsFilter bean...");
+        logger.info("Creando bean CorsFilter...");
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
         config.addAllowedOrigin("*");
@@ -93,7 +93,7 @@ public class UserSecurityConfig {
         config.addAllowedMethod("*");
         config.setAllowCredentials(true);
         source.registerCorsConfiguration("/**", config);
-        logger.debug("CorsFilter configured with allowed origins, headers, and methods.");
+        logger.debug("CorsFilter configurado con orígenes, encabezados y métodos permitidos.");
         return new CorsFilter(source);
     }
 }
