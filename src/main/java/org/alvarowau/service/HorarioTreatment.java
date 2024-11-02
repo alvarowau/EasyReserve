@@ -22,23 +22,16 @@ public class HorarioTreatment {
     public List<Appointment> generateAvailableAppointments(ServiceSchedule serviceSchedule) {
         List<TimeSlot> timeSlots = serviceSchedule.getTimeSlots();
 
-        // Comprobar que los TimeSlots son válidos
         validateTimeSlots(timeSlots);
 
-        // Buscar la próxima fecha disponible
         LocalDate availableDate = dateManagementService.findNextAvailableDate(serviceSchedule.getDay());
         List<Appointment> appointments = new ArrayList<>();
 
-        // Generar citas a partir de los TimeSlots
         for (TimeSlot timeSlot : timeSlots) {
-            // Calcular el tiempo de inicio y de fin
             LocalDateTime startTime = availableDate.atTime(timeSlot.getStartTime());
             LocalDateTime endTime = availableDate.atTime(timeSlot.getEndTime());
-
-            // Generar citas mientras haya tiempo disponible
             while (startTime.plusMinutes(serviceSchedule.getServiceOffering().getDuration()).isBefore(endTime) ||
                     startTime.plusMinutes(serviceSchedule.getServiceOffering().getDuration()).isEqual(endTime)) {
-                // Crear una nueva cita
                 Appointment appointment = new Appointment();
                 appointment.setStartTime(startTime);
                 appointment.setEndTime(startTime.plusMinutes(serviceSchedule.getServiceOffering().getDuration()));
@@ -48,7 +41,6 @@ public class HorarioTreatment {
                 appointment.setDate(availableDate);
 
                 appointments.add(appointment);
-                // Mover al siguiente tiempo de inicio
                 startTime = startTime.plusMinutes(serviceSchedule.getServiceOffering().getDuration());
             }
         }
@@ -60,17 +52,13 @@ public class HorarioTreatment {
 
     // Método para validar los TimeSlots
     private void validateTimeSlots(List<TimeSlot> timeSlots) {
-        // Comprobar que no se solapan
         if (checkForOverlappingTimeSlots(timeSlots)) {
             throw new OverlappingTimeSlotsException("Los TimeSlots se solapan entre sí.");
         }
-
-        // Comprobar que cada TimeSlot tiene sentido
         for (TimeSlot timeSlot : timeSlots) {
             if (!timeSlot.getStartTime().isBefore(timeSlot.getEndTime())) {
                 throw new IllegalArgumentException("El TimeSlot no tiene una hora de inicio anterior a la de fin.");
             }
-
             if (!timeSlot.isAvailable()) {
                 throw new IllegalArgumentException("El TimeSlot no está disponible.");
             }

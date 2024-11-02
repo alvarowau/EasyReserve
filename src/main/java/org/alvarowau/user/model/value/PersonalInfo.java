@@ -10,7 +10,7 @@ import lombok.*;
 @Builder
 @Embeddable
 public class PersonalInfo {
-    private String firstName;  // Nombre
-    private String lastName;   // Apellidos
-    private String idDocument; // Documento de identidad
+    private String firstName;
+    private String lastName;
+    private String idDocument;
 }

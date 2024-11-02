@@ -20,17 +20,10 @@ public class UserController {
 
     private final UserAuthFacade userAuthFacade;
 
-    /**
-     * Endpoint for user registration.
-     *
-     * @param role        The role of the user (ADMIN, CUSTOMER, PROVIDER).
-     * @param createUser  The user data for registration.
-     * @return Response entity containing authentication response.
-     */
+
     @PostMapping("/sign-up/{role}")
     public ResponseEntity<LoginResponse> registerUser(@PathVariable String role, @Valid @RequestBody UserRegistrationRequest createUser) {
         LoginResponse response;
-        System.out.println("paso por el principio, el rol que llega es: " + role );
         try {
             switch (role.toUpperCase()) {
                 case "STAFF":
@@ -58,6 +51,5 @@ public class UserController {
 
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
-
 
 }

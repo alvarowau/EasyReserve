@@ -5,7 +5,7 @@ import org.alvarowau.error.model.ApiError;
 import org.alvarowau.exception.user.InvalidRoleException;
 import org.alvarowau.exception.user.PasswordsDoNotMatchException;
 import org.alvarowau.exception.user.AuthenticationFailedException;
-import org.alvarowau.exception.user.UserProviderNotFoundException; // Importar tu nueva excepción
+import org.alvarowau.exception.user.UserProviderNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.server.ResponseStatusException;

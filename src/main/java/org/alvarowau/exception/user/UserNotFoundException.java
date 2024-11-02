@@ -2,7 +2,7 @@ package org.alvarowau.exception.user;
 
 public class UserNotFoundException extends RuntimeException {
     public UserNotFoundException(String message) {
-        super(message); // Constructor para mensajes genéricos
+        super(message);
     }
 
     public UserNotFoundException(String username, boolean notFound) {

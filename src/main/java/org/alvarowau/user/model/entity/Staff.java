@@ -3,14 +3,12 @@ package org.alvarowau.user.model.entity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 import org.alvarowau.user.model.entity.enums.RoleEnum;
 import org.alvarowau.user.model.value.UserProfile;
 
 @Entity
 @Table(name = "staff")
 @NoArgsConstructor
-@ToString
 public class Staff extends UserEntity {
 
     public Staff(String username, String password, String email, UserProfile userProfile) {

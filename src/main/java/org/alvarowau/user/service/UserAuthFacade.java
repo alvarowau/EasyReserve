@@ -31,11 +31,11 @@ public class UserAuthFacade {
         return userManagementService.deactivateCurrentUser(token, requestDelete);
     }
 
-    public ActionLogResponseAccountStatusChange deactivateUserByStaff(String token, UserAccountStatusChangeRequestByStaff requestDelete) {
-        return userManagementService.deactivateCurrentUserByStaff(token,requestDelete, false);
+    public ActionLogResponseAccountStatusChange deactivateUserByStaff(UserAccountStatusChangeRequestByStaff requestDelete) {
+        return userManagementService.deactivateCurrentUserByStaff(requestDelete, false);
     }
 
-    public ActionLogResponseAccountStatusChange activateUserByStaff(String token, UserAccountStatusChangeRequestByStaff requestDelete) {
-        return userManagementService.deactivateCurrentUserByStaff(token,requestDelete, true);
+    public ActionLogResponseAccountStatusChange activateUserByStaff(UserAccountStatusChangeRequestByStaff requestDelete) {
+        return userManagementService.deactivateCurrentUserByStaff(requestDelete, true);
     }
 }

@@ -30,14 +30,14 @@ public class UserManagementController {
     public ResponseEntity<ActionLogResponseAccountStatusChange> deactivateUserByStaff(
             @RequestHeader("Authorization") String token,
             @RequestBody UserAccountStatusChangeRequestByStaff requestDelete) {
-        return ResponseEntity.ok(userAuthFacade.deactivateUserByStaff(token, requestDelete));
+        return ResponseEntity.ok(userAuthFacade.deactivateUserByStaff(requestDelete));
     }
 
     @PreAuthorize("hasAnyRole('STAFF')")
-    @PostMapping("/staff/activate-user")  // Cambié a POST para la activación
+    @PostMapping("/staff/activate-user")
     public ResponseEntity<ActionLogResponseAccountStatusChange> activateUserByStaff(
             @RequestHeader("Authorization") String token,
             @RequestBody UserAccountStatusChangeRequestByStaff requestDelete) {
-        return ResponseEntity.ok(userAuthFacade.activateUserByStaff(token, requestDelete)); // Aquí se asume que 'true' indica activar.
+        return ResponseEntity.ok(userAuthFacade.activateUserByStaff( requestDelete));
     }
 }

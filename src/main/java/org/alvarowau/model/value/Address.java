@@ -10,9 +10,9 @@ import lombok.*;
 @Builder
 @Embeddable
 public class Address {
-    private String street;     // Calle
-    private String city;       // Ciudad
-    private String state;      // Estado o provincia
-    private String zipCode;    // Código postal
-    private String country;     // País
+    private String street;
+    private String city;
+    private String state;
+    private String zipCode;
+    private String country;
 }

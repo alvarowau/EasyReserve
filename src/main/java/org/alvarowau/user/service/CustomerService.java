@@ -17,8 +17,6 @@ public class CustomerService extends AbstractBaseUserService<Customer> {
         this.repository = repository;
     }
 
-
-
     @Override
     protected Customer saveEntity(Customer customer) {
         return repository.save(customer);

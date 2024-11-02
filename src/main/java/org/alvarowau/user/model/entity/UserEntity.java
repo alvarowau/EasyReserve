@@ -1,7 +1,13 @@
 package org.alvarowau.user.model.entity;
 
-import jakarta.persistence.*;
-import lombok.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
+import jakarta.persistence.EntityListeners;
+import jakarta.persistence.MappedSuperclass;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.alvarowau.user.model.entity.enums.RoleEnum;
 import org.alvarowau.user.model.value.UserProfile;
 import org.springframework.data.annotation.CreatedDate;
@@ -15,7 +21,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-@ToString
 public abstract class UserEntity extends BaseUser {
 
     @Column(unique = true, nullable = false)

@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.alvarowau.user.config.security.filter.JwtAuthenticationFilter;
 import org.alvarowau.user.config.security.JwtTokenProvider;
 import org.alvarowau.user.service.CustomUserDetailsService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;

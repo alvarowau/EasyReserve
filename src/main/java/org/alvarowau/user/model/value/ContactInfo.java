@@ -10,7 +10,7 @@ import lombok.*;
 @Builder
 @Embeddable
 public class ContactInfo {
-    private String primaryPhone;      // Número de teléfono principal
-    private String secondaryPhone;    // Número de teléfono secundario (opcional)
-    private String additionalEmail;    // Correo electrónico adicional (opcional)
+    private String primaryPhone;
+    private String secondaryPhone;
+    private String additionalEmail;
 }

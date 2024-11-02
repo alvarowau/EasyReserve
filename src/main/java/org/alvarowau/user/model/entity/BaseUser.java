@@ -16,7 +16,6 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 public abstract class BaseUser implements Serializable, UserDetails {
 
     @Serial

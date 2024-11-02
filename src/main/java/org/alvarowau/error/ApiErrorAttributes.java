@@ -21,11 +21,10 @@ public class ApiErrorAttributes extends DefaultErrorAttributes {
         errorAttributes.put("estado", HttpStatus.valueOf(statusCode));
         errorAttributes.put("fecha", LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")));
 
-        // Obtener el mensaje de error
+
         String mensaje = getErrorMessage(webRequest);
         errorAttributes.put("mensaje", mensaje);
 
-        // Incluir información adicional si es necesario
         errorAttributes.put("ruta", webRequest.getDescription(false));
 
         return errorAttributes;

@@ -14,11 +14,11 @@ import org.alvarowau.model.value.Address;
 public class UserProfile {
 
     @Embedded
-    private PersonalInfo personalInfo; // Información personal
+    private PersonalInfo personalInfo;
 
     @Embedded
-    private ContactInfo contactInfo; // Información de contacto
+    private ContactInfo contactInfo;
 
     @Embedded
-    private Address address; // Dirección del usuario
+    private Address address;
 }

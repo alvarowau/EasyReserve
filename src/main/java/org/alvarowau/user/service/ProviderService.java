@@ -17,7 +17,6 @@ public class ProviderService extends AbstractBaseUserService<Provider> {
         this.repository = repository;
     }
 
-
     @Override
     public Optional<Provider> findByUsername(String username) {
         return repository.findByUsername(username);
@@ -27,9 +26,6 @@ public class ProviderService extends AbstractBaseUserService<Provider> {
     public Optional<Provider> findByEmail(String email) {
         return repository.findByEmail(email);
     }
-
-
-
 
     @Override
     protected Provider saveEntity(Provider entity) {

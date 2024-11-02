@@ -39,10 +39,9 @@ public class UserManagementService {
         }
     }
 
-    public ActionLogResponseAccountStatusChange deactivateCurrentUserByStaff(String token, UserAccountStatusChangeRequestByStaff requestDelete, boolean active) {
+    public ActionLogResponseAccountStatusChange deactivateCurrentUserByStaff(UserAccountStatusChangeRequestByStaff requestDelete, boolean active) {
         String authenticatedUsername = securityContextUtil.getAuthenticatedUserDetails().getUsername();
         Optional<Long> staffId = staffService.findIdByUsername(authenticatedUsername);
-        String userNameToken = securityContextUtil.getUsernameToken(token.substring(7));
 
         if (staffId.isPresent()) {
             ActionLogResponseAccountStatusChange responseDelete = createActionLogResponseDelete(requestDelete, authenticatedUsername, requestDelete.usernameDelete());
