@@ -15,12 +15,7 @@ public class AuthenticationController {
 
     private final UserAuthFacade userDetailsService;
 
-    /**
-     * Endpoint for user login.
-     *
-     * @param request The login request containing username and password.
-     * @return Response entity containing authentication response.
-     */
+
     @PostMapping("/log-in")
     public ResponseEntity<LoginResponse> login(@RequestBody @Valid AuthLoginRequest request) {
         return ResponseEntity.ok(userDetailsService.authenticateUser(request));

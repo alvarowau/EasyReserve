@@ -2,9 +2,9 @@ package org.alvarowau.user.service;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.alvarowau.model.dto.ActionLogRequestAccountStatusChange;
-import org.alvarowau.model.dto.ActionLogResponseAccountStatusChange;
-import org.alvarowau.model.dto.UserAccountStatusChangeRequestByStaff;
+import org.alvarowau.model.dto.action.ActionLogRequestAccountStatusChange;
+import org.alvarowau.model.dto.action.ActionLogResponseAccountStatusChange;
+import org.alvarowau.model.dto.action.UserAccountStatusChangeRequestByStaff;
 import org.alvarowau.user.model.dto.UserRegistrationRequest;
 import org.alvarowau.user.model.dto.AuthLoginRequest;
 import org.alvarowau.user.model.dto.LoginResponse;

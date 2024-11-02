@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
+@ToString
 public abstract class UserEntity extends BaseUser {
 
     @Column(unique = true, nullable = false)

@@ -1,4 +1,4 @@
-package org.alvarowau.user.service.util;
+package org.alvarowau.config.utils;
 
 import lombok.RequiredArgsConstructor;
 import org.alvarowau.user.config.security.JwtTokenProvider;
@@ -45,6 +45,23 @@ public class SecurityContextUtil {
         } else if (authentication != null && authentication.isAuthenticated()) {
             String username = authentication.getName();
             return customUserDetailsService.loadUserByUsername(username);
+        }
+        throw new RuntimeException("No hay un usuario autenticado en el contexto.");
+    }
+
+    public String getAuthenticatedUsername() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.isAuthenticated()) {
+            String username;
+
+            // Intenta obtener el nombre de usuario directamente del objeto Authentication
+            if (authentication.getPrincipal() instanceof UserDetails) {
+                username = ((UserDetails) authentication.getPrincipal()).getUsername();
+            } else {
+                username = authentication.getName(); // Este es el nombre de usuario proporcionado al autenticarse
+            }
+
+            return username;
         }
         throw new RuntimeException("No hay un usuario autenticado en el contexto.");
     }

@@ -2,11 +2,11 @@ package org.alvarowau.user.controller;
 
 
 import lombok.RequiredArgsConstructor;
-import org.alvarowau.model.dto.ActionLogRequestAccountStatusChange;
-import org.alvarowau.model.dto.ActionLogResponseAccountStatusChange;
-import org.alvarowau.model.dto.UserAccountStatusChangeRequestByStaff;
+import org.alvarowau.model.dto.action.ActionLogRequestAccountStatusChange;
+import org.alvarowau.model.dto.action.ActionLogResponseAccountStatusChange;
+import org.alvarowau.model.dto.action.UserAccountStatusChangeRequestByStaff;
 import org.alvarowau.user.service.UserAuthFacade;
-import org.alvarowau.user.service.util.SecurityContextUtil;
+import org.alvarowau.config.utils.SecurityContextUtil;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;

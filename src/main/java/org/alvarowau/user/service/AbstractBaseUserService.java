@@ -1,7 +1,7 @@
 package org.alvarowau.user.service;
 
-import org.alvarowau.model.dto.ActionLogDTO;
-import org.alvarowau.model.dto.ActionLogResponseAccountStatusChange;
+import org.alvarowau.model.dto.action.ActionLogDTO;
+import org.alvarowau.model.dto.action.ActionLogResponseAccountStatusChange;
 import org.alvarowau.model.enums.ActionType;
 import org.alvarowau.service.ActionLogService;
 import org.alvarowau.user.model.entity.BaseUser;

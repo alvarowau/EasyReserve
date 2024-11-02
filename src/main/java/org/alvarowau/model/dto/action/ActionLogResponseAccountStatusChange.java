@@ -1,4 +1,4 @@
-package org.alvarowau.model.dto;
+package org.alvarowau.model.dto.action;
 
 import lombok.*;
 import org.alvarowau.model.enums.ActionType;

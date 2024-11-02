@@ -3,14 +3,14 @@ package org.alvarowau.user.service;
 import lombok.RequiredArgsConstructor;
 import org.alvarowau.exception.user.StaffNotFoundException;
 import org.alvarowau.exception.user.UserNotFoundException;
-import org.alvarowau.model.dto.ActionLogRequestAccountStatusChange;
-import org.alvarowau.model.dto.ActionLogResponseAccountStatusChange;
-import org.alvarowau.model.dto.UserAccountStatusChangeRequestByStaff;
+import org.alvarowau.model.dto.action.ActionLogRequestAccountStatusChange;
+import org.alvarowau.model.dto.action.ActionLogResponseAccountStatusChange;
+import org.alvarowau.model.dto.action.UserAccountStatusChangeRequestByStaff;
 import org.alvarowau.model.enums.ActionType;
 import org.alvarowau.user.model.entity.BaseUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.alvarowau.user.service.util.SecurityContextUtil;
+import org.alvarowau.config.utils.SecurityContextUtil;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;

@@ -1,6 +1,6 @@
 package org.alvarowau.user.service;
 
-import org.alvarowau.model.dto.ActionLogResponseAccountStatusChange;
+import org.alvarowau.model.dto.action.ActionLogResponseAccountStatusChange;
 import org.alvarowau.user.model.entity.BaseUser;
 
 import java.util.Optional;

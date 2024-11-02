@@ -1,5 +1,6 @@
 package org.alvarowau.user.config;
 
+import lombok.RequiredArgsConstructor;
 import org.alvarowau.user.config.security.filter.JwtAuthenticationFilter;
 import org.alvarowau.user.config.security.JwtTokenProvider;
 import org.alvarowau.user.service.CustomUserDetailsService;
@@ -23,10 +24,11 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
+@RequiredArgsConstructor
 public class UserSecurityConfig {
 
-    @Autowired
-    private JwtTokenProvider jwtTokenProvider;
+
+    private final JwtTokenProvider jwtTokenProvider;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
@@ -34,7 +36,7 @@ public class UserSecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(http -> {
                     http.requestMatchers("/user/public-data", "/auth/**","/user/**","/test/public-data").permitAll(); // Público sin autenticación
-                    http.requestMatchers("/test/**", "/deactivate/**").authenticated(); // Rutas que requieren autenticación
+                    http.requestMatchers("/test/**", "/deactivate/**", "/services/**").authenticated(); // Rutas que requieren autenticación
                 })
                 .httpBasic(Customizer.withDefaults())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
