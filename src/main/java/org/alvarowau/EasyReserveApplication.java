@@ -30,22 +30,7 @@ public class EasyReserveApplication {
                            StaffRepository staffRepository,
                            PasswordEncoder passwordEncoder) {
         return args -> {
-            // Crear un UserProfile para Customer
-            UserProfile customerProfile = UserProfile.builder()
-                    .personalInfo(new PersonalInfo("John", "Doe", "123456789"))
-                    .contactInfo(new ContactInfo("555-1234", "555-5678", "john.doe@example.com"))
-                    .address(new Address("123 Main St", "Springfield", "IL", "62701", "USA"))
-                    .build();
 
-            // Crear un Customer
-            Customer customer = new Customer();
-            customer.setUsername("customer1");
-            customer.setPassword(passwordEncoder.encode("1234"));
-            customer.setEmail("customer1@example.com");
-            customer.setRole(RoleEnum.CUSTOMER);
-            customer.setEnabled(true);
-            customer.setUserProfile(customerProfile); // Asigna el UserProfile correspondiente aquí
-            customerRepository.save(customer);
 
             // Crear un UserProfile para Provider
             UserProfile providerProfile = UserProfile.builder()
@@ -64,22 +49,7 @@ public class EasyReserveApplication {
             provider.setUserProfile(providerProfile); // Asigna el UserProfile correspondiente aquí
             providerRepository.save(provider);
 
-            // Crear un UserProfile para Staff
-            UserProfile staffProfile = UserProfile.builder()
-                    .personalInfo(new PersonalInfo("Emily", "Johnson", "135792468"))
-                    .contactInfo(new ContactInfo("555-2468", null, "emily.johnson@example.com"))
-                    .address(new Address("789 Maple St", "Gotham", "NJ", "07001", "USA"))
-                    .build();
 
-            // Crear un Staff
-            Staff staff = new Staff();
-            staff.setUsername("staff1");
-            staff.setPassword(passwordEncoder.encode("1234"));
-            staff.setEmail("staff1@example.com");
-            staff.setRole(RoleEnum.STAFF);
-            staff.setEnabled(true);
-            staff.setUserProfile(staffProfile); // Asigna el UserProfile correspondiente aquí
-            staffRepository.save(staff);
 
             System.out.println("Datos de prueba insertados con éxito.");
         };
