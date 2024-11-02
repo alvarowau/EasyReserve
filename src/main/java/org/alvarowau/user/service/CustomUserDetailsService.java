@@ -1,10 +1,7 @@
 package org.alvarowau.user.service;
 
 import lombok.RequiredArgsConstructor;
-import org.alvarowau.user.config.security.filter.JwtAuthenticationFilter;
 import org.alvarowau.user.model.entity.BaseUser;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -13,7 +10,6 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
-    private static final Logger logger = LoggerFactory.getLogger(CustomUserDetailsService.class);
     private final CustomerService customerService;
     private final ProviderService providerService;
     private final StaffService staffService;
@@ -41,7 +37,6 @@ public class CustomUserDetailsService implements UserDetailsService {
                     .orElseThrow(() -> new UsernameNotFoundException(username + " no encontrado"));
         }
 
-        logger.info("Usuario encontrado: {} con roles: {}", username, user.getAuthorities());
         return user;
     }
 

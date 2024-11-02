@@ -1,28 +1,23 @@
 package org.alvarowau.service;
 
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.alvarowau.model.dto.serviceoffering.ServiceOfferingRequest;
 import org.alvarowau.model.dto.serviceoffering.ServiceOfferingResponse;
-import org.alvarowau.model.entity.Appointment;
-import org.alvarowau.model.entity.ServiceSchedule;
-import org.alvarowau.model.entity.TimeSlot;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalTime;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class AppointmentFacade {
 
-    private ServiceOfferingService serviceOfferingService;
+    private final OfferingService offeringService;
 
 
 
     // Método para crear un nuevo Service Offering
-    public ServiceOfferingResponse createServiceOffering(@Valid ServiceOfferingRequest request) {
-        return serviceOfferingService.createServiceOffering(request);
+    public ServiceOfferingResponse createServiceOffering(ServiceOfferingRequest request) {
+        return offeringService.createServiceOffering(request);
     }
 
 //    // Método para crear un nuevo Service Schedule
