@@ -18,6 +18,7 @@ public class UserEntityMapper {
 
     private final PasswordEncoder passwordEncoder;
 
+
     public Customer convertToCustomer(UserRegistrationRequest userRegistrationRequest) {
         return new Customer(
                 userRegistrationRequest.username(),

@@ -8,7 +8,7 @@ import org.alvarowau.exception.user.PasswordsDoNotMatchException;
 import org.alvarowau.user.model.dto.UserRegistrationRequest;
 import org.alvarowau.user.model.dto.LoginResponse;
 import org.alvarowau.user.model.entity.enums.RoleEnum;
-import org.alvarowau.user.service.UserAuthService;
+import org.alvarowau.user.service.UserAuthFacade;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class UserController {
 
-    private final UserAuthService userAuthService;
+    private final UserAuthFacade userAuthFacade;
 
     /**
      * Endpoint for user registration.
@@ -30,17 +30,17 @@ public class UserController {
     @PostMapping("/sign-up/{role}")
     public ResponseEntity<LoginResponse> registerUser(@PathVariable String role, @Valid @RequestBody UserRegistrationRequest createUser) {
         LoginResponse response;
-
+        System.out.println("paso por el principio, el rol que llega es: " + role );
         try {
             switch (role.toUpperCase()) {
                 case "STAFF":
-                    response = userAuthService.registerUser(createUser, RoleEnum.STAFF);
+                    response = userAuthFacade.registerUser(createUser, RoleEnum.STAFF);
                     break;
                 case "CUSTOMER":
-                    response = userAuthService.registerUser(createUser, RoleEnum.CUSTOMER);
+                    response = userAuthFacade.registerUser(createUser, RoleEnum.CUSTOMER);
                     break;
                 case "PROVIDER":
-                    response = userAuthService.registerUser(createUser, RoleEnum.PROVIDER);
+                    response = userAuthFacade.registerUser(createUser, RoleEnum.PROVIDER);
                     break;
                 default:
                     return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null); // Rol no válido

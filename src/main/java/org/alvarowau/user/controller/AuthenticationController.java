@@ -4,7 +4,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.alvarowau.user.model.dto.AuthLoginRequest;
 import org.alvarowau.user.model.dto.LoginResponse;
-import org.alvarowau.user.service.UserAuthService;
+import org.alvarowau.user.service.UserAuthFacade;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class AuthenticationController {
 
-    private final UserAuthService userDetailsService;
+    private final UserAuthFacade userDetailsService;
 
     /**
      * Endpoint for user login.

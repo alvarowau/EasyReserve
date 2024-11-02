@@ -2,7 +2,7 @@ package org.alvarowau.user.config;
 
 import org.alvarowau.user.config.security.filter.JwtAuthenticationFilter;
 import org.alvarowau.user.config.security.JwtTokenProvider;
-import org.alvarowau.user.service.UserAuthService;
+import org.alvarowau.user.service.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -33,8 +33,8 @@ public class UserSecurityConfig {
         return httpSecurity
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(http -> {
-                    http.requestMatchers("/user/**","/test/public-data", "/auth/**").permitAll(); // Público sin autenticación
-                    http.requestMatchers("/test/**").authenticated(); // Rutas que requieren autenticación
+                    http.requestMatchers("/user/public-data", "/auth/**","/user/**","/test/public-data").permitAll(); // Público sin autenticación
+                    http.requestMatchers("/test/**", "/deactivate/**").authenticated(); // Rutas que requieren autenticación
                 })
                 .httpBasic(Customizer.withDefaults())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -48,7 +48,7 @@ public class UserSecurityConfig {
     }
 
     @Bean
-    public AuthenticationProvider authenticationProvider(UserAuthService service) {
+    public AuthenticationProvider authenticationProvider(CustomUserDetailsService service) {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         provider.setUserDetailsService(service);
         provider.setPasswordEncoder(passwordEncoder());

@@ -15,10 +15,16 @@ public class TestAuthController {
      *
      * @return A string message indicating access for ADMIN.
      */
-    @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping("/admin-data")
+    @PreAuthorize("hasRole('STAFF')")
+    @GetMapping("/staff-data")
     public String getAdminData() {
         return "Data visible solo para ADMIN";
+    }
+
+    @PreAuthorize("hasRole('PROVIDER')")
+    @GetMapping("/provider-data")
+    public String getProviderData() {
+        return "Data visible solo para provider";
     }
 
     /**
@@ -37,10 +43,10 @@ public class TestAuthController {
      *
      * @return A string message indicating access for ADMIN and CUSTOMER.
      */
-    @PreAuthorize("hasAnyRole('ADMIN', 'CUSTOMER')")
+    @PreAuthorize("hasAnyRole('STAFF', 'CUSTOMER')")
     @GetMapping("/common-data")
     public String getCommonData() {
-        return "Data visible para ADMIN y CUSTOMER";
+        return "Data visible para STAFF y CUSTOMER";
     }
 
     /**

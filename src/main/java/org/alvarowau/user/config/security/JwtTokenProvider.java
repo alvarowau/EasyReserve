@@ -6,6 +6,8 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.auth0.jwt.interfaces.JWTVerifier;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -104,5 +106,10 @@ public class JwtTokenProvider {
      */
     public Map<String, Claim> returnAllClaims(DecodedJWT decodedJWT) {
         return decodedJWT.getClaims();
+    }
+
+    public String getUsernameFromToken(String token) {
+        DecodedJWT decodedJWT = validateToken(token); // Valida y decodifica el token
+        return extractUsername(decodedJWT); // Extrae el nombre de usuario del token decodificado
     }
 }

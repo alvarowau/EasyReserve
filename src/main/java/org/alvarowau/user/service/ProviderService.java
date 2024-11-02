@@ -1,6 +1,6 @@
 package org.alvarowau.user.service;
 
-import lombok.RequiredArgsConstructor;
+import org.alvarowau.service.ActionLogService;
 import org.alvarowau.user.model.entity.Provider;
 import org.alvarowau.user.repository.ProviderRepository;
 import org.springframework.stereotype.Service;
@@ -8,10 +8,14 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
-public class ProviderService implements BaseUserService<Provider> {
+public class ProviderService extends AbstractBaseUserService<Provider> {
 
     private final ProviderRepository repository;
+
+    public ProviderService(ActionLogService actionLogService, ProviderRepository repository) {
+        super(actionLogService);
+        this.repository = repository;
+    }
 
 
     @Override
@@ -24,7 +28,11 @@ public class ProviderService implements BaseUserService<Provider> {
         return repository.findByEmail(email);
     }
 
-    public Provider save(Provider provider) {
-        return repository.save(provider);
+
+
+
+    @Override
+    protected Provider saveEntity(Provider entity) {
+        return repository.save(entity);
     }
 }
