@@ -27,7 +27,6 @@ public class HorarioTreatment {
 
         // Buscar la próxima fecha disponible
         LocalDate availableDate = dateManagementService.findNextAvailableDate(serviceSchedule.getDay());
-
         List<Appointment> appointments = new ArrayList<>();
 
         // Generar citas a partir de los TimeSlots
@@ -36,21 +35,27 @@ public class HorarioTreatment {
             LocalDateTime startTime = availableDate.atTime(timeSlot.getStartTime());
             LocalDateTime endTime = availableDate.atTime(timeSlot.getEndTime());
 
-            // Crear una nueva cita
-            Appointment appointment = new Appointment();
-            appointment.setStartTime(startTime);
-            appointment.setEndTime(endTime);
-            appointment.setAvailable(true);
-            appointment.setServiceName(serviceSchedule.getServiceOffering().getName()); // Asumiendo que hay un método para obtener el nombre del servicio
-            appointment.setTrackingNumber(generateTrackingNumber());
-            appointment.setDate(availableDate);
+            // Generar citas mientras haya tiempo disponible
+            while (startTime.plusMinutes(serviceSchedule.getServiceOffering().getDuration()).isBefore(endTime) ||
+                    startTime.plusMinutes(serviceSchedule.getServiceOffering().getDuration()).isEqual(endTime)) {
+                // Crear una nueva cita
+                Appointment appointment = new Appointment();
+                appointment.setStartTime(startTime);
+                appointment.setEndTime(startTime.plusMinutes(serviceSchedule.getServiceOffering().getDuration()));
+                appointment.setAvailable(true);
+                appointment.setServiceName(serviceSchedule.getServiceOffering().getName());
+                appointment.setTrackingNumber(generateTrackingNumber());
+                appointment.setDate(availableDate);
 
-
-            appointments.add(appointment);
+                appointments.add(appointment);
+                // Mover al siguiente tiempo de inicio
+                startTime = startTime.plusMinutes(serviceSchedule.getServiceOffering().getDuration());
+            }
         }
 
         return appointments;
     }
+
 
 
     // Método para validar los TimeSlots
