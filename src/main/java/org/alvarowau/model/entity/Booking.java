@@ -26,5 +26,4 @@ public class Booking {
     private String status;
 
 
-
 }

@@ -28,5 +28,5 @@ public class ServiceSchedule {
     private ServiceOffering serviceOffering;
 
     @OneToMany(mappedBy = "serviceSchedule", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<TimeSlot> timeSlots; // Lista de intervalos de tiempo disponibles
+    private List<TimeSlot> timeSlots;
 }

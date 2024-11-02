@@ -21,7 +21,7 @@ public class ServiceOffering {
     private Long id;
 
     private String name;
-    private int duration; // Duración del servicio en minutos
+    private int duration;
 
     @ManyToOne
     @JoinColumn(name = "provider_id", nullable = false)

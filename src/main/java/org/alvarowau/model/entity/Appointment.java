@@ -21,17 +21,17 @@ public class Appointment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private LocalDateTime startTime; // Hora de inicio de la cita
-    private LocalDateTime endTime;   // Hora de fin de la cita
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
 
     private LocalDate date;
-    private boolean isAvailable = true; // Disponibilidad inicial
+    private boolean isAvailable = true;
 
     @ManyToOne
     @JoinColumn(name = "customer_id")
-    private Customer customer; // Cliente que reserva
+    private Customer customer;
 
-    private String serviceName; // Nombre del servicio
-    private String trackingNumber;   // Número de seguimiento
+    private String serviceName;
+    private String trackingNumber;
 }
 

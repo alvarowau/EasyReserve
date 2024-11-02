@@ -45,11 +45,11 @@ public class HorarioTreatment {
             appointment.setTrackingNumber(generateTrackingNumber());
             appointment.setDate(availableDate);
 
-            // Agregar a la lista de citas
+
             appointments.add(appointment);
         }
 
-        return appointments; // Retornar la lista de citas generadas
+        return appointments;
     }
 
 
@@ -93,6 +93,6 @@ public class HorarioTreatment {
 
     // Método para generar un número de seguimiento único
     private String generateTrackingNumber() {
-        return UUID.randomUUID().toString(); // Ejemplo de generación de un número de seguimiento único
+        return UUID.randomUUID().toString();
     }
 }

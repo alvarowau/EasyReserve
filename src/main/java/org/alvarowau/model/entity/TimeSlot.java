@@ -19,12 +19,12 @@ public class TimeSlot {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private LocalTime startTime; // Hora de inicio
-    private LocalTime endTime; // Hora de fin
+    private LocalTime startTime;
+    private LocalTime endTime;
 
     @ManyToOne
     @JoinColumn(name = "schedule_id", nullable = false)
-    private ServiceSchedule serviceSchedule; // Horario al que pertenece
+    private ServiceSchedule serviceSchedule;
 
-    private boolean isAvailable = true; // Disponibilidad inicial
+    private boolean isAvailable = true;
 }

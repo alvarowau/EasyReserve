@@ -23,13 +23,13 @@ public class ActionLog {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private ActionType actionType;  // Cambiado de 'action' a 'actionType'
+    private ActionType actionType;
 
     @Column(nullable = false)
-    private Long userId;            // Cambiado de 'username' a 'userId'
+    private Long userId;
 
     @Column(nullable = false)
-    private Long affectedUserId;      // Cambiado de 'targetUsername' a 'targetUserId'
+    private Long affectedUserId;
 
     @Column(nullable = false)
     private String reason;

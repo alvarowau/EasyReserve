@@ -31,8 +31,6 @@ public class DateManagementService {
     }
 
     private boolean hasAppointmentsInRange(LocalDate date) {
-        // Aquí implementamos la lógica para verificar si hay citas en la base de datos para esa fecha
-        // Puedes utilizar un método en AppointmentRepository para realizar la consulta.
-        return appointmentRepository.existsByDate(date); // Suponiendo que existe un método en el repositorio
+        return appointmentRepository.existsByDate(date);
     }
 }
