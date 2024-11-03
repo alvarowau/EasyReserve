@@ -2,6 +2,9 @@ package org.alvarowau.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.alvarowau.model.dto.booking.BookingRequestId;
+import org.alvarowau.model.dto.booking.BookingRequestTrackingNumber;
+import org.alvarowau.model.dto.booking.BookingResponseCreate;
 import org.alvarowau.model.dto.serviceoffering.ServiceOfferingRequest;
 import org.alvarowau.model.dto.serviceoffering.ServiceOfferingResponse;
 import org.alvarowau.model.dto.serviceoffering.appointment.AppointmentResponse;
@@ -19,7 +22,7 @@ public class AppointmentFacade {
 
     private final ServiceOfferingService serviceOfferingService;
     private final ServiceScheduleService serviceScheduleService;
-
+    private final BookingService bookingService;
     private final AppointmentService appointmentService;
 
     // Método para crear un nuevo Service Offering
@@ -50,5 +53,24 @@ public class AppointmentFacade {
 
     public List<AppointmentResponse> getAvailableAppointmentsByDateRange(LocalDate startDate, LocalDate endDate) {
         return appointmentService.getAvailableAppointmentsByDateRange(startDate,endDate);
+    }
+
+    public boolean isAppointmentAvailableByTrackingNumber(String trackingNumber) {
+        return appointmentService.isAppointmentAvailableByTrackingNumber(trackingNumber);
+    }
+
+    public boolean isAppointmentAvailableById(Long id) {
+        return appointmentService.isAppointmentAvailableById(id);
+    }
+
+
+
+
+    public BookingResponseCreate createBookingByTrackingNumberAppointment(BookingRequestTrackingNumber bookingRequestTrackingNumber){
+        return bookingService.createBookingByTrackingNumberAppointment(bookingRequestTrackingNumber);
+    }
+
+    public BookingResponseCreate createBookingByIdAppointment(BookingRequestId bookingRequestId){
+        return bookingService.createBookingByIdAppointment(bookingRequestId);
     }
 }

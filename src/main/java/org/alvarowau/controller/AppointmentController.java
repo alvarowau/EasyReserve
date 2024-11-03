@@ -16,6 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 public class AppointmentController {
+
     private final AppointmentFacade appointmentFacade;
 
     @PreAuthorize("hasAnyRole('STAFF', 'CUSTOMER', 'PROVIDER')")
@@ -44,4 +45,20 @@ public class AppointmentController {
             @RequestParam LocalDate endDate) {
         return ResponseEntity.ok(appointmentFacade.getAvailableAppointmentsByDateRange(startDate, endDate));
     }
+
+    @PreAuthorize("hasAnyRole('STAFF', 'CUSTOMER', 'PROVIDER')")
+    @GetMapping("/available/by-tracking-number/{trackingNumber}")
+    public ResponseEntity<Boolean> isAppointmentAvailableByTrackingNumber(@PathVariable String trackingNumber) {
+        boolean isAvailable = appointmentFacade.isAppointmentAvailableByTrackingNumber(trackingNumber);
+        return ResponseEntity.ok(isAvailable);
+    }
+
+    @PreAuthorize("hasAnyRole('STAFF', 'CUSTOMER', 'PROVIDER')")
+    @GetMapping("/available/by-id/{id}")
+    public ResponseEntity<Boolean> isAppointmentAvailableById(@PathVariable Long id) {
+        boolean isAvailable = appointmentFacade.isAppointmentAvailableById(id);
+        return ResponseEntity.ok(isAvailable);
+    }
+
+
 }

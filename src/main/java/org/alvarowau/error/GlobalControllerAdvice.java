@@ -7,6 +7,10 @@ import org.alvarowau.exception.user.InvalidRoleException;
 import org.alvarowau.exception.user.PasswordsDoNotMatchException;
 import org.alvarowau.exception.user.AuthenticationFailedException;
 import org.alvarowau.exception.user.UserProviderNotFoundException;
+import org.alvarowau.exception.schedule.OverlappingTimeSlotsException;
+import org.alvarowau.exception.schedule.AppointmentNotFoundException;
+import org.alvarowau.exception.user.CustomerNotFoundException;
+import org.alvarowau.exception.user.InvalidCustomerException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.server.ResponseStatusException;
@@ -42,6 +46,34 @@ public class GlobalControllerAdvice extends ResponseEntityExceptionHandler {
     public ResponseEntity<ApiError> handleServiceOfferingNotFoundException(ServiceOfferingNotFoundException ex) {
         log.error("Service Offering Not Found: {}", ex.getMessage());
         return getApiErrorResponseEntity(ex.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(OverlappingTimeSlotsException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ResponseEntity<ApiError> handleOverlappingTimeSlotsException(OverlappingTimeSlotsException ex) {
+        log.error("Overlapping Time Slots: {}", ex.getMessage());
+        return getApiErrorResponseEntity(ex.getMessage(), HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(AppointmentNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ResponseEntity<ApiError> handleAppointmentNotFoundException(AppointmentNotFoundException ex) {
+        log.error("Appointment Not Found: {}", ex.getMessage());
+        return getApiErrorResponseEntity(ex.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(CustomerNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ResponseEntity<ApiError> handleCustomerNotFoundException(CustomerNotFoundException ex) {
+        log.error("Customer Not Found: {}", ex.getMessage());
+        return getApiErrorResponseEntity(ex.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(InvalidCustomerException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public ResponseEntity<ApiError> handleInvalidCustomerException(InvalidCustomerException ex) {
+        log.error("Invalid Customer: {}", ex.getMessage());
+        return getApiErrorResponseEntity(ex.getMessage(), HttpStatus.FORBIDDEN);
     }
 
     @ExceptionHandler(Exception.class)

@@ -36,7 +36,7 @@ public class UserSecurityConfig {
                 .authorizeHttpRequests(http -> {
                     http.requestMatchers("/user/public-data", "/auth/**","/user/**","/test/public-data").permitAll(); // Público sin autenticación
                     http.requestMatchers("/test/**", "/deactivate/**", "/services/**" , "/schedule/**",
-                            "/appointments/**").authenticated(); // Rutas que requieren autenticación
+                            "/appointments/**","/bookings/**").authenticated(); // Rutas que requieren autenticación
                 })
                 .httpBasic(Customizer.withDefaults())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

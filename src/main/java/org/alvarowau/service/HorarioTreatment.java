@@ -5,19 +5,25 @@ import org.alvarowau.exception.schedule.OverlappingTimeSlotsException;
 import org.alvarowau.model.entity.Appointment;
 import org.alvarowau.model.entity.ServiceSchedule;
 import org.alvarowau.model.entity.TimeSlot;
+import org.alvarowau.model.entity.TrackingNumber;
+import org.alvarowau.repository.AppointmentRepository;
+import org.alvarowau.repository.TrackingNumberRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
 @RequiredArgsConstructor
 public class HorarioTreatment {
 
     private final DateManagementService dateManagementService; // Inyección de DateManagementService
+    private final TrackingNumberService trackingNumberService;
 
     public List<Appointment> generateAvailableAppointments(ServiceSchedule serviceSchedule) {
         List<TimeSlot> timeSlots = serviceSchedule.getTimeSlots();
@@ -36,7 +42,7 @@ public class HorarioTreatment {
                 appointment.setStartTime(startTime);
                 appointment.setEndTime(startTime.plusMinutes(serviceSchedule.getServiceOffering().getDuration()));
                 appointment.setAvailable(true);
-                appointment.setTrackingNumber(generateTrackingNumber());
+                appointment.setTrackingNumber(trackingNumberService.generateTrackingNumber(availableDate));
                 appointment.setDate(availableDate);
                 appointment.setServiceSchedule(serviceSchedule);
 
@@ -84,8 +90,7 @@ public class HorarioTreatment {
         return first.getStartTime().isBefore(second.getEndTime()) && second.getStartTime().isBefore(first.getEndTime());
     }
 
-    // Método para generar un número de seguimiento único
-    private String generateTrackingNumber() {
-        return UUID.randomUUID().toString();
-    }
+
+
+
 }

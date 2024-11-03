@@ -7,8 +7,9 @@ import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
-public interface AppointmentRepository extends JpaRepository<Appointment, Integer> {
+public interface AppointmentRepository extends JpaRepository<Appointment, Long> {
     @Query("SELECT COUNT(a) > 0 FROM Appointment a WHERE a.date = :date")
     boolean existsByDate(@Param("date") LocalDate date);
 
@@ -23,4 +24,8 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Intege
     @Query("SELECT a FROM Appointment a WHERE a.isAvailable = true AND a.date BETWEEN :startDate AND :endDate")
     List<Appointment> findByIsAvailableTrueAndDateBetween(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
 
+    boolean existsByTrackingNumberAndIsAvailableTrue(String trackingNumber);
+    boolean existsByIdAndIsAvailableTrue(Long id);
+
+    Optional<Appointment> findByTrackingNumber(String trackingNumber);
 }

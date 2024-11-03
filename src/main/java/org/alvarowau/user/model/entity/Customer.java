@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.alvarowau.model.entity.Appointment;
+import org.alvarowau.model.entity.Booking;
 import org.alvarowau.user.model.entity.enums.RoleEnum;
 import org.alvarowau.user.model.value.UserProfile;
 
@@ -21,8 +22,9 @@ import java.util.List;
 @Setter
 public class Customer extends UserEntity {
 
+
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
-    private List<Appointment> appointments = new ArrayList<>();
+    private List<Booking> bookings = new ArrayList<>();
 
     public Customer(String username, String password, String email, UserProfile userProfile) {
         super(username, password, RoleEnum.CUSTOMER, email, userProfile);

@@ -26,12 +26,10 @@ public class Appointment {
     private boolean isAvailable = true;
 
     @ManyToOne
-    @JoinColumn(name = "customer_id")
-    private Customer customer;
-
-    @ManyToOne
     @JoinColumn(name = "schedule_id", nullable = false)
     private ServiceSchedule serviceSchedule;
+
+    @Column(unique = true, nullable = false)
     private String trackingNumber;
 }
 
