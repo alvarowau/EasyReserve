@@ -16,7 +16,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
 @Builder
-@ToString
 public class ActionLog {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

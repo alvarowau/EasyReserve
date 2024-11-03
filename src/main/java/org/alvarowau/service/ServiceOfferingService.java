@@ -26,7 +26,6 @@ public class ServiceOfferingService {
     private final SecurityContextUtil securityContextUtil;
 
     public ServiceOfferingResponse createServiceOffering(ServiceOfferingRequest request) {
-        log.info("Iniciando la creación de un nuevo ServiceOffering con nombre: {}", request.name());
         ServiceOffering serviceOffering = mapper.toEntity(request);
 
         String authenticatedUsername = securityContextUtil.getAuthenticatedUsername();
@@ -42,7 +41,7 @@ public class ServiceOfferingService {
             log.info("ServiceOffering guardado con Provider: {}", serviceOffering);
         } catch (Exception e) {
             log.error("Error al guardar ServiceOffering: {}", e.getMessage());
-            throw new org.alvarowau.exception.horarios.ServiceOfferingSaveException("No se pudo guardar el ServiceOffering.", e);
+            throw new org.alvarowau.exception.schedule.ServiceOfferingSaveException("No se pudo guardar el ServiceOffering.", e);
         }
 
         return mapper.toResponse(serviceOffering);

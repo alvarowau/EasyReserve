@@ -3,22 +3,19 @@ package org.alvarowau.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.alvarowau.exception.horarios.EmptySlotListException;
-import org.alvarowau.exception.horarios.ServiceOfferingNotFoundException;
-import org.alvarowau.exception.horarios.TimeSlotMappingException;
+import org.alvarowau.exception.schedule.EmptySlotListException;
+import org.alvarowau.exception.schedule.ServiceOfferingNotFoundException;
+import org.alvarowau.exception.schedule.TimeSlotMappingException;
 import org.alvarowau.model.dto.mapper.MapperServiceSchedule;
 import org.alvarowau.model.dto.mapper.MapperTimeSlot;
 import org.alvarowau.model.dto.serviceoffering.serviceschedule.ServiceScheduleRequest;
 import org.alvarowau.model.dto.serviceoffering.serviceschedule.ServiceScheduleResponse;
-import org.alvarowau.model.dto.serviceoffering.timeslot.TimeSlotRequest;
-import org.alvarowau.model.entity.Appointment;
 import org.alvarowau.model.entity.ServiceOffering;
 import org.alvarowau.model.entity.ServiceSchedule;
 import org.alvarowau.model.entity.TimeSlot;
 import org.alvarowau.repository.ServiceScheduleRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -68,9 +65,7 @@ public class ServiceScheduleService {
 
             serviceSchedule.setTimeSlots(timeSlots);
             serviceSchedule.setAppointments(horarioTreatment.generateAvailableAppointments(serviceSchedule));
-            return mapperServiceSchedule.toResponse(serviceSchedule);
-
-            //return mapperServiceSchedule.toResponse(serviceScheduleRepository.save(serviceSchedule));
+            return mapperServiceSchedule.toResponse(serviceScheduleRepository.save(serviceSchedule));
 
         } catch (Exception e) {
             log.error("Error durante la creación del ServiceSchedule: {}", e.getMessage());

@@ -3,15 +3,12 @@ package org.alvarowau.model.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalTime;
-
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Builder
-@ToString
 public class Booking {
 
     @Id

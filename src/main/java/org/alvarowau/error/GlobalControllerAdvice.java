@@ -2,7 +2,7 @@ package org.alvarowau.error;
 
 import lombok.extern.slf4j.Slf4j;
 import org.alvarowau.error.model.ApiError;
-import org.alvarowau.exception.horarios.ServiceOfferingNotFoundException;
+import org.alvarowau.exception.schedule.ServiceOfferingNotFoundException;
 import org.alvarowau.exception.user.InvalidRoleException;
 import org.alvarowau.exception.user.PasswordsDoNotMatchException;
 import org.alvarowau.exception.user.AuthenticationFailedException;

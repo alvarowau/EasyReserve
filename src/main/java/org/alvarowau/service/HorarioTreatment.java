@@ -1,7 +1,7 @@
 package org.alvarowau.service;
 
 import lombok.RequiredArgsConstructor;
-import org.alvarowau.exception.horarios.OverlappingTimeSlotsException;
+import org.alvarowau.exception.schedule.OverlappingTimeSlotsException;
 import org.alvarowau.model.entity.Appointment;
 import org.alvarowau.model.entity.ServiceSchedule;
 import org.alvarowau.model.entity.TimeSlot;

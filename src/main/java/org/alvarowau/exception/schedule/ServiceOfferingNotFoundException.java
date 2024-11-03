@@ -1,4 +1,4 @@
-package org.alvarowau.exception.horarios;
+package org.alvarowau.exception.schedule;
 
 public class ServiceOfferingNotFoundException extends RuntimeException {
     public ServiceOfferingNotFoundException(String message) {

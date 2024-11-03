@@ -1,6 +1,5 @@
 package org.alvarowau.model.entity;
 
-import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalTime;
@@ -10,7 +9,6 @@ import java.time.LocalTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@ToString
 public class TimeSlot {
     private LocalTime startTime;
     private LocalTime endTime;
