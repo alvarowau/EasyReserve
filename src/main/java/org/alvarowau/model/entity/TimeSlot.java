@@ -9,20 +9,10 @@ import java.time.LocalTime;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
 @Builder
+@ToString
 public class TimeSlot {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
     private LocalTime startTime;
     private LocalTime endTime;
-
-    @ManyToOne
-    @JoinColumn(name = "schedule_id", nullable = false)
-    private ServiceSchedule serviceSchedule;
-
     private boolean isAvailable = true;
 }

@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.alvarowau.model.dto.serviceoffering.ServiceOfferingRequest;
 import org.alvarowau.model.dto.serviceoffering.ServiceOfferingResponse;
+import org.alvarowau.model.dto.serviceoffering.serviceschedule.ServiceScheduleRequest;
+import org.alvarowau.model.dto.serviceoffering.serviceschedule.ServiceScheduleResponse;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -11,19 +13,19 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class AppointmentFacade {
 
-    private final OfferingService offeringService;
-
+    private final ServiceOfferingService serviceOfferingService;
+    private final ServiceScheduleService serviceScheduleService;
 
 
     // Método para crear un nuevo Service Offering
     public ServiceOfferingResponse createServiceOffering(ServiceOfferingRequest request) {
-        return offeringService.createServiceOffering(request);
+        return serviceOfferingService.createServiceOffering(request);
     }
 
-//    // Método para crear un nuevo Service Schedule
-//    public ServiceSchedule createServiceSchedule(@Valid ServiceScheduleRequest request) {
-//        return null;
-//    }
+    // Método para crear un nuevo Service Schedule
+    public ServiceScheduleResponse createServiceSchedule(ServiceScheduleRequest request) {
+        return serviceScheduleService.createServiceSchedule(request);
+    }
 //
 //    // Método para crear un nuevo Time Slot
 //    public TimeSlot createTimeSlot(Long scheduleId, LocalTime startTime, LocalTime endTime) {

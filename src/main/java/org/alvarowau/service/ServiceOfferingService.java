@@ -18,7 +18,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class OfferingService {
+public class ServiceOfferingService {
 
     private final ServiceOfferingRepository serviceOfferingRepository;
     private final MapperServiceOffering mapper;
@@ -46,5 +46,9 @@ public class OfferingService {
         }
 
         return mapper.toResponse(serviceOffering);
+    }
+
+    public Optional<ServiceOffering> getServiceOfferingByUsername(String name) {
+        return serviceOfferingRepository.findByName(name);
     }
 }

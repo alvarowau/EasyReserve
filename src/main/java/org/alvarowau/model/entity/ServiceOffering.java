@@ -13,6 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Builder
+@ToString
 public class ServiceOffering {
 
     @Id

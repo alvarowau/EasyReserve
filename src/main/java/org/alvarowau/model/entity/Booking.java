@@ -11,6 +11,7 @@ import java.time.LocalTime;
 @NoArgsConstructor
 @Entity
 @Builder
+@ToString
 public class Booking {
 
     @Id

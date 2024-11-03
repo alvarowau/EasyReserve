@@ -36,9 +36,9 @@ public class HorarioTreatment {
                 appointment.setStartTime(startTime);
                 appointment.setEndTime(startTime.plusMinutes(serviceSchedule.getServiceOffering().getDuration()));
                 appointment.setAvailable(true);
-                appointment.setServiceName(serviceSchedule.getServiceOffering().getName());
                 appointment.setTrackingNumber(generateTrackingNumber());
                 appointment.setDate(availableDate);
+                appointment.setServiceSchedule(serviceSchedule);
 
                 appointments.add(appointment);
                 startTime = startTime.plusMinutes(serviceSchedule.getServiceOffering().getDuration());

@@ -35,7 +35,7 @@ public class UserSecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(http -> {
                     http.requestMatchers("/user/public-data", "/auth/**","/user/**","/test/public-data").permitAll(); // Público sin autenticación
-                    http.requestMatchers("/test/**", "/deactivate/**", "/services/**").authenticated(); // Rutas que requieren autenticación
+                    http.requestMatchers("/test/**", "/deactivate/**", "/services/**" , "/schedule/**").authenticated(); // Rutas que requieren autenticación
                 })
                 .httpBasic(Customizer.withDefaults())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

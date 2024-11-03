@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Entity
 @Builder
+@ToString
 public class Appointment {
 
     @Id
@@ -29,7 +30,9 @@ public class Appointment {
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    private String serviceName;
+    @ManyToOne
+    @JoinColumn(name = "schedule_id", nullable = false)
+    private ServiceSchedule serviceSchedule;
     private String trackingNumber;
 }
 

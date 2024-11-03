@@ -2,6 +2,7 @@ package org.alvarowau.error;
 
 import lombok.extern.slf4j.Slf4j;
 import org.alvarowau.error.model.ApiError;
+import org.alvarowau.exception.horarios.ServiceOfferingNotFoundException;
 import org.alvarowau.exception.user.InvalidRoleException;
 import org.alvarowau.exception.user.PasswordsDoNotMatchException;
 import org.alvarowau.exception.user.AuthenticationFailedException;
@@ -21,7 +22,6 @@ import java.time.LocalDateTime;
 @RestControllerAdvice
 public class GlobalControllerAdvice extends ResponseEntityExceptionHandler {
 
-    // Manejo de excepciones de rol no válido, contraseñas que no coinciden, etc.
     @ExceptionHandler({PasswordsDoNotMatchException.class, InvalidRoleException.class,
             AuthenticationFailedException.class, ResponseStatusException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -30,7 +30,6 @@ public class GlobalControllerAdvice extends ResponseEntityExceptionHandler {
         return getApiErrorResponseEntity(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
-    // Manejo de la excepción UserProviderNotFoundException
     @ExceptionHandler(UserProviderNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ResponseEntity<ApiError> handleUserProviderNotFoundException(UserProviderNotFoundException ex) {
@@ -38,7 +37,13 @@ public class GlobalControllerAdvice extends ResponseEntityExceptionHandler {
         return getApiErrorResponseEntity(ex.getMessage(), HttpStatus.NOT_FOUND);
     }
 
-    // Manejo de excepciones generales
+    @ExceptionHandler(ServiceOfferingNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ResponseEntity<ApiError> handleServiceOfferingNotFoundException(ServiceOfferingNotFoundException ex) {
+        log.error("Service Offering Not Found: {}", ex.getMessage());
+        return getApiErrorResponseEntity(ex.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ResponseEntity<ApiError> handleGeneralException(Exception ex) {
@@ -46,7 +51,6 @@ public class GlobalControllerAdvice extends ResponseEntityExceptionHandler {
         return getApiErrorResponseEntity("Error interno del servidor.", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    // Manejo de excepciones de autorización denegada
     @ExceptionHandler(AuthorizationDeniedException.class)
     @ResponseStatus(HttpStatus.FORBIDDEN)
     public ResponseEntity<ApiError> handleAuthorizationDenied(AuthorizationDeniedException ex) {

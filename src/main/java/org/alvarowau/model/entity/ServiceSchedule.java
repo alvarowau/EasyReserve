@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.DayOfWeek;
-import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -13,6 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Builder
+@ToString
 public class ServiceSchedule {
 
     @Id
@@ -21,10 +22,14 @@ public class ServiceSchedule {
 
     @Enumerated(EnumType.STRING)
     private DayOfWeek day;
+
     @ManyToOne
     @JoinColumn(name = "service_id", nullable = false)
     private ServiceOffering serviceOffering;
 
+    @Transient
+    private List<TimeSlot> timeSlots = new ArrayList<>(); // Solo para lógica
+
     @OneToMany(mappedBy = "serviceSchedule", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<TimeSlot> timeSlots;
+    private List<Appointment> appointments = new ArrayList<>();
 }
