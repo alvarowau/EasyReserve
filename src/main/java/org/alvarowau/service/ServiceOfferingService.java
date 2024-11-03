@@ -13,6 +13,7 @@ import org.alvarowau.user.model.entity.Provider;
 import org.alvarowau.user.service.ProviderService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -45,6 +46,11 @@ public class ServiceOfferingService {
         }
 
         return mapper.toResponse(serviceOffering);
+    }
+
+    public List<ServiceOfferingResponse> searchServiceOfferingByUsernameProvider(String username) {
+        List<ServiceOffering> serviceOfferingList = serviceOfferingRepository.findByProvider_Username(username);
+        return serviceOfferingList.stream().map(mapper::toResponse).toList();
     }
 
     public Optional<ServiceOffering> getServiceOfferingByUsername(String name) {

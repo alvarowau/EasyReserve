@@ -4,9 +4,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.alvarowau.model.dto.serviceoffering.ServiceOfferingRequest;
 import org.alvarowau.model.dto.serviceoffering.ServiceOfferingResponse;
+import org.alvarowau.model.dto.serviceoffering.appointment.AppointmentResponse;
 import org.alvarowau.model.dto.serviceoffering.serviceschedule.ServiceScheduleRequest;
 import org.alvarowau.model.dto.serviceoffering.serviceschedule.ServiceScheduleResponse;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -16,6 +20,7 @@ public class AppointmentFacade {
     private final ServiceOfferingService serviceOfferingService;
     private final ServiceScheduleService serviceScheduleService;
 
+    private final AppointmentService appointmentService;
 
     // Método para crear un nuevo Service Offering
     public ServiceOfferingResponse createServiceOffering(ServiceOfferingRequest request) {
@@ -26,26 +31,24 @@ public class AppointmentFacade {
     public ServiceScheduleResponse createServiceSchedule(ServiceScheduleRequest request) {
         return serviceScheduleService.createServiceSchedule(request);
     }
-//
-//    // Método para crear un nuevo Time Slot
-//    public TimeSlot createTimeSlot(Long scheduleId, LocalTime startTime, LocalTime endTime) {
-//        return null;
-//    }
-//
-//    // Método para crear una nueva cita
-//    public Appointment createAppointment(@Valid AppointmentRequest request) {
-//        return null;
-//    }
-//
-//    // Puedes agregar más métodos según sea necesario para obtener, actualizar y eliminar servicios y citas
-//    public List<Appointment> getAllAppointments() {
-//        return null;
-//    }
-//
-//    public Appointment getAppointmentById(Long id) {
-//        return null;
-//    }
-//
-//    public void cancelAppointment(Long id) {
-//    }
+
+    public List<ServiceOfferingResponse> searchServiceOfferingByUsernameProvider(String username){
+        return serviceOfferingService.searchServiceOfferingByUsernameProvider(username);
+    }
+
+    public List<AppointmentResponse> getAvailableAppointmentsByProviderUsername(String username){
+        return appointmentService.getAvailableAppointmentsByProviderUsername(username);
+    }
+
+    public List<AppointmentResponse> getAvailableAppointmentsByServiceOfferingName(String serviceOfferingName){
+        return appointmentService.getAvailableAppointmentsByServiceOfferingName(serviceOfferingName);
+    }
+
+    public List<AppointmentResponse> getAvailableAppointmentsByDate(LocalDate date){
+        return appointmentService.getAvailableAppointmentsByDate(date);
+    }
+
+    public List<AppointmentResponse> getAvailableAppointmentsByDateRange(LocalDate startDate, LocalDate endDate) {
+        return appointmentService.getAvailableAppointmentsByDateRange(startDate,endDate);
+    }
 }
