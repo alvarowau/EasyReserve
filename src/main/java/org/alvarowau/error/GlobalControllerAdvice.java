@@ -11,6 +11,7 @@ import org.alvarowau.exception.schedule.OverlappingTimeSlotsException;
 import org.alvarowau.exception.schedule.AppointmentNotFoundException;
 import org.alvarowau.exception.user.CustomerNotFoundException;
 import org.alvarowau.exception.user.InvalidCustomerException;
+import org.alvarowau.exception.schedule.CustomConcurrencyException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.server.ResponseStatusException;
@@ -74,6 +75,13 @@ public class GlobalControllerAdvice extends ResponseEntityExceptionHandler {
     public ResponseEntity<ApiError> handleInvalidCustomerException(InvalidCustomerException ex) {
         log.error("Invalid Customer: {}", ex.getMessage());
         return getApiErrorResponseEntity(ex.getMessage(), HttpStatus.FORBIDDEN);
+    }
+
+    @ExceptionHandler(CustomConcurrencyException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ResponseEntity<ApiError> handleCustomConcurrencyException(CustomConcurrencyException ex) {
+        log.error("Concurrency Conflict: {}", ex.getMessage());
+        return getApiErrorResponseEntity("Concurrency conflict occurred: " + ex.getMessage(), HttpStatus.CONFLICT);
     }
 
     @ExceptionHandler(Exception.class)

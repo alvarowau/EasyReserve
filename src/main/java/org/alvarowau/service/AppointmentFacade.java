@@ -2,9 +2,8 @@ package org.alvarowau.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.alvarowau.model.dto.booking.BookingRequestId;
-import org.alvarowau.model.dto.booking.BookingRequestTrackingNumber;
-import org.alvarowau.model.dto.booking.BookingResponseCreate;
+import org.alvarowau.model.dto.BookingHistoryResponse;
+import org.alvarowau.model.dto.booking.*;
 import org.alvarowau.model.dto.serviceoffering.ServiceOfferingRequest;
 import org.alvarowau.model.dto.serviceoffering.ServiceOfferingResponse;
 import org.alvarowau.model.dto.serviceoffering.appointment.AppointmentResponse;
@@ -72,5 +71,17 @@ public class AppointmentFacade {
 
     public BookingResponseCreate createBookingByIdAppointment(BookingRequestId bookingRequestId){
         return bookingService.createBookingByIdAppointment(bookingRequestId);
+    }
+
+    public BookingCancellationResponse cancelBookingByUser(CancelBookingRequest request) {
+        return bookingService.cancelBookingByUser(request);
+    }
+
+    public BookingCancellationResponse cancelBookingByStaff(CancelBookingRequest request) {
+        return bookingService.cancelBookingByStaff(request);
+    }
+
+    public List<BookingHistoryResponse> getBookingHistory() {
+        return bookingService.getBookingHistory();
     }
 }

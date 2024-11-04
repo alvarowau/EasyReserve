@@ -76,4 +76,9 @@ public class AppointmentService {
         return appointmentRepository.save(appointment);
     }
 
+    public Appointment restoreAppointmentAvailability(Appointment appointment) {
+        appointment.setAvailable(true);
+        return appointmentRepository.save(appointment);
+    }
+
 }

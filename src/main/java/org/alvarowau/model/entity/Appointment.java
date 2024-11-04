@@ -31,5 +31,8 @@ public class Appointment {
 
     @Column(unique = true, nullable = false)
     private String trackingNumber;
+
+    @Version
+    private Integer version;
 }
 

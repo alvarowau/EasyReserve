@@ -11,7 +11,8 @@ public enum ActionType {
     PASSWORD_CHANGE("Cambio de Contraseña"),
     ROLE_CHANGE("Cambio de Rol"),
     ACCOUNT_LOCK("Bloquear Cuenta"),
-    ACCOUNT_UNLOCK("Desbloquear Cuenta");
+    ACCOUNT_UNLOCK("Desbloquear Cuenta"),
+    CANCEL_BOOKING("Cancelar Reserva");;
 
     private final String description;
 
