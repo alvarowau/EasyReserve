@@ -2,8 +2,10 @@ package org.alvarowau.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.alvarowau.model.dto.BookingHistoryResponse;
+import org.alvarowau.model.dto.booking.BookingHistoryResponse;
 import org.alvarowau.model.dto.booking.*;
+import org.alvarowau.model.dto.feedback.FeedbackRequest;
+import org.alvarowau.model.dto.feedback.FeedbackResponse;
 import org.alvarowau.model.dto.serviceoffering.ServiceOfferingRequest;
 import org.alvarowau.model.dto.serviceoffering.ServiceOfferingResponse;
 import org.alvarowau.model.dto.serviceoffering.appointment.AppointmentResponse;
@@ -23,6 +25,7 @@ public class AppointmentFacade {
     private final ServiceScheduleService serviceScheduleService;
     private final BookingService bookingService;
     private final AppointmentService appointmentService;
+    private final FeedbackService feedbackService;
 
     // Método para crear un nuevo Service Offering
     public ServiceOfferingResponse createServiceOffering(ServiceOfferingRequest request) {
@@ -62,9 +65,6 @@ public class AppointmentFacade {
         return appointmentService.isAppointmentAvailableById(id);
     }
 
-
-
-
     public BookingResponseCreate createBookingByTrackingNumberAppointment(BookingRequestTrackingNumber bookingRequestTrackingNumber){
         return bookingService.createBookingByTrackingNumberAppointment(bookingRequestTrackingNumber);
     }
@@ -83,5 +83,13 @@ public class AppointmentFacade {
 
     public List<BookingHistoryResponse> getBookingHistory() {
         return bookingService.getBookingHistory();
+    }
+
+    public List<BookingHistoryResponse> getBookingHistory(LocalDate startDate, LocalDate endDate) {
+        return bookingService.getBookingHistory(startDate,endDate);
+    }
+
+    public FeedbackResponse submitFeedback(FeedbackRequest request) {
+        return feedbackService.submitFeedback(request);
     }
 }

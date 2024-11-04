@@ -31,4 +31,8 @@ public class ProviderService extends AbstractBaseUserService<Provider> {
     protected Provider saveEntity(Provider entity) {
         return repository.save(entity);
     }
+
+    public boolean existsRecords() {
+        return repository.count() > 0;
+    }
 }

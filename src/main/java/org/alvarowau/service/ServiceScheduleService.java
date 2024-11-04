@@ -38,8 +38,6 @@ public class ServiceScheduleService {
             log.error("La lista de slotRequestList está vacía.");
             throw new EmptySlotListException("La lista de slots no puede estar vacía.");
         }
-
-
         Optional<ServiceOffering> optionalServiceOffering = serviceOfferingService
                 .getServiceOfferingByUsername(request.nameServiceOffering());
 
@@ -51,7 +49,6 @@ public class ServiceScheduleService {
         ServiceSchedule serviceSchedule = mapperServiceSchedule.toEntity(request, offering);
 
         try {
-
             List<TimeSlot> timeSlots = request.slotRequestList().stream()
                     .map(slot -> {
                         try {

@@ -2,19 +2,17 @@ package org.alvarowau.service;
 
 import jakarta.persistence.OptimisticLockException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.alvarowau.config.utils.SecurityContextUtil;
+import org.alvarowau.exception.schedule.AppointmentNotFoundException;
 import org.alvarowau.exception.schedule.BookingNotFoundException;
 import org.alvarowau.exception.schedule.CustomConcurrencyException;
-import org.alvarowau.exception.schedule.AppointmentNotFoundException;
 import org.alvarowau.exception.user.CustomerNotFoundException;
-import org.alvarowau.exception.user.InvalidCustomerException;
 import org.alvarowau.exception.user.InvalidRoleException;
 import org.alvarowau.exception.user.StaffNotFoundException;
-import org.alvarowau.model.dto.BookingHistoryResponse;
 import org.alvarowau.model.dto.action.ActionLogDTO;
 import org.alvarowau.model.dto.booking.*;
 import org.alvarowau.model.dto.mapper.MapperBooking;
-import org.alvarowau.model.entity.ActionLog;
 import org.alvarowau.model.entity.Appointment;
 import org.alvarowau.model.entity.Booking;
 import org.alvarowau.model.enums.ActionType;
@@ -22,17 +20,21 @@ import org.alvarowau.model.enums.BookingStatus;
 import org.alvarowau.model.enums.OperationStatus;
 import org.alvarowau.repository.BookingRepository;
 import org.alvarowau.user.model.entity.Customer;
+import org.alvarowau.user.model.entity.Provider;
 import org.alvarowau.user.model.entity.Staff;
 import org.alvarowau.user.model.entity.enums.RoleEnum;
 import org.alvarowau.user.service.CustomerService;
+import org.alvarowau.user.service.ProviderService;
 import org.alvarowau.user.service.StaffService;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class BookingService {
 
     private final BookingRepository bookingRepository;
@@ -43,6 +45,7 @@ public class BookingService {
     private final SecurityContextUtil securityContextUtil;
     private final ActionLogService actionLogService;
     private final StaffService staffService;
+    private final ProviderService providerService;
 
     public BookingResponseCreate createBookingByTrackingNumberAppointment(BookingRequestTrackingNumber bookingRequestTrackingNumber) {
         try {
@@ -50,8 +53,6 @@ public class BookingService {
                     .orElseThrow(() -> new AppointmentNotFoundException("Appointment not found with tracking number: "
                             + bookingRequestTrackingNumber.trackingNumberAppointment()));
             Customer customer = getCustomer(bookingRequestTrackingNumber.usernameCustomer());
-
-            validateAuthenticatedUser(customer.getUsername());
 
             return createBooking(customer, appointment);
         } catch (OptimisticLockException e) {
@@ -66,7 +67,6 @@ public class BookingService {
                             + bookingRequestId.id()));
             Customer customer = getCustomer(bookingRequestId.usernameCustomer());
 
-            validateAuthenticatedUser(customer.getUsername());
 
             return createBooking(customer, appointment);
         } catch (OptimisticLockException e) {
@@ -78,12 +78,6 @@ public class BookingService {
         return customerService.findByUsername(usernameCustomer)
                 .orElseThrow(() -> new CustomerNotFoundException("Customer not found with username: "
                         + usernameCustomer));
-    }
-
-    private void validateAuthenticatedUser(String username) {
-        if (!securityContextUtil.getAuthenticatedUsername().equals(username)) {
-            throw new InvalidCustomerException("Customer username does not match the authenticated user.");
-        }
     }
 
     private BookingResponseCreate createBooking(Customer customer, Appointment appointment) {
@@ -103,7 +97,6 @@ public class BookingService {
     }
 
     public BookingCancellationResponse cancelBookingByUser(CancelBookingRequest request) {
-        validateAuthenticatedUser(request.usernameCustomer());
         return cancelBooking(request.bookingNumber(),
                 request.usernameCustomer(),
                 request.reason(),
@@ -111,7 +104,7 @@ public class BookingService {
     }
 
     public BookingCancellationResponse cancelBookingByStaff(CancelBookingRequest request) {
-        if(!securityContextUtil.getUserRole().equals(RoleEnum.STAFF.toString())) {
+        if (!securityContextUtil.getUserRole().equals(RoleEnum.STAFF.toString())) {
             throw new InvalidRoleException("User does not have permission to cancel bookings.");
         }
         return cancelBooking(request.bookingNumber(),
@@ -120,17 +113,17 @@ public class BookingService {
                 true);
     }
 
-    private BookingCancellationResponse cancelBooking(String bookingNumber, String customerUsername, String reason ,boolean isStaff  ) {
+    private BookingCancellationResponse cancelBooking(String bookingNumber, String customerUsername, String reason, boolean isStaff) {
         Booking booking = findByBookingNumber(bookingNumber);
         booking.setStatus(BookingStatus.CANCELED);
         Appointment appointment = booking.getAppointment();
         Customer customer = getCustomer(customerUsername);
         Long userId = null;
-        if(isStaff) {
+        if (isStaff) {
             Staff staff = staffService.findByUsername(securityContextUtil.getAuthenticatedUsername())
                     .orElseThrow(() -> new StaffNotFoundException("Staff not found with username: "));
             userId = staff.getId();
-        }else{
+        } else {
             userId = customer.getId();
         }
         ActionLogDTO action = new ActionLogDTO(
@@ -140,14 +133,18 @@ public class BookingService {
                 reason
         );
         booking = bookingRepository.save(booking);
-        if(booking.getStatus().equals(BookingStatus.CANCELED)) {
+        if (booking.getStatus().equals(BookingStatus.CANCELED)) {
             appointment = appointmentService.restoreAppointmentAvailability(appointment);
-            if(!appointment.isAvailable()){
+            if (appointment.isAvailable()) {
                 actionLogService.saveAction(action);
-                return createResponseCancellation(customerUsername,bookingNumber,reason,OperationStatus.SUCCESS);
+                return createResponseCancellation(customerUsername, bookingNumber, reason, OperationStatus.SUCCESS);
+            } else {
+                log.info("no cambia la apooint");
             }
+        } else {
+            log.info("no cambia el booking");
         }
-        return createResponseCancellation(customerUsername,bookingNumber,reason,OperationStatus.FAILURE);
+        return createResponseCancellation(customerUsername, bookingNumber, reason, OperationStatus.FAILURE);
 
     }
 
@@ -166,5 +163,25 @@ public class BookingService {
                         booking.getAppointment().getDate().toString(),
                         booking.getStatus()))
                 .collect(Collectors.toList());
+    }
+
+    public List<BookingHistoryResponse> getBookingHistory(LocalDate startDate, LocalDate endDate) {
+        String username = securityContextUtil.getAuthenticatedUsername();
+        Provider provider = providerService.findByUsername(username).orElseThrow();
+        List<Booking> bookings = bookingRepository.findAllByProviderAndDateRange(provider.getId(), startDate, endDate);
+        return bookings.stream()
+                .map(this::convertToBookingHistoryResponse).toList();
+    }
+
+    private BookingHistoryResponse convertToBookingHistoryResponse(Booking booking) {
+        return new BookingHistoryResponse(
+                booking.getBookingNumber(),
+                booking.getAppointment().getDate().toString(),
+                booking.getStatus()
+        );
+    }
+
+    public List<Booking> findAll(){
+        return bookingRepository.findAll();
     }
 }
