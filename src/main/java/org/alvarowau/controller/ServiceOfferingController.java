@@ -21,14 +21,16 @@ public class ServiceOfferingController {
     private final AppointmentFacade appointmentFacade;
 
     @PreAuthorize("hasRole('PROVIDER')")
-    @PostMapping("/create")
-    public ResponseEntity<ServiceOfferingResponse> createServiceOffering(@Valid @RequestBody ServiceOfferingRequest request){
-        return ResponseEntity.ok(appointmentFacade.createServiceOffering(request));
+    @PostMapping
+    public ResponseEntity<ServiceOfferingResponse> createServiceOffering(@Valid @RequestBody ServiceOfferingRequest request) {
+        ServiceOfferingResponse response = appointmentFacade.createServiceOffering(request);
+        return ResponseEntity.ok(response);
     }
 
     @PreAuthorize("hasAnyRole('STAFF', 'CUSTOMER', 'PROVIDER')")
-    @GetMapping("/search/{username}")
-    public ResponseEntity<List<ServiceOfferingResponse>> searchServiceOfferingByUsernameProvider(@PathVariable String username){
-        return ResponseEntity.ok(appointmentFacade.searchServiceOfferingByUsernameProvider(username));
+    @GetMapping("/provider/{username}")
+    public ResponseEntity<List<ServiceOfferingResponse>> getServiceOfferingsByProviderUsername(@PathVariable String username) {
+        List<ServiceOfferingResponse> services = appointmentFacade.searchServiceOfferingByUsernameProvider(username);
+        return ResponseEntity.ok(services);
     }
 }

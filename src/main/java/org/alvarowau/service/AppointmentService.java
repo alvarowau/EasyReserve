@@ -67,7 +67,7 @@ public class AppointmentService {
     public AppointmentResponse markAppointmentAsUnavailableByTrackingNumber(String trackingNumber) {
         Appointment appointment = appointmentRepository.findByTrackingNumber(trackingNumber)
                 .orElseThrow(() -> new AppointmentNotFoundException("Appointment not found with tracking number: " + trackingNumber));
-         return mapperAppointment.toResponse(setAppointmentUnavailable(appointment));
+        return mapperAppointment.toResponse(setAppointmentUnavailable(appointment));
 
     }
 

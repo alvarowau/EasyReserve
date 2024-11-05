@@ -1,6 +1,8 @@
 package org.alvarowau.user.service;
 
 import lombok.RequiredArgsConstructor;
+import org.alvarowau.config.utils.SecurityContextUtil;
+import org.alvarowau.exception.common.CustomException;
 import org.alvarowau.exception.user.StaffNotFoundException;
 import org.alvarowau.exception.user.UserNotFoundException;
 import org.alvarowau.model.dto.action.ActionLogRequestAccountStatusChange;
@@ -8,7 +10,6 @@ import org.alvarowau.model.dto.action.ActionLogResponseAccountStatusChange;
 import org.alvarowau.model.dto.action.UserAccountStatusChangeRequestByStaff;
 import org.alvarowau.model.enums.ActionType;
 import org.alvarowau.user.model.entity.BaseUser;
-import org.alvarowau.config.utils.SecurityContextUtil;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -23,20 +24,11 @@ public class UserManagementService {
     private final StaffService staffService;
     private final CustomUserDetailsService customUserDetailsService;
 
-
-    public ActionLogResponseAccountStatusChange deactivateCurrentUser(String token, ActionLogRequestAccountStatusChange requestDelete) {
-        // Obtén el nombre de usuario del contexto autenticado
+    public ActionLogResponseAccountStatusChange deactivateCurrentUser(ActionLogRequestAccountStatusChange requestDelete) {
         String authenticatedUsername = securityContextUtil.getAuthenticatedUserDetails().getUsername();
         String role = securityContextUtil.getUserRole();
-        String userNameToken = securityContextUtil.getUsernameToken(token.substring(7));
-
-        // Comparación con el nombre de usuario autenticado
-        if (userNameToken.equals(authenticatedUsername)) {
-            ActionLogResponseAccountStatusChange responseDelete = createActionLogResponseDelete(requestDelete, authenticatedUsername, authenticatedUsername);
-            return deactivateUser(responseDelete, role);
-        } else {
-            throw new UserNotFoundException(userNameToken);
-        }
+        ActionLogResponseAccountStatusChange responseDelete = createActionLogResponseDelete(requestDelete, authenticatedUsername, authenticatedUsername);
+        return deactivateUser(responseDelete, role);
     }
 
     public ActionLogResponseAccountStatusChange deactivateCurrentUserByStaff(UserAccountStatusChangeRequestByStaff requestDelete, boolean active) {
@@ -51,11 +43,8 @@ public class UserManagementService {
             }
             return deactivateUserByStaff(responseDelete, base.getRole().toString(), staffId.get(), active);
         }
-
         throw new StaffNotFoundException("No se pudo encontrar el staff con nombre de usuario: " + authenticatedUsername);
     }
-
-
 
     private ActionLogResponseAccountStatusChange createActionLogResponseDelete(ActionLogRequestAccountStatusChange requestDelete, String initiator, String target) {
         return ActionLogResponseAccountStatusChange.builder()
@@ -77,21 +66,19 @@ public class UserManagementService {
 
     private ActionLogResponseAccountStatusChange deactivateUserByStaff(ActionLogResponseAccountStatusChange responseDelete, String rol, Long idStaff, boolean active) {
         return switch (rol) {
-            case "STAFF" -> staffService.deactivateUserByStaff(responseDelete, idStaff,active);
+            case "STAFF" -> staffService.deactivateUserByStaff(responseDelete, idStaff, active);
             case "CUSTOMER" -> customerService.deactivateUserByStaff(responseDelete, idStaff, active);
             case "PROVIDER" -> providerService.deactivateUserByStaff(responseDelete, idStaff, active);
-            default -> throw new RuntimeException("No se pudo hacer nada");
+            default -> throw new CustomException("No se pudo hacer nada", "INVALID_ROLE");
         };
     }
-
-
 
     private ActionLogResponseAccountStatusChange deactivateUser(ActionLogResponseAccountStatusChange responseDelete, String rol) {
         return switch (rol) {
             case "STAFF" -> staffService.deactivateUser(responseDelete);
             case "CUSTOMER" -> customerService.deactivateUser(responseDelete);
             case "PROVIDER" -> providerService.deactivateUser(responseDelete);
-            default -> throw new RuntimeException("No se pudo hacer nada");
+            default -> throw new CustomException("No se pudo hacer nada", "INVALID_ROLE");
         };
     }
 }

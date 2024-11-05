@@ -8,14 +8,12 @@ import org.alvarowau.user.model.dto.LoginResponse;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,7 +25,6 @@ public class UserAuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
 
-
     public LoginResponse authenticateUser(AuthLoginRequest request) {
 
         Authentication authentication = authenticate(request.username(), request.password());
@@ -38,25 +35,21 @@ public class UserAuthenticationService {
     }
 
     private Authentication authenticate(String username, String password) {
-
         UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
         if (userDetails == null) {
-            throw new AuthenticationFailedException("Credenciales inválidas. No se pudo iniciar sesión.");
+            throw new AuthenticationFailedException();
         }
-
 
         if (!passwordEncoder.matches(password, userDetails.getPassword())) {
-            throw new AuthenticationFailedException("Credenciales inválidas. No se pudo iniciar sesión.");
+            throw new AuthenticationFailedException();
         }
 
-        // Obtener los roles del usuario
-        String roles = userDetails.getAuthorities().stream()
-                .map(GrantedAuthority::getAuthority)
-                .collect(Collectors.joining(", "));
+        // Obtén las autoridades del usuario directamente
+        List<GrantedAuthority> authorities = userDetails.getAuthorities().stream()
+                .collect(Collectors.toList());
 
-        List<SimpleGrantedAuthority> authorities = Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + roles));
-
+        // Crea la autenticación
         Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, password, authorities);
 
         // Guarda la autenticación en el contexto de seguridad
@@ -66,4 +59,5 @@ public class UserAuthenticationService {
 
         return authentication;
     }
+
 }

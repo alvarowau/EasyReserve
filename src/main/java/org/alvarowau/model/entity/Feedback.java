@@ -1,6 +1,8 @@
 package org.alvarowau.model.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.*;
 import org.alvarowau.model.enums.FeedbackRating;
@@ -11,6 +13,7 @@ import org.alvarowau.model.enums.FeedbackRating;
 @NoArgsConstructor
 @Entity
 @Builder
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Feedback {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,7 +24,6 @@ public class Feedback {
     private Booking booking;
 
     private String comment;
-
 
     private FeedbackRating rating;
 }

@@ -1,11 +1,7 @@
 package org.alvarowau.exception.user;
 
-public class UserNotFoundException extends RuntimeException {
-    public UserNotFoundException(String message) {
-        super(message);
-    }
-
-    public UserNotFoundException(String username, boolean notFound) {
-        super("No se pudo encontrar el usuario con nombre de usuario: " + username);
+public class UserNotFoundException extends UserException {
+    public UserNotFoundException(String username) {
+        super("Usuario no encontrado: " + username, "USER_NOT_FOUND");
     }
 }

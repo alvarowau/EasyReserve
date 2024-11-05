@@ -1,5 +1,6 @@
 package org.alvarowau.user.service;
 
+import org.alvarowau.exception.user.UserNotFoundException;
 import org.alvarowau.model.dto.action.ActionLogDTO;
 import org.alvarowau.model.dto.action.ActionLogResponseAccountStatusChange;
 import org.alvarowau.model.enums.ActionType;
@@ -7,6 +8,7 @@ import org.alvarowau.service.ActionLogService;
 import org.alvarowau.user.model.entity.BaseUser;
 
 import java.util.Optional;
+
 
 public abstract class AbstractBaseUserService<T extends BaseUser> implements BaseUserService<T> {
 

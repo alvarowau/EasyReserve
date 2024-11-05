@@ -27,8 +27,8 @@ public class UserAuthFacade {
         return userSignUpService.registerUser(request, role);
     }
 
-    public ActionLogResponseAccountStatusChange deactivateCurrentUser(String token , ActionLogRequestAccountStatusChange requestDelete) {
-        return userManagementService.deactivateCurrentUser(token, requestDelete);
+    public ActionLogResponseAccountStatusChange deactivateCurrentUser(ActionLogRequestAccountStatusChange requestDelete) {
+        return userManagementService.deactivateCurrentUser(requestDelete);
     }
 
     public ActionLogResponseAccountStatusChange deactivateUserByStaff(UserAccountStatusChangeRequestByStaff requestDelete) {

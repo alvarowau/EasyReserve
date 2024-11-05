@@ -2,104 +2,59 @@ package org.alvarowau.error;
 
 import lombok.extern.slf4j.Slf4j;
 import org.alvarowau.error.model.ApiError;
-import org.alvarowau.exception.schedule.ServiceOfferingNotFoundException;
+import org.alvarowau.exception.BaseCustomException;
+import org.alvarowau.exception.common.CustomException;
+import org.alvarowau.exception.common.GenericException;
+import org.alvarowau.exception.user.AuthenticationFailedException;
 import org.alvarowau.exception.user.InvalidRoleException;
 import org.alvarowau.exception.user.PasswordsDoNotMatchException;
-import org.alvarowau.exception.user.AuthenticationFailedException;
-import org.alvarowau.exception.user.UserProviderNotFoundException;
-import org.alvarowau.exception.schedule.OverlappingTimeSlotsException;
-import org.alvarowau.exception.schedule.AppointmentNotFoundException;
-import org.alvarowau.exception.user.CustomerNotFoundException;
-import org.alvarowau.exception.user.InvalidCustomerException;
-import org.alvarowau.exception.schedule.CustomConcurrencyException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.springframework.web.server.ResponseStatusException;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.security.authorization.AuthorizationDeniedException;
+import org.springframework.http.ResponseEntity;
 
 import java.time.LocalDateTime;
 
 @Slf4j
 @RestControllerAdvice
-public class GlobalControllerAdvice extends ResponseEntityExceptionHandler {
+public class GlobalControllerAdvice {
 
-    @ExceptionHandler({PasswordsDoNotMatchException.class, InvalidRoleException.class,
-            AuthenticationFailedException.class, ResponseStatusException.class})
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(BaseCustomException.class)
+    public ResponseEntity<ApiError> handleBaseCustomException(BaseCustomException ex) {
+        log.error("Custom Exception: {}", ex.getMessage());
+        return getApiErrorResponseEntity(ex.getMessage(), HttpStatus.BAD_REQUEST, ex.getErrorCode(), "Error de validación.");
+    }
+
+    @ExceptionHandler(CustomException.class)
+    public ResponseEntity<ApiError> handleCustomException(CustomException ex) {
+        log.error("Custom Exception: {}", ex.getMessage());
+        return getApiErrorResponseEntity(ex.getMessage(), HttpStatus.BAD_REQUEST, "CUSTOM_ERROR", "Error personalizado.");
+    }
+
+    @ExceptionHandler(GenericException.class)
+    public ResponseEntity<ApiError> handleGenericException(GenericException ex) {
+        log.error("Generic Exception: {}", ex.getMessage());
+        return getApiErrorResponseEntity(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR, "GENERIC_ERROR", "Error genérico.");
+    }
+
+    @ExceptionHandler({
+            PasswordsDoNotMatchException.class,
+            InvalidRoleException.class,
+            AuthenticationFailedException.class
+    })
     public ResponseEntity<ApiError> handleBadRequestExceptions(RuntimeException ex) {
         log.error("Bad Request Exception: {}", ex.getMessage());
-        return getApiErrorResponseEntity(ex.getMessage(), HttpStatus.BAD_REQUEST);
-    }
-
-    @ExceptionHandler(UserProviderNotFoundException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ResponseEntity<ApiError> handleUserProviderNotFoundException(UserProviderNotFoundException ex) {
-        log.error("Provider Not Found: {}", ex.getMessage());
-        return getApiErrorResponseEntity(ex.getMessage(), HttpStatus.NOT_FOUND);
-    }
-
-    @ExceptionHandler(ServiceOfferingNotFoundException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ResponseEntity<ApiError> handleServiceOfferingNotFoundException(ServiceOfferingNotFoundException ex) {
-        log.error("Service Offering Not Found: {}", ex.getMessage());
-        return getApiErrorResponseEntity(ex.getMessage(), HttpStatus.NOT_FOUND);
-    }
-
-    @ExceptionHandler(OverlappingTimeSlotsException.class)
-    @ResponseStatus(HttpStatus.CONFLICT)
-    public ResponseEntity<ApiError> handleOverlappingTimeSlotsException(OverlappingTimeSlotsException ex) {
-        log.error("Overlapping Time Slots: {}", ex.getMessage());
-        return getApiErrorResponseEntity(ex.getMessage(), HttpStatus.CONFLICT);
-    }
-
-    @ExceptionHandler(AppointmentNotFoundException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ResponseEntity<ApiError> handleAppointmentNotFoundException(AppointmentNotFoundException ex) {
-        log.error("Appointment Not Found: {}", ex.getMessage());
-        return getApiErrorResponseEntity(ex.getMessage(), HttpStatus.NOT_FOUND);
-    }
-
-    @ExceptionHandler(CustomerNotFoundException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ResponseEntity<ApiError> handleCustomerNotFoundException(CustomerNotFoundException ex) {
-        log.error("Customer Not Found: {}", ex.getMessage());
-        return getApiErrorResponseEntity(ex.getMessage(), HttpStatus.NOT_FOUND);
-    }
-
-    @ExceptionHandler(InvalidCustomerException.class)
-    @ResponseStatus(HttpStatus.FORBIDDEN)
-    public ResponseEntity<ApiError> handleInvalidCustomerException(InvalidCustomerException ex) {
-        log.error("Invalid Customer: {}", ex.getMessage());
-        return getApiErrorResponseEntity(ex.getMessage(), HttpStatus.FORBIDDEN);
-    }
-
-    @ExceptionHandler(CustomConcurrencyException.class)
-    @ResponseStatus(HttpStatus.CONFLICT)
-    public ResponseEntity<ApiError> handleCustomConcurrencyException(CustomConcurrencyException ex) {
-        log.error("Concurrency Conflict: {}", ex.getMessage());
-        return getApiErrorResponseEntity("Concurrency conflict occurred: " + ex.getMessage(), HttpStatus.CONFLICT);
+        return getApiErrorResponseEntity(ex.getMessage(), HttpStatus.BAD_REQUEST, "BAD_REQUEST", "La solicitud es incorrecta.");
     }
 
     @ExceptionHandler(Exception.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ResponseEntity<ApiError> handleGeneralException(Exception ex) {
         log.error("Internal Server Error: {}", ex.getMessage());
-        return getApiErrorResponseEntity("Error interno del servidor.", HttpStatus.INTERNAL_SERVER_ERROR);
+        return getApiErrorResponseEntity("Error interno del servidor.", HttpStatus.INTERNAL_SERVER_ERROR, "INTERNAL_SERVER_ERROR", "Ocurrió un error en el servidor.");
     }
 
-    @ExceptionHandler(AuthorizationDeniedException.class)
-    @ResponseStatus(HttpStatus.FORBIDDEN)
-    public ResponseEntity<ApiError> handleAuthorizationDenied(AuthorizationDeniedException ex) {
-        log.error("Authorization Denied: {}", ex.getMessage());
-        return getApiErrorResponseEntity("Acceso denegado: " + ex.getMessage(), HttpStatus.FORBIDDEN);
-    }
-
-    private static ResponseEntity<ApiError> getApiErrorResponseEntity(String message, HttpStatus status) {
-        ApiError apiError = new ApiError(status, LocalDateTime.now(), message);
+    private static ResponseEntity<ApiError> getApiErrorResponseEntity(String message, HttpStatus status, String errorCode, String details) {
+        ApiError apiError = new ApiError(status, LocalDateTime.now(), message, errorCode, details);
         return ResponseEntity.status(status).body(apiError);
     }
 }

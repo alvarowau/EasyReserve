@@ -6,11 +6,13 @@ import org.alvarowau.model.dto.booking.BookingHistoryResponse;
 import org.alvarowau.model.dto.booking.*;
 import org.alvarowau.model.dto.feedback.FeedbackRequest;
 import org.alvarowau.model.dto.feedback.FeedbackResponse;
+import org.alvarowau.model.dto.feedback.ProviderAverageRating;
 import org.alvarowau.model.dto.serviceoffering.ServiceOfferingRequest;
 import org.alvarowau.model.dto.serviceoffering.ServiceOfferingResponse;
 import org.alvarowau.model.dto.serviceoffering.appointment.AppointmentResponse;
 import org.alvarowau.model.dto.serviceoffering.serviceschedule.ServiceScheduleRequest;
 import org.alvarowau.model.dto.serviceoffering.serviceschedule.ServiceScheduleResponse;
+import org.alvarowau.model.entity.Feedback;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -91,5 +93,21 @@ public class AppointmentFacade {
 
     public FeedbackResponse submitFeedback(FeedbackRequest request) {
         return feedbackService.submitFeedback(request);
+    }
+
+    public List<FeedbackResponse> getAllFeedbacksByUserUsername(){
+        return feedbackService.getAllFeedbacksByUserUsername();
+    }
+
+    public List<FeedbackResponse> getFeedbacksByServiceOfferingName(String serviceOfferingName){
+        return feedbackService.getFeedbacksByServiceOfferingName(serviceOfferingName);
+    }
+
+    public List<FeedbackResponse> getFeedbacksByProviderUsername(String providerUsername){
+        return feedbackService.getFeedbacksByProviderUsername(providerUsername);
+    }
+
+    public ProviderAverageRating getAverageRatingByProviderUsername(String providerUsername){
+        return feedbackService.getAverageRatingByProviderUsername(providerUsername);
     }
 }

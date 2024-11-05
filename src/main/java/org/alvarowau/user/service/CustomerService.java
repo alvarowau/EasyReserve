@@ -1,5 +1,6 @@
 package org.alvarowau.user.service;
 
+import org.alvarowau.exception.user.UserNotFoundException;
 import org.alvarowau.user.model.entity.Customer;
 import org.alvarowau.user.repository.CustomerRepository;
 import org.alvarowau.service.ActionLogService;
@@ -31,10 +32,4 @@ public class CustomerService extends AbstractBaseUserService<Customer> {
     public Optional<Customer> findByEmail(String email) {
         return repository.findByEmail(email);
     }
-
-
-
-
-
-
 }

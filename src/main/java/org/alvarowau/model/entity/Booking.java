@@ -1,5 +1,7 @@
 package org.alvarowau.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.*;
 import org.alvarowau.model.enums.BookingStatus;
@@ -11,6 +13,7 @@ import org.alvarowau.user.model.entity.Customer;
 @NoArgsConstructor
 @Entity
 @Builder
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Booking {
 
     @Id

@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/test")
 public class TestAuthController {
 
-
     @PreAuthorize("hasRole('STAFF')")
     @GetMapping("/staff-data")
     public String getAdminData() {
@@ -23,13 +22,11 @@ public class TestAuthController {
         return "Data visible solo para provider";
     }
 
-
     @PreAuthorize("hasRole('CUSTOMER')")
     @GetMapping("/customer-data")
     public String getCustomerData() {
         return "Data visible solo para CUSTOMER";
     }
-
 
     @PreAuthorize("hasAnyRole('STAFF', 'CUSTOMER')")
     @GetMapping("/common-data")
@@ -37,9 +34,8 @@ public class TestAuthController {
         return "Data visible para STAFF y CUSTOMER";
     }
 
-
     @GetMapping("/public-data")
     public String getPublicData() {
-        return "Data visible para todos los usuarios autenticados";
+        return "Data visible para todos";
     }
 }

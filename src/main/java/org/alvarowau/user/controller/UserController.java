@@ -20,36 +20,25 @@ public class UserController {
 
     private final UserAuthFacade userAuthFacade;
 
-
     @PostMapping("/sign-up/{role}")
     public ResponseEntity<LoginResponse> registerUser(@PathVariable String role, @Valid @RequestBody UserRegistrationRequest createUser) {
-        LoginResponse response;
         try {
-            switch (role.toUpperCase()) {
-                case "STAFF":
-                    response = userAuthFacade.registerUser(createUser, RoleEnum.STAFF);
-                    break;
-                case "CUSTOMER":
-                    response = userAuthFacade.registerUser(createUser, RoleEnum.CUSTOMER);
-                    break;
-                case "PROVIDER":
-                    response = userAuthFacade.registerUser(createUser, RoleEnum.PROVIDER);
-                    break;
-                default:
-                    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null); // Rol no válido
-            }
+            RoleEnum roleEnum = RoleEnum.valueOf(role.toUpperCase());
+            LoginResponse response = userAuthFacade.registerUser(createUser, roleEnum);
+            return new ResponseEntity<>(response, HttpStatus.CREATED);
         } catch (PasswordsDoNotMatchException | InvalidRoleException ex) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(new LoginResponse(null, ex.getMessage(), null, false));
+            return buildErrorResponse(HttpStatus.BAD_REQUEST, ex.getMessage());
         } catch (AuthenticationFailedException ex) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                    .body(new LoginResponse(null, ex.getMessage(), null, false));
+            return buildErrorResponse(HttpStatus.UNAUTHORIZED, ex.getMessage());
+        } catch (IllegalArgumentException ex) { // Manejo de rol inválido
+            return buildErrorResponse(HttpStatus.BAD_REQUEST, "Rol no válido.");
         } catch (Exception ex) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new LoginResponse(null, "Error interno del servidor.", null, false));
+            return buildErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Error interno del servidor.");
         }
-
-        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
+    private ResponseEntity<LoginResponse> buildErrorResponse(HttpStatus status, String message) {
+        LoginResponse errorResponse = new LoginResponse(null, message, null, false);
+        return ResponseEntity.status(status).body(errorResponse);
+    }
 }

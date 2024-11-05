@@ -1,9 +1,7 @@
 package org.alvarowau.exception.user;
 
-import org.alvarowau.exception.schedule.ServiceOfferingException;
-
-public class UserProviderNotFoundException extends ServiceOfferingException {
+public class UserProviderNotFoundException extends UserException {
     public UserProviderNotFoundException(String message) {
-        super(message);
+        super(message, "USER_PROVIDER_NOT_FOUND");
     }
 }

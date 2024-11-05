@@ -1,5 +1,7 @@
 package org.alvarowau.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.*;
 import org.alvarowau.user.model.entity.Provider;
@@ -13,6 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Builder
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class ServiceOffering {
 
     @Id

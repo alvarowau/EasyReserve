@@ -1,7 +1,7 @@
 package org.alvarowau.exception.schedule;
 
-public class ServiceOfferingNotFoundException extends RuntimeException {
+public class ServiceOfferingNotFoundException extends ServiceOfferingException {
     public ServiceOfferingNotFoundException(String message) {
-        super(message);
+        super(message, "SERVICE_OFFERING_NOT_FOUND");
     }
 }
