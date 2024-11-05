@@ -21,21 +21,21 @@ public class ServiceOfferingPopulator {
 
     public List<ServiceOffering> createServiceOfferings(List<UserRegistrationRequest> listProvider) {
         List<String> serviceNames = List.of(
-                "Consulta General",
-                "Terapia Física",
-                "Asesoría Legal",
-                "Revisión Médica",
-                "Evaluación Psicológica",
-                "Consultoría Financiera",
-                "Diagnóstico Completo",
-                "Revisión Técnica",
-                "Consulta Veterinaria",
-                "Terapia Ocupacional",
-                "Asesoría en IT",
-                "Diagnóstico Nutricional",
-                "Entrenamiento Personal",
-                "Asesoría de Marketing",
-                "Reparación Electrónica"
+                "Consulta-General",
+                "Terapia-Fisica",
+                "Asesoria-Legal",
+                "Revision-Medica",
+                "Evaluacion-Psologica",
+                "Consultoria-Financiera",
+                "Diagnostico-Completo",
+                "Revision-Tecnica",
+                "Consulta-Veterinaria",
+                "Terapia-Ocupacional",
+                "Asesoria-en-IT",
+                "Diagnostico-Nutricional",
+                "Entrenamiento-Personal",
+                "Asesoria-de-Marketing",
+                "Reparacion-Electronica"
         );
         List<Provider> providerEntities = new ArrayList<>();
         for (UserRegistrationRequest provider : listProvider) {
