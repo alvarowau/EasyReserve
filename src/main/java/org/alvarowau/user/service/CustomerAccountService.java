@@ -1,6 +1,5 @@
 package org.alvarowau.user.service;
 
-import org.alvarowau.exception.user.UserNotFoundException;
 import org.alvarowau.user.model.entity.Customer;
 import org.alvarowau.user.repository.CustomerRepository;
 import org.alvarowau.service.ActionLogService;
@@ -9,11 +8,11 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class CustomerService extends AbstractBaseUserService<Customer> {
+public class CustomerAccountService extends AbstractUserAccountService<Customer> {
 
     private final CustomerRepository repository;
 
-    public CustomerService(ActionLogService actionLogService, CustomerRepository repository) {
+    public CustomerAccountService(ActionLogService actionLogService, CustomerRepository repository) {
         super(actionLogService);
         this.repository = repository;
     }
@@ -21,6 +20,11 @@ public class CustomerService extends AbstractBaseUserService<Customer> {
     @Override
     protected Customer saveEntity(Customer customer) {
         return repository.save(customer);
+    }
+
+    @Override
+    public Optional<Customer> findById(Long id) {
+        return repository.findById(id);
     }
 
     @Override

@@ -23,9 +23,9 @@ import org.alvarowau.user.model.entity.Customer;
 import org.alvarowau.user.model.entity.Provider;
 import org.alvarowau.user.model.entity.Staff;
 import org.alvarowau.user.model.entity.enums.RoleEnum;
-import org.alvarowau.user.service.CustomerService;
-import org.alvarowau.user.service.ProviderService;
-import org.alvarowau.user.service.StaffService;
+import org.alvarowau.user.service.CustomerAccountService;
+import org.alvarowau.user.service.ProviderAccountService;
+import org.alvarowau.user.service.StaffAccountService;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -41,11 +41,11 @@ public class BookingService {
     private final BookingNumberGenerator bookingNumberGenerator;
     private final MapperBooking bookingMapper;
     private final AppointmentService appointmentService;
-    private final CustomerService customerService;
+    private final CustomerAccountService customerService;
     private final SecurityContextUtil securityContextUtil;
     private final ActionLogService actionLogService;
-    private final StaffService staffService;
-    private final ProviderService providerService;
+    private final StaffAccountService staffService;
+    private final ProviderAccountService providerService;
 
     public BookingResponseCreate createBookingByTrackingNumberAppointment(BookingRequestTrackingNumber bookingRequestTrackingNumber) {
         try {
@@ -137,7 +137,7 @@ public class BookingService {
         if (booking.getStatus().equals(BookingStatus.CANCELED)) {
             appointment = appointmentService.restoreAppointmentAvailability(appointment);
             if (appointment.isAvailable()) {
-                actionLogService.saveAction(action);
+                actionLogService.saveActionLog(action);
                 return createResponseCancellation(customerUsername, bookingNumber, reason, OperationStatus.SUCCESS);
             } else {
                 log.info("no cambia la apooint");

@@ -6,7 +6,8 @@ import org.alvarowau.user.model.entity.BaseUser;
 import java.util.Optional;
 
 public interface BaseUserService<T extends BaseUser> {
+    Optional<T> findById(Long id);
     Optional<T> findByUsername(String username);
     Optional<T> findByEmail(String email);
-    ActionLogResponseAccountStatusChange deactivateUser(ActionLogResponseAccountStatusChange delete);
+    ActionLogResponseAccountStatusChange deactivateUserAccount(ActionLogResponseAccountStatusChange delete);
 }

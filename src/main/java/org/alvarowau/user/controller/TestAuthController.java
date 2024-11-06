@@ -12,7 +12,7 @@ public class TestAuthController {
 
     @PreAuthorize("hasRole('STAFF')")
     @GetMapping("/staff-data")
-    public String getAdminData() {
+    public String getStaffData() {
         return "Data visible solo para ADMIN";
     }
 
@@ -30,7 +30,7 @@ public class TestAuthController {
 
     @PreAuthorize("hasAnyRole('STAFF', 'CUSTOMER')")
     @GetMapping("/common-data")
-    public String getCommonData() {
+    public String getStaffAndCustomerData() {
         return "Data visible para STAFF y CUSTOMER";
     }
 

@@ -10,7 +10,7 @@ import org.alvarowau.model.dto.serviceoffering.ServiceOfferingResponse;
 import org.alvarowau.model.entity.ServiceOffering;
 import org.alvarowau.repository.ServiceOfferingRepository;
 import org.alvarowau.user.model.entity.Provider;
-import org.alvarowau.user.service.ProviderService;
+import org.alvarowau.user.service.ProviderAccountService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,7 +23,7 @@ public class ServiceOfferingService {
 
     private final ServiceOfferingRepository serviceOfferingRepository;
     private final MapperServiceOffering mapper;
-    private final ProviderService providerService;
+    private final ProviderAccountService providerService;
     private final SecurityContextUtil securityContextUtil;
 
     public ServiceOfferingResponse createServiceOffering(ServiceOfferingRequest request) {

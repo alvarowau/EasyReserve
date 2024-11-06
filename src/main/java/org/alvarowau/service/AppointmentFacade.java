@@ -13,7 +13,6 @@ import org.alvarowau.model.dto.serviceoffering.appointment.AppointmentResponse;
 import org.alvarowau.model.dto.serviceoffering.appointment.AppointmentResponseWithId;
 import org.alvarowau.model.dto.serviceoffering.serviceschedule.ServiceScheduleRequest;
 import org.alvarowau.model.dto.serviceoffering.serviceschedule.ServiceScheduleResponse;
-import org.alvarowau.model.entity.Feedback;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -30,21 +29,20 @@ public class AppointmentFacade {
     private final AppointmentService appointmentService;
     private final FeedbackService feedbackService;
 
-    // Método para crear un nuevo Service Offering
+
     public ServiceOfferingResponse createServiceOffering(ServiceOfferingRequest request) {
         return serviceOfferingService.createServiceOffering(request);
     }
 
-    // Método para crear un nuevo Service Schedule
     public ServiceScheduleResponse createServiceSchedule(ServiceScheduleRequest request) {
         return serviceScheduleService.createServiceSchedule(request);
     }
 
-    public List<ServiceOfferingResponse> searchServiceOfferingByUsernameProvider(String username){
+    public List<ServiceOfferingResponse> searchServiceOfferingsByProviderUsername(String username){
         return serviceOfferingService.searchServiceOfferingByUsernameProvider(username);
     }
 
-    public List<AppointmentResponse> getAvailableAppointmentsByProviderUsername(String username){
+    public List<AppointmentResponse> getAvailableAppointmentsByProvider(String username){
         return appointmentService.getAvailableAppointmentsByProviderUsername(username);
     }
 
@@ -115,7 +113,7 @@ public class AppointmentFacade {
         return feedbackService.getAverageRatingByProviderUsername(providerUsername);
     }
 
-    public List<BookingResponseCreate> listForStaff() {
+    public List<BookingResponseCreate> getBookingsForStaff() {
         return bookingService.listForStaff();
     }
 }

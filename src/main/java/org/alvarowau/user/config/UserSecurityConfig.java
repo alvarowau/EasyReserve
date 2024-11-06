@@ -46,7 +46,7 @@ public class UserSecurityConfig {
                     log.info("Rutas públicas: /user/public-data, /auth/**, /user/**, /test/public-data");
 
                     http.requestMatchers("/test/**", "/user-management/**", "/services/**", "/schedule/**",
-                                    "/appointments/**", "/bookings/**", "/feedbacks/**")
+                                    "/appointments/**", "/bookings/**", "/feedbacks/**", "/actions/**")
                             .authenticated();
                     log.info("Rutas autenticadas: /test/**, /user-management/**, /services/**, /schedule/**, " +
                             "/appointments/**, /bookings/**, /feedbacks/**");

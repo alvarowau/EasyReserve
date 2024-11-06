@@ -8,7 +8,7 @@ import org.alvarowau.exception.user.PasswordsDoNotMatchException;
 import org.alvarowau.user.model.dto.UserRegistrationRequest;
 import org.alvarowau.user.model.dto.LoginResponse;
 import org.alvarowau.user.model.entity.enums.RoleEnum;
-import org.alvarowau.user.service.UserAuthFacade;
+import org.alvarowau.user.service.UserAccountAuthFacade;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,19 +18,19 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class UserController {
 
-    private final UserAuthFacade userAuthFacade;
+    private final UserAccountAuthFacade userAccountAuthFacade;
 
     @PostMapping("/sign-up/{role}")
-    public ResponseEntity<LoginResponse> registerUser(@PathVariable String role, @Valid @RequestBody UserRegistrationRequest createUser) {
+    public ResponseEntity<LoginResponse> registerUserWithRole(@PathVariable String role, @Valid @RequestBody UserRegistrationRequest createUser) {
         try {
             RoleEnum roleEnum = RoleEnum.valueOf(role.toUpperCase());
-            LoginResponse response = userAuthFacade.registerUser(createUser, roleEnum);
+            LoginResponse response = userAccountAuthFacade.registerUserAccount(createUser, roleEnum);
             return new ResponseEntity<>(response, HttpStatus.CREATED);
         } catch (PasswordsDoNotMatchException | InvalidRoleException ex) {
             return buildErrorResponse(HttpStatus.BAD_REQUEST, ex.getMessage());
         } catch (AuthenticationFailedException ex) {
             return buildErrorResponse(HttpStatus.UNAUTHORIZED, ex.getMessage());
-        } catch (IllegalArgumentException ex) { // Manejo de rol inválido
+        } catch (IllegalArgumentException ex) {
             return buildErrorResponse(HttpStatus.BAD_REQUEST, "Rol no válido.");
         } catch (Exception ex) {
             return buildErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Error interno del servidor.");

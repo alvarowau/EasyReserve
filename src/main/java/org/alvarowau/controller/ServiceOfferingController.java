@@ -30,7 +30,7 @@ public class ServiceOfferingController {
     @PreAuthorize("hasAnyRole('STAFF', 'CUSTOMER', 'PROVIDER')")
     @GetMapping("/provider/{username}")
     public ResponseEntity<List<ServiceOfferingResponse>> getServiceOfferingsByProviderUsername(@PathVariable String username) {
-        List<ServiceOfferingResponse> services = appointmentFacade.searchServiceOfferingByUsernameProvider(username);
+        List<ServiceOfferingResponse> services = appointmentFacade.searchServiceOfferingsByProviderUsername(username);
         return ResponseEntity.ok(services);
     }
 }

@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.alvarowau.model.dto.action.ActionLogRequestAccountStatusChange;
 import org.alvarowau.model.dto.action.ActionLogResponseAccountStatusChange;
 import org.alvarowau.model.dto.action.UserAccountStatusChangeRequestByStaff;
-import org.alvarowau.user.service.UserAuthFacade;
+import org.alvarowau.user.service.UserAccountAuthFacade;
 import org.alvarowau.config.utils.SecurityContextUtil;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -18,27 +18,27 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class UserManagementController {
 
-    private final UserAuthFacade userAuthFacade;
+    private final UserAccountAuthFacade userAccountAuthFacade;
     private final SecurityContextUtil securityContext;
 
     @PreAuthorize("hasAnyRole('STAFF', 'CUSTOMER', 'PROVIDER')")
     @DeleteMapping("/deactivate/current")
-    public ResponseEntity<ActionLogResponseAccountStatusChange> deactivateCurrentUser(
+    public ResponseEntity<ActionLogResponseAccountStatusChange> deactivateCurrentUserAccount(
             @RequestBody ActionLogRequestAccountStatusChange requestDelete) {
-        return ResponseEntity.ok(userAuthFacade.deactivateCurrentUser(requestDelete));
+        return ResponseEntity.ok(userAccountAuthFacade.deactivateCurrentUserAccount(requestDelete));
     }
 
     @PreAuthorize("hasRole('STAFF')")
     @DeleteMapping("/staff/deactivate-user")
-    public ResponseEntity<ActionLogResponseAccountStatusChange> deactivateUserByStaff(
+    public ResponseEntity<ActionLogResponseAccountStatusChange> deactivateUserByStaffAccount(
             @RequestBody UserAccountStatusChangeRequestByStaff requestDelete) {
-        return ResponseEntity.ok(userAuthFacade.deactivateUserByStaff(requestDelete));
+        return ResponseEntity.ok(userAccountAuthFacade.deactivateUserAccountByStaff(requestDelete));
     }
 
     @PreAuthorize("hasRole('STAFF')")
     @PostMapping("/staff/activate-user")
-    public ResponseEntity<ActionLogResponseAccountStatusChange> activateUserByStaff(
+    public ResponseEntity<ActionLogResponseAccountStatusChange> activateUserByStaffAccount(
             @RequestBody UserAccountStatusChangeRequestByStaff requestActivate) {
-        return ResponseEntity.ok(userAuthFacade.activateUserByStaff(requestActivate));
+        return ResponseEntity.ok(userAccountAuthFacade.activateUserAccountByStaff(requestActivate));
     }
 }

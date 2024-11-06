@@ -9,7 +9,7 @@ import org.alvarowau.user.model.dto.UserRegistrationRequest;
 import org.alvarowau.user.model.dto.mapper.UserEntityMapper;
 import org.alvarowau.user.model.entity.UserEntity;
 import org.alvarowau.user.model.entity.enums.RoleEnum;
-import org.alvarowau.user.service.util.AuthenticationUtils;
+import org.alvarowau.user.service.util.AuthenticationHelper;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
@@ -17,14 +17,14 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class UserSignUpService {
 
-    private final CustomerService customerService;
-    private final ProviderService providerService;
-    private final StaffService staffService;
+    private final CustomerAccountService customerService;
+    private final ProviderAccountService providerService;
+    private final StaffAccountService staffService;
     private final UserEntityMapper userEntityMapper;
     private final JwtTokenProvider jwtTokenProvider;
 
     public LoginResponse registerUser(@Valid UserRegistrationRequest request, RoleEnum role) {
-        AuthenticationUtils.ensurePasswordsMatch(request.password(), request.passwordRepeat());
+        AuthenticationHelper.validatePasswordsMatch(request.password(), request.passwordRepeat());
 
         UserEntity userEntity = switch (role) {
             case RoleEnum.CUSTOMER -> customerService.saveEntity(userEntityMapper.convertToCustomer(request));
@@ -37,7 +37,7 @@ public class UserSignUpService {
     }
 
     private LoginResponse buildAuthResponse(UserEntity entity) {
-        Authentication authentication = AuthenticationUtils.buildAuthenticationToken(
+        Authentication authentication = AuthenticationHelper.createAuthenticationToken(
                 entity.getUsername(), entity.getPassword(), entity.getRole().name());
         String accessToken = jwtTokenProvider.createToken(authentication);
         return new LoginResponse(entity.getUsername(), "Usuario creado con éxito", accessToken, true);

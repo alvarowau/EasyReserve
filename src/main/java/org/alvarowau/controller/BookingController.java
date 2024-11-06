@@ -62,7 +62,7 @@ public class BookingController {
     @PreAuthorize("hasRole('STAFF')")
     @GetMapping("/bookings/staff")
     public ResponseEntity<List<BookingResponseCreate>> getBookingsForStaff() {
-        List<BookingResponseCreate> bookings = appointmentFacade.listForStaff();
+        List<BookingResponseCreate> bookings = appointmentFacade.getBookingsForStaff();
         return ResponseEntity.ok(bookings);
     }
 

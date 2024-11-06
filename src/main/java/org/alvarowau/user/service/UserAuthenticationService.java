@@ -50,7 +50,6 @@ public class UserAuthenticationService {
             throw new AuthenticationFailedException();
         }
 
-        // Obtener los roles del usuario
         String roles = userDetails.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(", "));

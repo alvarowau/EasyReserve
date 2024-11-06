@@ -25,7 +25,7 @@ public class AppointmentController {
     @PreAuthorize("hasAnyRole('STAFF', 'CUSTOMER', 'PROVIDER')")
     @GetMapping("/available/by-provider/{username}")
     public ResponseEntity<List<AppointmentResponse>> getAvailableAppointmentsForProvider(@PathVariable String username) {
-        return ResponseEntity.ok(appointmentFacade.getAvailableAppointmentsByProviderUsername(username));
+        return ResponseEntity.ok(appointmentFacade.getAvailableAppointmentsByProvider(username));
     }
 
     @PreAuthorize("hasAnyRole('STAFF', 'CUSTOMER', 'PROVIDER')")
@@ -75,6 +75,5 @@ public class AppointmentController {
         boolean isAvailable = appointmentFacade.isAppointmentAvailableById(id);
         return ResponseEntity.ok(isAvailable);
     }
-
 
 }

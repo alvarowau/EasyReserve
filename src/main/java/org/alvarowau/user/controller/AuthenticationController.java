@@ -2,10 +2,9 @@ package org.alvarowau.user.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.alvarowau.user.model.dto.AuthLoginRequest;
 import org.alvarowau.user.model.dto.LoginResponse;
-import org.alvarowau.user.service.UserAuthFacade;
+import org.alvarowau.user.service.UserAccountAuthFacade;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,11 +13,11 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class AuthenticationController {
 
-    private final UserAuthFacade userAuthFacade;
+    private final UserAccountAuthFacade userAccountAuthFacade;
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> login(@Valid @RequestBody AuthLoginRequest request) {
-        LoginResponse response = userAuthFacade.authenticateUser(request);
+    public ResponseEntity<LoginResponse> authenticateUserLogin(@Valid @RequestBody AuthLoginRequest request) {
+        LoginResponse response = userAccountAuthFacade.authenticateUserLogin(request);
         return ResponseEntity.ok(response);
     }
 }

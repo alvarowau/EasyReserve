@@ -12,8 +12,6 @@ public class MapperActionLog {
 
     private final ModelMapper modelMapper;
 
-
-
     public ActionLog toEntity(ActionLogDTO dto) {
         return ActionLog.builder()
                 .actionType(dto.actionType())
@@ -26,4 +24,6 @@ public class MapperActionLog {
     public ActionLogDTO toDto(ActionLog entity) {
         return modelMapper.map(entity, ActionLogDTO.class);
     }
+
+
 }

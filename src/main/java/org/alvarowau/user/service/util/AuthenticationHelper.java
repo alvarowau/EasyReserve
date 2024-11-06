@@ -8,15 +8,15 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import java.util.Collections;
 import java.util.List;
 
-public class AuthenticationUtils {
+public class AuthenticationHelper {
 
-    public static void ensurePasswordsMatch(String password, String passwordRepeat) {
+    public static void validatePasswordsMatch(String password, String passwordRepeat) {
         if (!password.equals(passwordRepeat)) {
             throw new PasswordsDoNotMatchException("Las contraseñas no coinciden.");
         }
     }
 
-    public static Authentication buildAuthenticationToken(String username, String password, String role) {
+    public static Authentication createAuthenticationToken(String username, String password, String role) {
         List<SimpleGrantedAuthority> authorities = Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + role));
         return new UsernamePasswordAuthenticationToken(username, password, authorities);
     }

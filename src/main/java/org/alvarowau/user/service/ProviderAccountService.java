@@ -8,13 +8,18 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class ProviderService extends AbstractBaseUserService<Provider> {
+public class ProviderAccountService extends AbstractUserAccountService<Provider> {
 
     private final ProviderRepository repository;
 
-    public ProviderService(ActionLogService actionLogService, ProviderRepository repository) {
+    public ProviderAccountService(ActionLogService actionLogService, ProviderRepository repository) {
         super(actionLogService);
         this.repository = repository;
+    }
+
+    @Override
+    public Optional<Provider> findById(Long id) {
+        return repository.findById(id);
     }
 
     @Override

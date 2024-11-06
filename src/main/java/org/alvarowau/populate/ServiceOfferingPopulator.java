@@ -5,7 +5,7 @@ import org.alvarowau.model.entity.ServiceOffering;
 import org.alvarowau.repository.ServiceOfferingRepository;
 import org.alvarowau.user.model.dto.UserRegistrationRequest;
 import org.alvarowau.user.model.entity.Provider;
-import org.alvarowau.user.service.ProviderService;
+import org.alvarowau.user.service.ProviderAccountService;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -17,7 +17,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class ServiceOfferingPopulator {
 
     private final ServiceOfferingRepository serviceOfferingRepository;
-    private final ProviderService providerService;
+    private final ProviderAccountService providerService;
 
     public List<ServiceOffering> createServiceOfferings(List<UserRegistrationRequest> listProvider) {
         List<String> serviceNames = List.of(

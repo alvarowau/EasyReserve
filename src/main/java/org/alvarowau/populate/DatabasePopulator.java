@@ -4,7 +4,7 @@ import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.alvarowau.user.model.dto.UserRegistrationRequest;
 import org.alvarowau.user.model.entity.enums.RoleEnum;
-import org.alvarowau.user.service.ProviderService;
+import org.alvarowau.user.service.ProviderAccountService;
 import org.alvarowau.user.service.UserSignUpService;
 import org.springframework.stereotype.Component;
 
@@ -23,7 +23,7 @@ public class DatabasePopulator {
     private final ScheduleServicePopulator scheduleServicePopulator;
     private final BookingPopulator bookingPopulator;
     private final FeedbackPopulator feedbackPopulator;
-    private final ProviderService providerService;
+    private final ProviderAccountService providerService;
 
     @PostConstruct
     public void populateDatabase() {

@@ -9,10 +9,11 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
+
 public class CustomUserDetailsService implements UserDetailsService {
-    private final CustomerService customerService;
-    private final ProviderService providerService;
-    private final StaffService staffService;
+    private final CustomerAccountService customerService;
+    private final ProviderAccountService providerService;
+    private final StaffAccountService staffService;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -56,4 +57,5 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         return user;
     }
+
 }
