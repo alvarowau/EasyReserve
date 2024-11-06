@@ -1,6 +1,6 @@
 package org.alvarowau.user.service;
 
-import org.alvarowau.service.ActionLogService;
+import org.alvarowau.service.ActionLogManagementService;
 import org.alvarowau.user.model.entity.Staff;
 import org.alvarowau.user.repository.StaffRepository;
 import org.springframework.stereotype.Service;
@@ -22,8 +22,8 @@ public class StaffAccountService extends AbstractUserAccountService<Staff> {
         return repository.findByUsername(username);
     }
 
-    public StaffAccountService(StaffRepository repository, ActionLogService actionLogService) {
-        super(actionLogService);
+    public StaffAccountService(StaffRepository repository, ActionLogManagementService actionLogManagementService) {
+        super(actionLogManagementService);
         this.repository = repository;
     }
 

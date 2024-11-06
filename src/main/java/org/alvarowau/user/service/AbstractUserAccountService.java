@@ -3,7 +3,7 @@ package org.alvarowau.user.service;
 import org.alvarowau.model.dto.action.ActionLogDTO;
 import org.alvarowau.model.dto.action.ActionLogResponseAccountStatusChange;
 import org.alvarowau.model.enums.ActionType;
-import org.alvarowau.service.ActionLogService;
+import org.alvarowau.service.ActionLogManagementService;
 import org.alvarowau.user.model.entity.BaseUser;
 
 import java.util.Optional;
@@ -11,10 +11,10 @@ import java.util.Optional;
 
 public abstract class AbstractUserAccountService<T extends BaseUser> implements BaseUserService<T> {
 
-    protected final ActionLogService actionLogService;
+    protected final ActionLogManagementService actionLogManagementService;
 
-    protected AbstractUserAccountService(ActionLogService actionLogService) {
-        this.actionLogService = actionLogService;
+    protected AbstractUserAccountService(ActionLogManagementService actionLogManagementService) {
+        this.actionLogManagementService = actionLogManagementService;
     }
 
     protected abstract T saveEntity(T entity);
@@ -43,7 +43,7 @@ public abstract class AbstractUserAccountService<T extends BaseUser> implements 
                         delete.getReason()
                 );
                 System.out.println(action);
-                actionLogService.saveActionLog(action);
+                actionLogManagementService.saveActionLog(action);
                 delete.setSuccessful(true);
                 return delete;
             }

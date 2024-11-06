@@ -4,8 +4,8 @@ package org.alvarowau.populate;
 import lombok.RequiredArgsConstructor;
 import org.alvarowau.model.dto.feedback.FeedbackRequest;
 import org.alvarowau.model.entity.Booking;
-import org.alvarowau.service.BookingService;
-import org.alvarowau.service.FeedbackService;
+import org.alvarowau.service.BookingManagementService;
+import org.alvarowau.service.FeedbackManagementService;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -16,13 +16,13 @@ import java.util.Random;
 @RequiredArgsConstructor
 public class FeedbackPopulator {
 
-    private final BookingService bookingService;
-    private final FeedbackService feedbackService;
+    private final BookingManagementService bookingManagementService;
+    private final FeedbackManagementService feedbackManagementService;
     private final List<String> listFeedbacks = listFeedbacks();
     private final Random random = new Random();
 
     public void createFeedbacks() {
-        List<Booking> bookings = bookingService.findAll();
+        List<Booking> bookings = bookingManagementService.findAll();
         List<FeedbackRequest> requestList = new ArrayList<>();
         for (Booking booking : bookings) {
             FeedbackRequest request = new FeedbackRequest(
@@ -34,7 +34,7 @@ public class FeedbackPopulator {
         }
 
         for (FeedbackRequest request : requestList) {
-            feedbackService.submitFeedback(request);
+            feedbackManagementService.submitFeedbackByCustomer(request);
         }
 
     }

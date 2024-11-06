@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.alvarowau.model.dto.serviceoffering.serviceschedule.ServiceScheduleRequest;
 import org.alvarowau.model.dto.serviceoffering.serviceschedule.ServiceScheduleResponse;
 import org.alvarowau.model.dto.serviceoffering.timeslot.TimeSlotRequest;
-import org.alvarowau.service.ServiceScheduleService;
+import org.alvarowau.service.ServiceScheduleManagementService;
 import org.springframework.stereotype.Component;
 
 import java.time.DayOfWeek;
@@ -18,7 +18,7 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class ScheduleServicePopulator {
 
-    private final ServiceScheduleService serviceScheduleService;
+    private final ServiceScheduleManagementService serviceScheduleManagementService;
 
     public List<ServiceScheduleResponse> createScheduleService() {
         List<String> serviceNames = List.of(
@@ -54,7 +54,7 @@ public class ScheduleServicePopulator {
 
         List<ServiceScheduleResponse> responses = new ArrayList<>();
         for (ServiceScheduleRequest schedule : schedules) {
-            ServiceScheduleResponse response = serviceScheduleService.createServiceSchedule(schedule);
+            ServiceScheduleResponse response = serviceScheduleManagementService.createServiceScheduleForProvider(schedule);
             responses.add(response);
         }
         return responses;

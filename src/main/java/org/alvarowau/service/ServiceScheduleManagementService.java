@@ -22,24 +22,21 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class ServiceScheduleService {
+public class ServiceScheduleManagementService {
 
     private final MapperTimeSlot mapperTimeSlot;
     private final MapperServiceSchedule mapperServiceSchedule;
-    private final ServiceOfferingService serviceOfferingService;
-    private final HorarioTreatment horarioTreatment;
+    private final ServiceOfferingManagementService serviceOfferingManagementService;
+    private final AppointmentSlotManagementService appointmentSlotManagementService;
     private final ServiceScheduleRepository serviceScheduleRepository;
 
-    public ServiceScheduleResponse createServiceSchedule(ServiceScheduleRequest request) {
-        log.info("Iniciando creación de ServiceSchedule con request: {}", request);
-
-        // Verifica que la lista de slots no esté vacía
+    public ServiceScheduleResponse createServiceScheduleForProvider(ServiceScheduleRequest request) {
         if (request.slotRequestList() == null || request.slotRequestList().isEmpty()) {
             log.error("La lista de slotRequestList está vacía.");
             throw new EmptySlotListException("La lista de slots no puede estar vacía.");
         }
-        Optional<ServiceOffering> optionalServiceOffering = serviceOfferingService
-                .getServiceOfferingByUsername(request.nameServiceOffering());
+        Optional<ServiceOffering> optionalServiceOffering = serviceOfferingManagementService
+                .getServiceOfferingByName(request.nameServiceOffering());
 
         ServiceOffering offering = optionalServiceOffering.orElseThrow(
                 () -> new ServiceOfferingNotFoundException("Service offering no encontrado para el nombre: " + request.nameServiceOffering())
@@ -61,7 +58,7 @@ public class ServiceScheduleService {
                     .toList();
 
             serviceSchedule.setTimeSlots(timeSlots);
-            serviceSchedule.setAppointments(horarioTreatment.generateAvailableAppointments(serviceSchedule));
+            serviceSchedule.setAppointments(appointmentSlotManagementService.generateAvailableAppointments(serviceSchedule));
             return mapperServiceSchedule.toResponse(serviceScheduleRepository.save(serviceSchedule));
 
         } catch (Exception e) {

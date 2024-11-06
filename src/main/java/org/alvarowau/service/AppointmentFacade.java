@@ -23,97 +23,97 @@ import java.util.List;
 @Slf4j
 public class AppointmentFacade {
 
-    private final ServiceOfferingService serviceOfferingService;
-    private final ServiceScheduleService serviceScheduleService;
-    private final BookingService bookingService;
-    private final AppointmentService appointmentService;
-    private final FeedbackService feedbackService;
+    private final ServiceOfferingManagementService serviceOfferingManagementService;
+    private final ServiceScheduleManagementService serviceScheduleManagementService;
+    private final BookingManagementService bookingManagementService;
+    private final AppointmentManagementService appointmentManagementService;
+    private final FeedbackManagementService feedbackManagementService;
 
 
     public ServiceOfferingResponse createServiceOffering(ServiceOfferingRequest request) {
-        return serviceOfferingService.createServiceOffering(request);
+        return serviceOfferingManagementService.createServiceOfferingForProvider(request);
     }
 
     public ServiceScheduleResponse createServiceSchedule(ServiceScheduleRequest request) {
-        return serviceScheduleService.createServiceSchedule(request);
+        return serviceScheduleManagementService.createServiceScheduleForProvider(request);
     }
 
     public List<ServiceOfferingResponse> searchServiceOfferingsByProviderUsername(String username){
-        return serviceOfferingService.searchServiceOfferingByUsernameProvider(username);
+        return serviceOfferingManagementService.getServiceOfferingsByProviderUsername(username);
     }
 
     public List<AppointmentResponse> getAvailableAppointmentsByProvider(String username){
-        return appointmentService.getAvailableAppointmentsByProviderUsername(username);
+        return appointmentManagementService.getAvailableAppointmentsByProviderUsername(username);
     }
 
     public List<AppointmentResponse> getAvailableAppointmentsByServiceOfferingName(String serviceOfferingName){
-        return appointmentService.getAvailableAppointmentsByServiceOfferingName(serviceOfferingName);
+        return appointmentManagementService.getAvailableAppointmentsByServiceOfferingName(serviceOfferingName);
     }
     public List<AppointmentResponseWithId> getAvailableAppointmentsByServiceOfferingNameWithId(String serviceOfferingName){
-        return appointmentService.getAvailableAppointmentsByServiceOfferingNameWithId(serviceOfferingName);
+        return appointmentManagementService.getAvailableAppointmentsByServiceOfferingNameWithId(serviceOfferingName);
     }
 
     public List<AppointmentResponse> getAvailableAppointmentsByDate(LocalDate date){
-        return appointmentService.getAvailableAppointmentsByDate(date);
+        return appointmentManagementService.getAvailableAppointmentsByDate(date);
     }
 
     public List<AppointmentResponse> getAvailableAppointmentsByDateRange(LocalDate startDate, LocalDate endDate) {
-        return appointmentService.getAvailableAppointmentsByDateRange(startDate,endDate);
+        return appointmentManagementService.getAvailableAppointmentsByDateRange(startDate,endDate);
     }
 
     public boolean isAppointmentAvailableByTrackingNumber(String trackingNumber) {
-        return appointmentService.isAppointmentAvailableByTrackingNumber(trackingNumber);
+        return appointmentManagementService.isAppointmentAvailableByTrackingNumber(trackingNumber);
     }
 
     public boolean isAppointmentAvailableById(Long id) {
-        return appointmentService.isAppointmentAvailableById(id);
+        return appointmentManagementService.isAppointmentAvailableById(id);
     }
 
     public BookingResponseCreate createBookingByTrackingNumberAppointment(BookingRequestTrackingNumber bookingRequestTrackingNumber){
-        return bookingService.createBookingByTrackingNumberAppointment(bookingRequestTrackingNumber);
+        return bookingManagementService.createBookingByTrackingNumberAppointment(bookingRequestTrackingNumber);
     }
 
     public BookingResponseCreate createBookingByIdAppointment(BookingRequestId bookingRequestId){
-        return bookingService.createBookingByIdAppointment(bookingRequestId);
+        return bookingManagementService.createBookingByIdAppointment(bookingRequestId);
     }
 
     public BookingCancellationResponse cancelBookingByUser(CancelBookingRequest request) {
-        return bookingService.cancelBookingByUser(request);
+        return bookingManagementService.cancelBookingByUser(request);
     }
 
     public BookingCancellationResponse cancelBookingByStaff(CancelBookingRequest request) {
-        return bookingService.cancelBookingByStaff(request);
+        return bookingManagementService.cancelBookingByStaff(request);
     }
 
     public List<BookingHistoryResponse> getBookingHistory() {
-        return bookingService.getBookingHistory();
+        return bookingManagementService.getBookingHistory();
     }
 
     public List<BookingHistoryResponse> getBookingHistory(LocalDate startDate, LocalDate endDate) {
-        return bookingService.getBookingHistory(startDate,endDate);
+        return bookingManagementService.getBookingHistory(startDate,endDate);
     }
 
     public FeedbackResponse submitFeedback(FeedbackRequest request) {
-        return feedbackService.submitFeedback(request);
+        return feedbackManagementService.submitFeedbackByCustomer(request);
     }
 
     public List<FeedbackResponse> getAllFeedbacksByUserUsername(){
-        return feedbackService.getAllFeedbacksByUserUsername();
+        return feedbackManagementService.getAllFeedbacksByCustomer();
     }
 
     public List<FeedbackResponse> getFeedbacksByServiceOfferingName(String serviceOfferingName){
-        return feedbackService.getFeedbacksByServiceOfferingName(serviceOfferingName);
+        return feedbackManagementService.getFeedbacksByServiceOfferingName(serviceOfferingName);
     }
 
     public List<FeedbackResponse> getFeedbacksByProviderUsername(String providerUsername){
-        return feedbackService.getFeedbacksByProviderUsername(providerUsername);
+        return feedbackManagementService.getFeedbacksByProviderUsername(providerUsername);
     }
 
     public ProviderAverageRating getAverageRatingByProviderUsername(String providerUsername){
-        return feedbackService.getAverageRatingByProviderUsername(providerUsername);
+        return feedbackManagementService.getAverageRatingByProviderUsername(providerUsername);
     }
 
     public List<BookingResponseCreate> getBookingsForStaff() {
-        return bookingService.listForStaff();
+        return bookingManagementService.listForStaff();
     }
 }

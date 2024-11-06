@@ -18,7 +18,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class ActionLogService {
+public class ActionLogManagementService {
 
     private final ActionLogRepository actionLogRepository;
     private final MapperActionLog mapperActionLog;

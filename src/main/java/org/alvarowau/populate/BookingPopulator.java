@@ -8,7 +8,7 @@ import org.alvarowau.model.entity.Appointment;
 import org.alvarowau.model.entity.Booking;
 import org.alvarowau.repository.AppointmentRepository;
 import org.alvarowau.repository.BookingRepository;
-import org.alvarowau.service.BookingService;
+import org.alvarowau.service.BookingManagementService;
 import org.alvarowau.user.model.entity.Customer;
 import org.alvarowau.user.repository.CustomerRepository;
 import org.springframework.stereotype.Component;
@@ -21,7 +21,7 @@ import java.util.Random;
 @RequiredArgsConstructor
 public class BookingPopulator {
     private final BookingRepository bookingRepository;
-    private final BookingService bookingService;
+    private final BookingManagementService bookingManagementService;
     private final AppointmentRepository appointmentRepository;
     private final CustomerRepository customerRepository;
     private final List<String> cancellationReasons = ListReason();
@@ -52,7 +52,7 @@ public class BookingPopulator {
         }
         List<BookingResponseCreate> bookingResponseCreateList = new ArrayList<>();
         for (BookingRequestTrackingNumber bookingRequestTrackingNumber : bookings) {
-            bookingResponseCreateList.add(bookingService.createBookingByTrackingNumberAppointment(bookingRequestTrackingNumber));
+            bookingResponseCreateList.add(bookingManagementService.createBookingByTrackingNumberAppointment(bookingRequestTrackingNumber));
         }
         return bookingResponseCreateList;
     }
@@ -82,7 +82,7 @@ public class BookingPopulator {
         }
 
         for(CancelBookingRequest cancel: cancelRequests){
-            bookingService.cancelBookingByUser(cancel);
+            bookingManagementService.cancelBookingByUser(cancel);
         }
     }
 

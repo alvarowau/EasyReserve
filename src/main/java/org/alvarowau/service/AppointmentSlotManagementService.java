@@ -5,32 +5,26 @@ import org.alvarowau.exception.schedule.OverlappingTimeSlotsException;
 import org.alvarowau.model.entity.Appointment;
 import org.alvarowau.model.entity.ServiceSchedule;
 import org.alvarowau.model.entity.TimeSlot;
-import org.alvarowau.model.entity.TrackingNumber;
-import org.alvarowau.repository.AppointmentRepository;
-import org.alvarowau.repository.TrackingNumberRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
-import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
 @RequiredArgsConstructor
-public class HorarioTreatment {
+public class AppointmentSlotManagementService {
 
-    private final DateManagementService dateManagementService; // Inyección de DateManagementService
-    private final TrackingNumberService trackingNumberService;
+    private final AppointmentDateManagementService appointmentDateManagementService; // Inyección de DateManagementService
+    private final TrackingNumberManagementService trackingNumberManagementService;
 
     public List<Appointment> generateAvailableAppointments(ServiceSchedule serviceSchedule) {
         List<TimeSlot> timeSlots = serviceSchedule.getTimeSlots();
 
-        validateTimeSlots(timeSlots);
+        validateAndCheckForOverlappingTimeSlots(timeSlots);
 
-        LocalDate availableDate = dateManagementService.findNextAvailableDate(serviceSchedule.getDay());
+        LocalDate availableDate = appointmentDateManagementService.findNextAvailableDateForAppointment(serviceSchedule.getDay());
         List<Appointment> appointments = new ArrayList<>();
 
         for (TimeSlot timeSlot : timeSlots) {
@@ -42,7 +36,7 @@ public class HorarioTreatment {
                 appointment.setStartTime(startTime);
                 appointment.setEndTime(startTime.plusMinutes(serviceSchedule.getServiceOffering().getDuration()));
                 appointment.setAvailable(true);
-                appointment.setTrackingNumber(trackingNumberService.generateTrackingNumber(availableDate));
+                appointment.setTrackingNumber(trackingNumberManagementService.generateTrackingNumberFromDate(availableDate));
                 appointment.setDate(availableDate);
                 appointment.setServiceSchedule(serviceSchedule);
 
@@ -57,8 +51,8 @@ public class HorarioTreatment {
 
 
     // Método para validar los TimeSlots
-    private void validateTimeSlots(List<TimeSlot> timeSlots) {
-        if (checkForOverlappingTimeSlots(timeSlots)) {
+    private void validateAndCheckForOverlappingTimeSlots(List<TimeSlot> timeSlots) {
+        if (areTimeSlotsOverlapping(timeSlots)) {
             throw new OverlappingTimeSlotsException("Los TimeSlots se solapan entre sí.");
         }
         for (TimeSlot timeSlot : timeSlots) {
@@ -72,12 +66,12 @@ public class HorarioTreatment {
     }
 
     // Método privado que verifica si los TimeSlot se solapan
-    private boolean checkForOverlappingTimeSlots(List<TimeSlot> timeSlots) {
+    private boolean areTimeSlotsOverlapping(List<TimeSlot> timeSlots) {
         for (int i = 0; i < timeSlots.size(); i++) {
             TimeSlot current = timeSlots.get(i);
             for (int j = i + 1; j < timeSlots.size(); j++) {
                 TimeSlot next = timeSlots.get(j);
-                if (timeSlotsOverlap(current, next)) {
+                if (doTimeSlotsOverlap(current, next)) {
                     return true; // Hay solapamiento
                 }
             }
@@ -86,11 +80,8 @@ public class HorarioTreatment {
     }
 
     // Método para determinar si dos TimeSlot se solapan
-    private boolean timeSlotsOverlap(TimeSlot first, TimeSlot second) {
+    private boolean doTimeSlotsOverlap(TimeSlot first, TimeSlot second) {
         return first.getStartTime().isBefore(second.getEndTime()) && second.getStartTime().isBefore(first.getEndTime());
     }
-
-
-
 
 }

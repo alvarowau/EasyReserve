@@ -20,15 +20,15 @@ public class BookingNumberGenerator {
                 .orElse(new BookingNumber());
         int newBookingNumber = bookingNumber.getLastNumber() + 1;
         bookingNumber.setLastNumber(newBookingNumber);
-        bookingNumberRepository.save(bookingNumber); // Actualiza en la base de datos
+        bookingNumberRepository.save(bookingNumber);
         return newBookingNumber;
     }
 
     // Método para generar el número de reserva
     public String generateBookingNumber() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
-        String datePart = LocalDate.now().format(formatter); // Formato de la fecha actual
-        int sequenceNumber = getNextBookingNumber(); // Obtiene el siguiente número de secuencia
-        return String.format("BOOK-%s-%04d", datePart, sequenceNumber); // Número de reserva con formato
+        String datePart = LocalDate.now().format(formatter);
+        int sequenceNumber = getNextBookingNumber();
+        return String.format("BOOK-%s-%04d", datePart, sequenceNumber);
     }
 }

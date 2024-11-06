@@ -2,7 +2,7 @@ package org.alvarowau.user.service;
 
 import org.alvarowau.user.model.entity.Customer;
 import org.alvarowau.user.repository.CustomerRepository;
-import org.alvarowau.service.ActionLogService;
+import org.alvarowau.service.ActionLogManagementService;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -12,8 +12,8 @@ public class CustomerAccountService extends AbstractUserAccountService<Customer>
 
     private final CustomerRepository repository;
 
-    public CustomerAccountService(ActionLogService actionLogService, CustomerRepository repository) {
-        super(actionLogService);
+    public CustomerAccountService(ActionLogManagementService actionLogManagementService, CustomerRepository repository) {
+        super(actionLogManagementService);
         this.repository = repository;
     }
 

@@ -9,11 +9,11 @@ import java.time.LocalDate;
 
 @Service
 @RequiredArgsConstructor
-public class DateManagementService {
+public class AppointmentDateManagementService {
 
     private final AppointmentRepository appointmentRepository;
 
-    public LocalDate findNextAvailableDate(DayOfWeek desiredDay) {
+    public LocalDate findNextAvailableDateForAppointment(DayOfWeek desiredDay) {
 
         LocalDate nextDate = LocalDate.now();
 
@@ -21,14 +21,14 @@ public class DateManagementService {
             nextDate = nextDate.plusDays(1);
         }
 
-        while (hasAppointmentsInRange(nextDate)) {
+        while (hasAppointmentsOnDate(nextDate)) {
             nextDate = nextDate.plusWeeks(1);
         }
 
         return nextDate;
     }
 
-    private boolean hasAppointmentsInRange(LocalDate date) {
+    private boolean hasAppointmentsOnDate(LocalDate date) {
         return appointmentRepository.existsByDate(date);
     }
 }

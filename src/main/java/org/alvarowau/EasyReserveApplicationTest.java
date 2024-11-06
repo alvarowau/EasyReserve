@@ -4,7 +4,7 @@ import org.alvarowau.model.entity.Appointment;
 import org.alvarowau.model.entity.ServiceOffering;
 import org.alvarowau.model.entity.ServiceSchedule;
 import org.alvarowau.model.entity.TimeSlot;
-import org.alvarowau.service.HorarioTreatment;
+import org.alvarowau.service.AppointmentSlotManagementService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
@@ -22,7 +22,7 @@ public class EasyReserveApplicationTest {
         ApplicationContext context = SpringApplication.run(EasyReserveApplicationTest.class, args);
 
         // Obtener el bean HorarioTreatment
-        HorarioTreatment horarioTreatment = context.getBean(HorarioTreatment.class);
+        AppointmentSlotManagementService appointmentSlotManagementService = context.getBean(AppointmentSlotManagementService.class);
 
         // Crear un ServiceOffering
         ServiceOffering serviceOffering = new ServiceOffering();
@@ -46,8 +46,8 @@ public class EasyReserveApplicationTest {
         tuesdaySchedule.setTimeSlots(Arrays.asList(tuesdaySlot));
 
         // Generar citas para lunes y martes
-        List<Appointment> mondayAppointments = horarioTreatment.generateAvailableAppointments(mondaySchedule);
-        List<Appointment> tuesdayAppointments = horarioTreatment.generateAvailableAppointments(tuesdaySchedule);
+        List<Appointment> mondayAppointments = appointmentSlotManagementService.generateAvailableAppointments(mondaySchedule);
+        List<Appointment> tuesdayAppointments = appointmentSlotManagementService.generateAvailableAppointments(tuesdaySchedule);
 
         // Imprimir las citas generadas
         System.out.println("Citas generadas para Lunes:");

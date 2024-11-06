@@ -19,41 +19,38 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class ServiceOfferingService {
+public class ServiceOfferingManagementService {
 
     private final ServiceOfferingRepository serviceOfferingRepository;
     private final MapperServiceOffering mapper;
     private final ProviderAccountService providerService;
     private final SecurityContextUtil securityContextUtil;
 
-    public ServiceOfferingResponse createServiceOffering(ServiceOfferingRequest request) {
+    public ServiceOfferingResponse createServiceOfferingForProvider(ServiceOfferingRequest request) {
         ServiceOffering serviceOffering = mapper.toEntity(request);
 
         String authenticatedUsername = securityContextUtil.getAuthenticatedUsername();
         Optional<Provider> optionalProvider = providerService.findByUsername(authenticatedUsername);
         Provider provider = optionalProvider.orElseThrow(() -> {
-            log.error("Proveedor no encontrado para el usuario autenticado: {}", authenticatedUsername);
             return new UserProviderNotFoundException("Proveedor no encontrado para el usuario autenticado.");
         });
 
         serviceOffering.setProvider(provider);
         try {
             serviceOffering = serviceOfferingRepository.save(serviceOffering);
-            log.info("ServiceOffering guardado con Provider: {}", serviceOffering);
         } catch (Exception e) {
-            log.error("Error al guardar ServiceOffering: {}", e.getMessage());
             throw new org.alvarowau.exception.schedule.ServiceOfferingSaveException("No se pudo guardar el ServiceOffering.", e);
         }
 
         return mapper.toResponse(serviceOffering);
     }
 
-    public List<ServiceOfferingResponse> searchServiceOfferingByUsernameProvider(String username) {
+    public List<ServiceOfferingResponse> getServiceOfferingsByProviderUsername(String username) {
         List<ServiceOffering> serviceOfferingList = serviceOfferingRepository.findByProvider_Username(username);
         return serviceOfferingList.stream().map(mapper::toResponse).toList();
     }
 
-    public Optional<ServiceOffering> getServiceOfferingByUsername(String name) {
+    public Optional<ServiceOffering> getServiceOfferingByName(String name) {
         return serviceOfferingRepository.findByName(name);
     }
 }

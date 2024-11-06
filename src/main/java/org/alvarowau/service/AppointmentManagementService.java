@@ -16,7 +16,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class AppointmentService {
+public class AppointmentManagementService {
 
     private final AppointmentRepository appointmentRepository;
     private final MapperAppointment mapperAppointment;

@@ -20,16 +20,16 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class FeedbackService {
+public class FeedbackManagementService {
 
     private final FeedbackRepository feedbackRepository;
-    private final BookingService bookingService;
+    private final BookingManagementService bookingManagementService;
     private final MapperFeedback feedbackMapper;
     private final SecurityContextUtil securityContextUtil;
-    private final ServiceOfferingService serviceOfferingService;
+    private final ServiceOfferingManagementService serviceOfferingManagementService;
 
-    public FeedbackResponse submitFeedback(FeedbackRequest feedbackRequest) {
-        Booking booking = bookingService.findByBookingNumber(feedbackRequest.bookingNumber());
+    public FeedbackResponse submitFeedbackByCustomer(FeedbackRequest feedbackRequest) {
+        Booking booking = bookingManagementService.findByBookingNumber(feedbackRequest.bookingNumber());
         Feedback feedback = buildFeedback(feedbackRequest, booking);
         return feedbackMapper.toFeedbackResponse(feedbackRepository.save(feedback));
     }
@@ -48,15 +48,15 @@ public class FeedbackService {
                 .build();
     }
 
-    public List<FeedbackResponse> getAllFeedbacksByUserUsername() {
+    public List<FeedbackResponse> getAllFeedbacksByCustomer() {
         return feedbackRepository
                 .findByBookingCustomerUsername(securityContextUtil.getAuthenticatedUsername()).stream()
                 .map(feedbackMapper::toFeedbackResponse).toList();
     }
 
     public List<FeedbackResponse> getFeedbacksByServiceOfferingName(String serviceOfferingName) {
-        List<ServiceOfferingResponse> services = serviceOfferingService
-                .searchServiceOfferingByUsernameProvider(securityContextUtil.getAuthenticatedUsername());
+        List<ServiceOfferingResponse> services = serviceOfferingManagementService
+                .getServiceOfferingsByProviderUsername(securityContextUtil.getAuthenticatedUsername());
 
         for (ServiceOfferingResponse service : services) {
             if (service.name().equals(serviceOfferingName)) {

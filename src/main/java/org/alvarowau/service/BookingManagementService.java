@@ -35,21 +35,21 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class BookingService {
+public class BookingManagementService {
 
     private final BookingRepository bookingRepository;
     private final BookingNumberGenerator bookingNumberGenerator;
     private final MapperBooking bookingMapper;
-    private final AppointmentService appointmentService;
+    private final AppointmentManagementService appointmentManagementService;
     private final CustomerAccountService customerService;
     private final SecurityContextUtil securityContextUtil;
-    private final ActionLogService actionLogService;
+    private final ActionLogManagementService actionLogManagementService;
     private final StaffAccountService staffService;
     private final ProviderAccountService providerService;
 
     public BookingResponseCreate createBookingByTrackingNumberAppointment(BookingRequestTrackingNumber bookingRequestTrackingNumber) {
         try {
-            Appointment appointment = appointmentService.findByTrackingNumber(bookingRequestTrackingNumber.trackingNumberAppointment())
+            Appointment appointment = appointmentManagementService.findByTrackingNumber(bookingRequestTrackingNumber.trackingNumberAppointment())
                     .orElseThrow(() -> new AppointmentNotFoundException("Appointment not found with tracking number: "
                             + bookingRequestTrackingNumber.trackingNumberAppointment()));
             Customer customer = getCustomer(bookingRequestTrackingNumber.usernameCustomer());
@@ -62,7 +62,7 @@ public class BookingService {
 
     public BookingResponseCreate createBookingByIdAppointment(BookingRequestId bookingRequestId) {
         try {
-            Appointment appointment = appointmentService.findById(bookingRequestId.id())
+            Appointment appointment = appointmentManagementService.findById(bookingRequestId.id())
                     .orElseThrow(() -> new AppointmentNotFoundException("Appointment not found with id: "
                             + bookingRequestId.id()));
             Customer customer = getCustomer(bookingRequestId.usernameCustomer());
@@ -87,7 +87,7 @@ public class BookingService {
                 .status(BookingStatus.CONFIRMED)
                 .bookingNumber(bookingNumberGenerator.generateBookingNumber())
                 .build();
-        appointmentService.markAppointmentAsUnavailable(appointment);
+        appointmentManagementService.markAppointmentAsUnavailable(appointment);
         return bookingMapper.toResponse(bookingRepository.save(booking));
     }
 
@@ -135,9 +135,9 @@ public class BookingService {
         );
         booking = bookingRepository.save(booking);
         if (booking.getStatus().equals(BookingStatus.CANCELED)) {
-            appointment = appointmentService.restoreAppointmentAvailability(appointment);
+            appointment = appointmentManagementService.restoreAppointmentAvailability(appointment);
             if (appointment.isAvailable()) {
-                actionLogService.saveActionLog(action);
+                actionLogManagementService.saveActionLog(action);
                 return createResponseCancellation(customerUsername, bookingNumber, reason, OperationStatus.SUCCESS);
             } else {
                 log.info("no cambia la apooint");

@@ -1,16 +1,6 @@
 package org.alvarowau;
 
-import org.alvarowau.model.entity.Appointment;
-import org.alvarowau.model.entity.ServiceOffering;
-import org.alvarowau.model.entity.ServiceSchedule;
-import org.alvarowau.model.entity.TimeSlot;
-import org.alvarowau.service.HorarioTreatment;
-import org.alvarowau.user.model.entity.Provider;
-import org.alvarowau.user.model.entity.enums.RoleEnum;
-import org.alvarowau.model.value.Address;
-import org.alvarowau.user.model.value.ContactInfo;
-import org.alvarowau.user.model.value.PersonalInfo;
-import org.alvarowau.user.model.value.UserProfile;
+import org.alvarowau.service.AppointmentSlotManagementService;
 import org.alvarowau.user.repository.CustomerRepository;
 import org.alvarowau.user.repository.ProviderRepository;
 import org.alvarowau.repository.ServiceOfferingRepository;
@@ -21,11 +11,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
-import java.time.DayOfWeek;
-import java.time.LocalTime;
-import java.util.Arrays;
-import java.util.List;
 
 @SpringBootApplication
 public class EasyReserveApplication {
@@ -41,7 +26,7 @@ public class EasyReserveApplication {
                            ServiceScheduleRepository serviceScheduleRepository,
                            AppointmentRepository appointmentRepository,
                            PasswordEncoder passwordEncoder,
-                           HorarioTreatment horarioTreatment) {
+                           AppointmentSlotManagementService appointmentSlotManagementService) {
         return args -> {
 //            // Crear un UserProfile para Provider
 //            UserProfile providerProfile = UserProfile.builder()
