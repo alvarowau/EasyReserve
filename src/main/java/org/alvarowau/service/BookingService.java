@@ -87,6 +87,7 @@ public class BookingService {
                 .status(BookingStatus.CONFIRMED)
                 .bookingNumber(bookingNumberGenerator.generateBookingNumber())
                 .build();
+        appointmentService.markAppointmentAsUnavailable(appointment);
         return bookingMapper.toResponse(bookingRepository.save(booking));
     }
 
@@ -184,4 +185,12 @@ public class BookingService {
     public List<Booking> findAll(){
         return bookingRepository.findAll();
     }
+
+    public List<BookingResponseCreate> listForStaff() {
+        return bookingRepository.findByStatus(BookingStatus.CONFIRMED).stream()
+                .map(bookingMapper::toResponse)
+                .toList();
+    }
+
+
 }

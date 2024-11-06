@@ -10,6 +10,7 @@ import org.alvarowau.model.dto.feedback.ProviderAverageRating;
 import org.alvarowau.model.dto.serviceoffering.ServiceOfferingRequest;
 import org.alvarowau.model.dto.serviceoffering.ServiceOfferingResponse;
 import org.alvarowau.model.dto.serviceoffering.appointment.AppointmentResponse;
+import org.alvarowau.model.dto.serviceoffering.appointment.AppointmentResponseWithId;
 import org.alvarowau.model.dto.serviceoffering.serviceschedule.ServiceScheduleRequest;
 import org.alvarowau.model.dto.serviceoffering.serviceschedule.ServiceScheduleResponse;
 import org.alvarowau.model.entity.Feedback;
@@ -49,6 +50,9 @@ public class AppointmentFacade {
 
     public List<AppointmentResponse> getAvailableAppointmentsByServiceOfferingName(String serviceOfferingName){
         return appointmentService.getAvailableAppointmentsByServiceOfferingName(serviceOfferingName);
+    }
+    public List<AppointmentResponseWithId> getAvailableAppointmentsByServiceOfferingNameWithId(String serviceOfferingName){
+        return appointmentService.getAvailableAppointmentsByServiceOfferingNameWithId(serviceOfferingName);
     }
 
     public List<AppointmentResponse> getAvailableAppointmentsByDate(LocalDate date){
@@ -109,5 +113,9 @@ public class AppointmentFacade {
 
     public ProviderAverageRating getAverageRatingByProviderUsername(String providerUsername){
         return feedbackService.getAverageRatingByProviderUsername(providerUsername);
+    }
+
+    public List<BookingResponseCreate> listForStaff() {
+        return bookingService.listForStaff();
     }
 }

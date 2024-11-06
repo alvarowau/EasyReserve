@@ -17,7 +17,6 @@ public class ActionLogService {
 
     public ActionLogResponseAccountStatusChange generateActionLog(ActionLogResponseAccountStatusChange responseDelete) {
         return responseDelete;
-
     }
 
     public void saveAction(ActionLogDTO action) {

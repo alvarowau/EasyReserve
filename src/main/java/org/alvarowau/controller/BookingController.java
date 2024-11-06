@@ -45,7 +45,7 @@ public class BookingController {
     }
 
     @PreAuthorize("hasAnyRole('CUSTOMER')")
-    @PostMapping("/cancel/customer")
+    @PatchMapping("/cancel/customer")
     public ResponseEntity<BookingCancellationResponse> cancelBookingByUser(@RequestBody CancelBookingRequest request) {
         validateAuthenticatedUser(request.usernameCustomer());
         BookingCancellationResponse bookingCancel = appointmentFacade.cancelBookingByUser(request);
@@ -53,10 +53,17 @@ public class BookingController {
     }
 
     @PreAuthorize("hasRole('STAFF')")
-    @PostMapping("/cancel/staff")
+    @PatchMapping("/cancel/staff")
     public ResponseEntity<BookingCancellationResponse> cancelBookingByStaff(@RequestBody CancelBookingRequest request) {
         BookingCancellationResponse bookingCancel = appointmentFacade.cancelBookingByStaff(request);
         return ResponseEntity.ok(bookingCancel);
+    }
+
+    @PreAuthorize("hasRole('STAFF')")
+    @GetMapping("/bookings/staff")
+    public ResponseEntity<List<BookingResponseCreate>> getBookingsForStaff() {
+        List<BookingResponseCreate> bookings = appointmentFacade.listForStaff();
+        return ResponseEntity.ok(bookings);
     }
 
     @PreAuthorize("hasAnyRole('CUSTOMER')")

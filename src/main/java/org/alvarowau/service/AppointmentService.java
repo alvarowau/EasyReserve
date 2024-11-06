@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.alvarowau.exception.schedule.AppointmentNotFoundException;
 import org.alvarowau.model.dto.mapper.MapperAppointment;
 import org.alvarowau.model.dto.serviceoffering.appointment.AppointmentResponse;
+import org.alvarowau.model.dto.serviceoffering.appointment.AppointmentResponseWithId;
 import org.alvarowau.model.entity.Appointment;
 import org.alvarowau.repository.AppointmentRepository;
 import org.springframework.stereotype.Service;
@@ -71,6 +72,10 @@ public class AppointmentService {
 
     }
 
+    public void markAppointmentAsUnavailable(Appointment appointment) {
+        setAppointmentUnavailable(appointment);
+    }
+
     private Appointment setAppointmentUnavailable(Appointment appointment) {
         appointment.setAvailable(false);
         return appointmentRepository.save(appointment);
@@ -81,4 +86,9 @@ public class AppointmentService {
         return appointmentRepository.save(appointment);
     }
 
+    public List<AppointmentResponseWithId> getAvailableAppointmentsByServiceOfferingNameWithId(String serviceOfferingName) {
+        return appointmentRepository
+                .findByServiceSchedule_ServiceOffering_NameAndIsAvailableTrue(serviceOfferingName)
+                .stream().map(mapperAppointment::toResponseWithId).toList();
+    }
 }
