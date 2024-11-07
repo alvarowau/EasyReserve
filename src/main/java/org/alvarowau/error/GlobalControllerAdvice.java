@@ -21,14 +21,14 @@ public class GlobalControllerAdvice {
 
     @ExceptionHandler(BaseCustomException.class)
     public ResponseEntity<ApiError> handleBaseCustomException(BaseCustomException ex) {
-        log.error("Custom Exception: {}", ex.getMessage());
-        return getApiErrorResponseEntity(ex.getMessage(), HttpStatus.BAD_REQUEST, ex.getErrorCode(), "Error de validación.");
+        log.error("BaseCustomException: ErrorCode: {}, Message: {}", ex.getErrorCode(), ex.getMessage());
+        return getApiErrorResponseEntity(ex.getMessage(), HttpStatus.BAD_REQUEST, ex.getErrorCode(), "Validation error.");
     }
 
     @ExceptionHandler(CustomException.class)
     public ResponseEntity<ApiError> handleCustomException(CustomException ex) {
-        log.error("Custom Exception: {}", ex.getMessage());
-        return getApiErrorResponseEntity(ex.getMessage(), HttpStatus.BAD_REQUEST, "CUSTOM_ERROR", "Error personalizado.");
+        log.error("CustomException: ErrorCode: {}, Message: {}", ex.getErrorCode(), ex.getMessage());
+        return getApiErrorResponseEntity(ex.getMessage(), HttpStatus.BAD_REQUEST, "CUSTOM_ERROR", "Custom error.");
     }
 
     @ExceptionHandler(GenericException.class)

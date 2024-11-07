@@ -47,7 +47,7 @@ public abstract class BaseUser implements Serializable, UserDetails {
     @Enumerated(EnumType.STRING)
     private RoleEnum role;
 
-    public BaseUser(String username, String password, RoleEnum role) {
+    protected BaseUser(String username, String password, RoleEnum role) {
         this.username = username;
         this.password = password;
         this.role = role;

@@ -2,7 +2,7 @@ package org.alvarowau.model.dto.mapper;
 
 
 import lombok.RequiredArgsConstructor;
-import org.alvarowau.model.dto.booking.BookingResponseCreate;
+import org.alvarowau.model.dto.booking.BookingCreationResponse;
 import org.alvarowau.model.entity.Booking;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
@@ -16,8 +16,8 @@ public class MapperBooking {
 
     private final ModelMapper modelMapper;
 
-    public BookingResponseCreate toResponse(Booking booking) {
-        return new BookingResponseCreate(
+    public BookingCreationResponse toResponse(Booking booking) {
+        return new BookingCreationResponse(
                booking.getAppointment().getTrackingNumber(),
                booking.getAppointment().getDate(),
                formatTimeRange(

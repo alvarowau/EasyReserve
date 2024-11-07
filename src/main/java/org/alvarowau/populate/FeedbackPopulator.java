@@ -2,7 +2,7 @@ package org.alvarowau.populate;
 
 
 import lombok.RequiredArgsConstructor;
-import org.alvarowau.model.dto.feedback.FeedbackRequest;
+import org.alvarowau.model.dto.feedback.BookingFeedbackRequest;
 import org.alvarowau.model.entity.Booking;
 import org.alvarowau.service.BookingManagementService;
 import org.alvarowau.service.FeedbackManagementService;
@@ -23,9 +23,9 @@ public class FeedbackPopulator {
 
     public void createFeedbacks() {
         List<Booking> bookings = bookingManagementService.findAll();
-        List<FeedbackRequest> requestList = new ArrayList<>();
+        List<BookingFeedbackRequest> requestList = new ArrayList<>();
         for (Booking booking : bookings) {
-            FeedbackRequest request = new FeedbackRequest(
+            BookingFeedbackRequest request = new BookingFeedbackRequest(
                     booking.getBookingNumber(),
                     getRandomCancellationReason(),
                     random.nextInt(5) + 1
@@ -33,7 +33,7 @@ public class FeedbackPopulator {
             requestList.add(request);
         }
 
-        for (FeedbackRequest request : requestList) {
+        for (BookingFeedbackRequest request : requestList) {
             feedbackManagementService.submitFeedbackByCustomer(request);
         }
 

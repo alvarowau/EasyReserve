@@ -2,7 +2,6 @@ package org.alvarowau.user.service;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.alvarowau.exception.user.InvalidRoleException;
 import org.alvarowau.user.config.security.JwtTokenProvider;
 import org.alvarowau.user.model.dto.LoginResponse;
 import org.alvarowau.user.model.dto.UserRegistrationRequest;
@@ -30,9 +29,7 @@ public class UserSignUpService {
             case RoleEnum.CUSTOMER -> customerService.saveEntity(userEntityMapper.convertToCustomer(request));
             case RoleEnum.PROVIDER -> providerService.saveEntity(userEntityMapper.convertToProvider(request));
             case RoleEnum.STAFF -> staffService.saveEntity(userEntityMapper.convertToStaff(request));
-            default -> throw new InvalidRoleException("Rol no válido para crear el usuario");
         };
-
         return buildAuthResponse(userEntity);
     }
 

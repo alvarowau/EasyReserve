@@ -1,7 +1,7 @@
 package org.alvarowau.model.dto.mapper;
 
 import lombok.RequiredArgsConstructor;
-import org.alvarowau.model.dto.serviceoffering.serviceschedule.ServiceScheduleRequest;
+import org.alvarowau.model.dto.serviceoffering.serviceschedule.ServiceOfferingScheduleRequest;
 import org.alvarowau.model.dto.serviceoffering.serviceschedule.ServiceScheduleResponse;
 import org.alvarowau.model.entity.ServiceOffering;
 import org.alvarowau.model.entity.ServiceSchedule;
@@ -15,7 +15,7 @@ public class MapperServiceSchedule {
     private final ModelMapper modelMapper;
     private final MapperAppointment mapperAppointment;
 
-    public ServiceSchedule toEntity(ServiceScheduleRequest request,ServiceOffering serviceOffering) {
+    public ServiceSchedule toEntity(ServiceOfferingScheduleRequest request, ServiceOffering serviceOffering) {
         return ServiceSchedule.builder()
                 .day(request.day())
                 .serviceOffering(serviceOffering)

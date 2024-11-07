@@ -9,13 +9,18 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serial;
+import java.io.Serializable;
+
 @Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-public class TrackingNumber {
+public class TrackingNumber implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
     @Id
     private Long id = 1L; // Único para que haya solo una fila
     private int lastNumber;

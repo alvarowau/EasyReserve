@@ -2,9 +2,9 @@ package org.alvarowau.model.dto.feedback;
 
 import org.alvarowau.model.enums.FeedbackRating;
 
-public record FeedbackResponse (
+public record ServiceOfferingFeedbackResponse(
         String serviceOfferingName,
-        String CustomerUsername,
+        String customerUsername,
         String feedback,
         FeedbackRating rating
 ){

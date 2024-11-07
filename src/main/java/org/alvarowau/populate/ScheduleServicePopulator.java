@@ -1,7 +1,7 @@
 package org.alvarowau.populate;
 
 import lombok.RequiredArgsConstructor;
-import org.alvarowau.model.dto.serviceoffering.serviceschedule.ServiceScheduleRequest;
+import org.alvarowau.model.dto.serviceoffering.serviceschedule.ServiceOfferingScheduleRequest;
 import org.alvarowau.model.dto.serviceoffering.serviceschedule.ServiceScheduleResponse;
 import org.alvarowau.model.dto.serviceoffering.timeslot.TimeSlotRequest;
 import org.alvarowau.service.ServiceScheduleManagementService;
@@ -39,7 +39,7 @@ public class ScheduleServicePopulator {
                 "Reparacion-Electronica"
         );
 
-        List<ServiceScheduleRequest> schedules = new ArrayList<>();
+        List<ServiceOfferingScheduleRequest> schedules = new ArrayList<>();
 
         for (String serviceName : serviceNames) {
             Set<DayOfWeek> usedDays = new HashSet<>();
@@ -47,13 +47,13 @@ public class ScheduleServicePopulator {
                 DayOfWeek day = getUniqueDayOfWeek(usedDays);
                 if (day != null) {
                     List<TimeSlotRequest> timeSlots = generateTimeSlot(day);
-                    schedules.add(new ServiceScheduleRequest(serviceName, day, timeSlots));
+                    schedules.add(new ServiceOfferingScheduleRequest(serviceName, day, timeSlots));
                 }
             }
         }
 
         List<ServiceScheduleResponse> responses = new ArrayList<>();
-        for (ServiceScheduleRequest schedule : schedules) {
+        for (ServiceOfferingScheduleRequest schedule : schedules) {
             ServiceScheduleResponse response = serviceScheduleManagementService.createServiceScheduleForProvider(schedule);
             responses.add(response);
         }

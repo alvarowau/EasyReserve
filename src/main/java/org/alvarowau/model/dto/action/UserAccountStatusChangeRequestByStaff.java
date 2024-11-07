@@ -1,5 +1,5 @@
 package org.alvarowau.model.dto.action;
 
-public record UserAccountStatusChangeRequestByStaff(String usernameDelete, String reason) {
+public record UserAccountStatusChangeRequestByStaff(String usernameToDelete, String deletionReason) {
 
 }

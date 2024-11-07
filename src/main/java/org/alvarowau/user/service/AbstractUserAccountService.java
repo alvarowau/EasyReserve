@@ -1,7 +1,7 @@
 package org.alvarowau.user.service;
 
 import org.alvarowau.model.dto.action.ActionLogDTO;
-import org.alvarowau.model.dto.action.ActionLogResponseAccountStatusChange;
+import org.alvarowau.model.dto.action.AccountStatusChangeActionLogResponse;
 import org.alvarowau.model.enums.ActionType;
 import org.alvarowau.service.ActionLogManagementService;
 import org.alvarowau.user.model.entity.BaseUser;
@@ -20,15 +20,15 @@ public abstract class AbstractUserAccountService<T extends BaseUser> implements 
     protected abstract T saveEntity(T entity);
 
     @Override
-    public ActionLogResponseAccountStatusChange deactivateUserAccount(ActionLogResponseAccountStatusChange delete) {
+    public AccountStatusChangeActionLogResponse deactivateUserAccount(AccountStatusChangeActionLogResponse delete) {
         return deactivateUserAccountInternal(delete, null, false);
     }
 
-    public ActionLogResponseAccountStatusChange deactivateUserAccountByStaff(ActionLogResponseAccountStatusChange delete, Long staffId, boolean active) {
+    public AccountStatusChangeActionLogResponse deactivateUserAccountByStaff(AccountStatusChangeActionLogResponse delete, Long staffId, boolean active) {
         return deactivateUserAccountInternal(delete, staffId, active);
     }
 
-    private ActionLogResponseAccountStatusChange deactivateUserAccountInternal(ActionLogResponseAccountStatusChange delete, Long staffId, boolean active) {
+    private AccountStatusChangeActionLogResponse deactivateUserAccountInternal(AccountStatusChangeActionLogResponse delete, Long staffId, boolean active) {
         Optional<T> optionalEntity = findByUsername(staffId == null ? delete.getInitiatorUsername() : delete.getTargetUsername());
         if (optionalEntity.isPresent()) {
             T entity = optionalEntity.get();
@@ -42,7 +42,6 @@ public abstract class AbstractUserAccountService<T extends BaseUser> implements 
                         entity.getId(),
                         delete.getReason()
                 );
-                System.out.println(action);
                 actionLogManagementService.saveActionLog(action);
                 delete.setSuccessful(true);
                 return delete;

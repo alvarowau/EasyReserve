@@ -15,5 +15,5 @@ public class ActionSummary {
     private String initiatorUsername;
     private String targetUsername;
     private String reason;
-    private LocalDate date;
+    private LocalDate actionDate;
 }

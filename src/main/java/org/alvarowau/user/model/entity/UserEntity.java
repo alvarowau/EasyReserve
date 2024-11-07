@@ -33,7 +33,7 @@ public abstract class UserEntity extends BaseUser {
     @Column(updatable = false)
     private LocalDateTime createdAt;
 
-    public UserEntity(String username, String password, RoleEnum role, String email, UserProfile userProfile) {
+    protected UserEntity(String username, String password, RoleEnum role, String email, UserProfile userProfile) {
         super(username, password, role);
         this.email = email;
         this.userProfile = userProfile;

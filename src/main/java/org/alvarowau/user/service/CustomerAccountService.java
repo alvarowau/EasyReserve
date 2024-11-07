@@ -23,17 +23,8 @@ public class CustomerAccountService extends AbstractUserAccountService<Customer>
     }
 
     @Override
-    public Optional<Customer> findById(Long id) {
-        return repository.findById(id);
-    }
-
-    @Override
     public Optional<Customer> findByUsername(String username) {
         return repository.findByUsername(username);
     }
 
-    @Override
-    public Optional<Customer> findByEmail(String email) {
-        return repository.findByEmail(email);
-    }
 }

@@ -24,6 +24,6 @@ public class ApiError {
     @NonNull
     private String mensaje;
 
-    private String errorCode; // Código de error personalizado
-    private String details;    // Detalles adicionales del error
+    private String errorCode;
+    private String details;
 }

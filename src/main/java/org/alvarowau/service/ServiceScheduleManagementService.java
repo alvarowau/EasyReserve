@@ -8,7 +8,7 @@ import org.alvarowau.exception.schedule.ServiceOfferingNotFoundException;
 import org.alvarowau.exception.schedule.TimeSlotMappingException;
 import org.alvarowau.model.dto.mapper.MapperServiceSchedule;
 import org.alvarowau.model.dto.mapper.MapperTimeSlot;
-import org.alvarowau.model.dto.serviceoffering.serviceschedule.ServiceScheduleRequest;
+import org.alvarowau.model.dto.serviceoffering.serviceschedule.ServiceOfferingScheduleRequest;
 import org.alvarowau.model.dto.serviceoffering.serviceschedule.ServiceScheduleResponse;
 import org.alvarowau.model.entity.ServiceOffering;
 import org.alvarowau.model.entity.ServiceSchedule;
@@ -30,7 +30,7 @@ public class ServiceScheduleManagementService {
     private final AppointmentSlotManagementService appointmentSlotManagementService;
     private final ServiceScheduleRepository serviceScheduleRepository;
 
-    public ServiceScheduleResponse createServiceScheduleForProvider(ServiceScheduleRequest request) {
+    public ServiceScheduleResponse createServiceScheduleForProvider(ServiceOfferingScheduleRequest request) {
         if (request.slotRequestList() == null || request.slotRequestList().isEmpty()) {
             log.error("La lista de slotRequestList está vacía.");
             throw new EmptySlotListException("La lista de slots no puede estar vacía.");

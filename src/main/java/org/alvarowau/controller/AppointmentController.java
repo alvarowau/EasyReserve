@@ -2,8 +2,8 @@ package org.alvarowau.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.alvarowau.model.dto.serviceoffering.appointment.AppointmentResponse;
-import org.alvarowau.model.dto.serviceoffering.appointment.AppointmentResponseWithId;
+import org.alvarowau.model.dto.serviceoffering.appointment.ServiceAppointmentResponse;
+import org.alvarowau.model.dto.serviceoffering.appointment.ServiceAppointmentResponseWithId;
 import org.alvarowau.service.AppointmentFacade;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
@@ -24,25 +24,25 @@ public class AppointmentController {
 
     @PreAuthorize("hasAnyRole('STAFF', 'CUSTOMER', 'PROVIDER')")
     @GetMapping("/available/by-provider/{username}")
-    public ResponseEntity<List<AppointmentResponse>> getAvailableAppointmentsForProvider(@PathVariable String username) {
+    public ResponseEntity<List<ServiceAppointmentResponse>> getAvailableAppointmentsForProvider(@PathVariable String username) {
         return ResponseEntity.ok(appointmentFacade.getAvailableAppointmentsByProvider(username));
     }
 
     @PreAuthorize("hasAnyRole('STAFF', 'CUSTOMER', 'PROVIDER')")
     @GetMapping("/available/by-service-offering/{serviceOfferingName}")
-    public ResponseEntity<List<AppointmentResponse>> getAvailableAppointmentsForServiceOffering(@PathVariable String serviceOfferingName) {
+    public ResponseEntity<List<ServiceAppointmentResponse>> getAvailableAppointmentsForServiceOffering(@PathVariable String serviceOfferingName) {
         return ResponseEntity.ok(appointmentFacade.getAvailableAppointmentsByServiceOfferingName(serviceOfferingName));
     }
 
     @PreAuthorize("hasAnyRole('STAFF', 'CUSTOMER', 'PROVIDER')")
     @GetMapping("/available/by-service-offering/id/{serviceOfferingName}")
-    public ResponseEntity<List<AppointmentResponseWithId>> getAvailableAppointmentsForServiceOfferingAndId(@PathVariable String serviceOfferingName) {
+    public ResponseEntity<List<ServiceAppointmentResponseWithId>> getAvailableAppointmentsForServiceOfferingAndId(@PathVariable String serviceOfferingName) {
         return ResponseEntity.ok(appointmentFacade.getAvailableAppointmentsByServiceOfferingNameWithId(serviceOfferingName));
     }
 
     @PreAuthorize("hasAnyRole('STAFF', 'CUSTOMER', 'PROVIDER')")
     @GetMapping("/available/by-date/{date}")
-    public ResponseEntity<List<AppointmentResponse>> getAvailableAppointmentsByDate(@PathVariable String date) {
+    public ResponseEntity<List<ServiceAppointmentResponse>> getAvailableAppointmentsByDate(@PathVariable String date) {
         try {
             LocalDate parsedDate = LocalDate.parse(date);
             return ResponseEntity.ok(appointmentFacade.getAvailableAppointmentsByDate(parsedDate));
@@ -53,7 +53,7 @@ public class AppointmentController {
 
     @PreAuthorize("hasAnyRole('STAFF', 'CUSTOMER', 'PROVIDER')")
     @GetMapping("/available/by-date-range")
-    public ResponseEntity<List<AppointmentResponse>> getAvailableAppointmentsByDateRange(
+    public ResponseEntity<List<ServiceAppointmentResponse>> getAvailableAppointmentsByDateRange(
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
         if (startDate.isAfter(endDate)) {

@@ -6,6 +6,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.alvarowau.user.model.entity.Provider;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,8 +18,9 @@ import java.util.List;
 @Entity
 @Builder
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-public class ServiceOffering {
-
+public class ServiceOffering implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

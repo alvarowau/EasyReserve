@@ -3,8 +3,8 @@ package org.alvarowau.service;
 import lombok.RequiredArgsConstructor;
 import org.alvarowau.config.utils.SecurityContextUtil;
 import org.alvarowau.exception.schedule.ServiceOfferingNotFoundException;
-import org.alvarowau.model.dto.feedback.FeedbackRequest;
-import org.alvarowau.model.dto.feedback.FeedbackResponse;
+import org.alvarowau.model.dto.feedback.BookingFeedbackRequest;
+import org.alvarowau.model.dto.feedback.ServiceOfferingFeedbackResponse;
 import org.alvarowau.model.dto.feedback.ProviderAverageRating;
 import org.alvarowau.model.dto.mapper.MapperFeedback;
 import org.alvarowau.model.dto.serviceoffering.ServiceOfferingResponse;
@@ -28,14 +28,14 @@ public class FeedbackManagementService {
     private final SecurityContextUtil securityContextUtil;
     private final ServiceOfferingManagementService serviceOfferingManagementService;
 
-    public FeedbackResponse submitFeedbackByCustomer(FeedbackRequest feedbackRequest) {
-        Booking booking = bookingManagementService.findByBookingNumber(feedbackRequest.bookingNumber());
-        Feedback feedback = buildFeedback(feedbackRequest, booking);
+    public ServiceOfferingFeedbackResponse submitFeedbackByCustomer(BookingFeedbackRequest bookingFeedbackRequest) {
+        Booking booking = bookingManagementService.findByBookingNumber(bookingFeedbackRequest.bookingNumber());
+        Feedback feedback = buildFeedback(bookingFeedbackRequest, booking);
         return feedbackMapper.toFeedbackResponse(feedbackRepository.save(feedback));
     }
 
-    private Feedback buildFeedback(FeedbackRequest feedbackRequest, Booking booking) {
-        int rating = feedbackRequest.rating();
+    private Feedback buildFeedback(BookingFeedbackRequest bookingFeedbackRequest, Booking booking) {
+        int rating = bookingFeedbackRequest.rating();
         if (rating > 5) {
             rating = 5;
         } else if (rating < 1) {
@@ -43,18 +43,18 @@ public class FeedbackManagementService {
         }
         return Feedback.builder()
                 .booking(booking)
-                .comment(feedbackRequest.feedback())
+                .comment(bookingFeedbackRequest.feedback())
                 .rating(FeedbackRating.fromValue(rating))
                 .build();
     }
 
-    public List<FeedbackResponse> getAllFeedbacksByCustomer() {
+    public List<ServiceOfferingFeedbackResponse> getAllFeedbacksByCustomer() {
         return feedbackRepository
                 .findByBookingCustomerUsername(securityContextUtil.getAuthenticatedUsername()).stream()
                 .map(feedbackMapper::toFeedbackResponse).toList();
     }
 
-    public List<FeedbackResponse> getFeedbacksByServiceOfferingName(String serviceOfferingName) {
+    public List<ServiceOfferingFeedbackResponse> getFeedbacksByServiceOfferingName(String serviceOfferingName) {
         List<ServiceOfferingResponse> services = serviceOfferingManagementService
                 .getServiceOfferingsByProviderUsername(securityContextUtil.getAuthenticatedUsername());
 
@@ -71,7 +71,7 @@ public class FeedbackManagementService {
         throw new ServiceOfferingNotFoundException(serviceOfferingName);
     }
 
-    public List<FeedbackResponse> getFeedbacksByProviderUsername(String providerUsername) {
+    public List<ServiceOfferingFeedbackResponse> getFeedbacksByProviderUsername(String providerUsername) {
         return feedbackRepository
                 .findByBookingAppointmentServiceScheduleServiceOfferingProviderUsername(providerUsername)
                 .stream().map(feedbackMapper::toFeedbackResponse).toList();

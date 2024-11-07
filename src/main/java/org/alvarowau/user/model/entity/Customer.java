@@ -7,7 +7,6 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.alvarowau.model.entity.Appointment;
 import org.alvarowau.model.entity.Booking;
 import org.alvarowau.user.model.entity.enums.RoleEnum;
 import org.alvarowau.user.model.value.UserProfile;

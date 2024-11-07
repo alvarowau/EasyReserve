@@ -41,8 +41,7 @@ public class JwtTokenProvider {
 
         List<String> authorities = authentication.getAuthorities()
                 .stream()
-                .map(GrantedAuthority::getAuthority)
-                .collect(Collectors.toList());
+                .map(GrantedAuthority::getAuthority).toList();
 
         log.info("Creando token JWT para usuario: {}", username);
         log.info("Roles asignados al usuario: {}", authorities);

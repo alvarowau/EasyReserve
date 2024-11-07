@@ -7,6 +7,9 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.alvarowau.model.enums.FeedbackRating;
 
+import java.io.Serial;
+import java.io.Serializable;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -14,7 +17,9 @@ import org.alvarowau.model.enums.FeedbackRating;
 @Entity
 @Builder
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-public class Feedback {
+public class Feedback implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

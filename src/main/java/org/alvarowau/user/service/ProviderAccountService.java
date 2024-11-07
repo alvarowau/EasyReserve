@@ -18,18 +18,8 @@ public class ProviderAccountService extends AbstractUserAccountService<Provider>
     }
 
     @Override
-    public Optional<Provider> findById(Long id) {
-        return repository.findById(id);
-    }
-
-    @Override
     public Optional<Provider> findByUsername(String username) {
         return repository.findByUsername(username);
-    }
-
-    @Override
-    public Optional<Provider> findByEmail(String email) {
-        return repository.findByEmail(email);
     }
 
     @Override

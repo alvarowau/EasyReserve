@@ -50,8 +50,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 log.info("Roles extraídos del token: {}", authoritiesList);
 
                 Collection<? extends GrantedAuthority> authorities = authoritiesList.stream()
-                        .map(SimpleGrantedAuthority::new)
-                        .collect(Collectors.toList());
+                        .map(SimpleGrantedAuthority::new).toList();
 
                 Authentication authentication = new UsernamePasswordAuthenticationToken(username, null, authorities);
                 SecurityContextHolder.getContext().setAuthentication(authentication);

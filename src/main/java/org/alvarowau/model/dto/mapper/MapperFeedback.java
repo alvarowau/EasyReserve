@@ -2,9 +2,7 @@ package org.alvarowau.model.dto.mapper;
 
 
 import lombok.RequiredArgsConstructor;
-import org.alvarowau.model.dto.feedback.FeedbackRequest;
-import org.alvarowau.model.dto.feedback.FeedbackResponse;
-import org.alvarowau.model.entity.Booking;
+import org.alvarowau.model.dto.feedback.ServiceOfferingFeedbackResponse;
 import org.alvarowau.model.entity.Feedback;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
@@ -15,8 +13,8 @@ public class MapperFeedback {
 
     private final ModelMapper modelMapper;
 
-    public FeedbackResponse toFeedbackResponse(Feedback feedback) {
-        return new FeedbackResponse(
+    public ServiceOfferingFeedbackResponse toFeedbackResponse(Feedback feedback) {
+        return new ServiceOfferingFeedbackResponse(
                 feedback.getBooking().getAppointment().getServiceSchedule().getServiceOffering().getName(),
                 feedback.getBooking().getCustomer().getUsername(),
                 feedback.getComment(),

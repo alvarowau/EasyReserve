@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.alvarowau.model.dto.mapper.MapperServiceSchedule;
 import org.alvarowau.model.dto.mapper.MapperTimeSlot;
-import org.alvarowau.model.dto.serviceoffering.serviceschedule.ServiceScheduleRequest;
+import org.alvarowau.model.dto.serviceoffering.serviceschedule.ServiceOfferingScheduleRequest;
 import org.alvarowau.model.dto.serviceoffering.serviceschedule.ServiceScheduleResponse;
 import org.alvarowau.service.AppointmentFacade;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +27,7 @@ public class ServiceScheduleController {
 
     @PreAuthorize("hasRole('PROVIDER')")
     @PostMapping
-    public ResponseEntity<ServiceScheduleResponse> createServiceSchedule(@Valid @RequestBody ServiceScheduleRequest request) {
+    public ResponseEntity<ServiceScheduleResponse> createServiceSchedule(@Valid @RequestBody ServiceOfferingScheduleRequest request) {
         ServiceScheduleResponse response = appointmentFacade.createServiceSchedule(request);
         return ResponseEntity.ok(response);
     }

@@ -7,6 +7,9 @@ import lombok.*;
 import org.alvarowau.model.enums.BookingStatus;
 import org.alvarowau.user.model.entity.Customer;
 
+import java.io.Serial;
+import java.io.Serializable;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -14,7 +17,9 @@ import org.alvarowau.user.model.entity.Customer;
 @Entity
 @Builder
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-public class Booking {
+public class Booking implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -30,7 +30,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -47,12 +46,12 @@ public class BookingManagementService {
     private final StaffAccountService staffService;
     private final ProviderAccountService providerService;
 
-    public BookingResponseCreate createBookingByTrackingNumberAppointment(BookingRequestTrackingNumber bookingRequestTrackingNumber) {
+    public BookingCreationResponse createBookingByTrackingNumberAppointment(BookingRequestByTrackingNumber bookingRequestByTrackingNumber) {
         try {
-            Appointment appointment = appointmentManagementService.findByTrackingNumber(bookingRequestTrackingNumber.trackingNumberAppointment())
+            Appointment appointment = appointmentManagementService.findByTrackingNumber(bookingRequestByTrackingNumber.appointmentTrackingNumber())
                     .orElseThrow(() -> new AppointmentNotFoundException("Appointment not found with tracking number: "
-                            + bookingRequestTrackingNumber.trackingNumberAppointment()));
-            Customer customer = getCustomer(bookingRequestTrackingNumber.usernameCustomer());
+                            + bookingRequestByTrackingNumber.appointmentTrackingNumber()));
+            Customer customer = getCustomer(bookingRequestByTrackingNumber.customerUsername());
 
             return createBooking(customer, appointment);
         } catch (OptimisticLockException e) {
@@ -60,12 +59,12 @@ public class BookingManagementService {
         }
     }
 
-    public BookingResponseCreate createBookingByIdAppointment(BookingRequestId bookingRequestId) {
+    public BookingCreationResponse createBookingByIdAppointment(BookingRequestById bookingRequestById) {
         try {
-            Appointment appointment = appointmentManagementService.findById(bookingRequestId.id())
+            Appointment appointment = appointmentManagementService.findById(bookingRequestById.id())
                     .orElseThrow(() -> new AppointmentNotFoundException("Appointment not found with id: "
-                            + bookingRequestId.id()));
-            Customer customer = getCustomer(bookingRequestId.usernameCustomer());
+                            + bookingRequestById.id()));
+            Customer customer = getCustomer(bookingRequestById.usernameCustomer());
 
 
             return createBooking(customer, appointment);
@@ -80,7 +79,7 @@ public class BookingManagementService {
                         + usernameCustomer));
     }
 
-    private BookingResponseCreate createBooking(Customer customer, Appointment appointment) {
+    private BookingCreationResponse createBooking(Customer customer, Appointment appointment) {
         Booking booking = Booking.builder()
                 .appointment(appointment)
                 .customer(customer)
@@ -97,29 +96,29 @@ public class BookingManagementService {
                         + bookingNumber));
     }
 
-    public BookingCancellationResponse cancelBookingByUser(CancelBookingRequest request) {
+    public BookingCancellationStatusResponse cancelBookingByUser(BookingCancellationRequest request) {
         return cancelBooking(request.bookingNumber(),
-                request.usernameCustomer(),
+                request.customerUsername(),
                 request.reason(),
                 false);
     }
 
-    public BookingCancellationResponse cancelBookingByStaff(CancelBookingRequest request) {
+    public BookingCancellationStatusResponse cancelBookingByStaff(BookingCancellationRequest request) {
         if (!securityContextUtil.getUserRole().equals(RoleEnum.STAFF.toString())) {
             throw new InvalidRoleException("User does not have permission to cancel bookings.");
         }
         return cancelBooking(request.bookingNumber(),
-                request.usernameCustomer(),
+                request.customerUsername(),
                 request.reason(),
                 true);
     }
 
-    private BookingCancellationResponse cancelBooking(String bookingNumber, String customerUsername, String reason, boolean isStaff) {
+    private BookingCancellationStatusResponse cancelBooking(String bookingNumber, String customerUsername, String reason, boolean isStaff) {
         Booking booking = findByBookingNumber(bookingNumber);
         booking.setStatus(BookingStatus.CANCELED);
         Appointment appointment = booking.getAppointment();
         Customer customer = getCustomer(customerUsername);
-        Long userId = null;
+        Long userId;
         if (isStaff) {
             Staff staff = staffService.findByUsername(securityContextUtil.getAuthenticatedUsername())
                     .orElseThrow(() -> new StaffNotFoundException("Staff not found with username: "));
@@ -149,8 +148,8 @@ public class BookingManagementService {
 
     }
 
-    private BookingCancellationResponse createResponseCancellation(String customerUsername, String bookingNumber, String reason, OperationStatus status) {
-        return new BookingCancellationResponse(
+    private BookingCancellationStatusResponse createResponseCancellation(String customerUsername, String bookingNumber, String reason, OperationStatus status) {
+        return new BookingCancellationStatusResponse(
                 customerUsername, bookingNumber, reason, status
         );
     }
@@ -162,8 +161,7 @@ public class BookingManagementService {
                 .map(booking -> new BookingHistoryResponse(
                         booking.getBookingNumber(),
                         booking.getAppointment().getDate().toString(),
-                        booking.getStatus()))
-                .collect(Collectors.toList());
+                        booking.getStatus())).toList();
     }
 
     public List<BookingHistoryResponse> getBookingHistory(LocalDate startDate, LocalDate endDate) {
@@ -186,7 +184,7 @@ public class BookingManagementService {
         return bookingRepository.findAll();
     }
 
-    public List<BookingResponseCreate> listForStaff() {
+    public List<BookingCreationResponse> listForStaff() {
         return bookingRepository.findByStatus(BookingStatus.CONFIRMED).stream()
                 .map(bookingMapper::toResponse)
                 .toList();

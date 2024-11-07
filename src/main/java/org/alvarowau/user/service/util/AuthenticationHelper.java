@@ -10,6 +10,8 @@ import java.util.List;
 
 public class AuthenticationHelper {
 
+    private AuthenticationHelper() {}
+
     public static void validatePasswordsMatch(String password, String passwordRepeat) {
         if (!password.equals(passwordRepeat)) {
             throw new PasswordsDoNotMatchException("Las contraseñas no coinciden.");

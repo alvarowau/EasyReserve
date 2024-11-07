@@ -4,14 +4,14 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.alvarowau.model.dto.booking.BookingHistoryResponse;
 import org.alvarowau.model.dto.booking.*;
-import org.alvarowau.model.dto.feedback.FeedbackRequest;
-import org.alvarowau.model.dto.feedback.FeedbackResponse;
+import org.alvarowau.model.dto.feedback.BookingFeedbackRequest;
+import org.alvarowau.model.dto.feedback.ServiceOfferingFeedbackResponse;
 import org.alvarowau.model.dto.feedback.ProviderAverageRating;
 import org.alvarowau.model.dto.serviceoffering.ServiceOfferingRequest;
 import org.alvarowau.model.dto.serviceoffering.ServiceOfferingResponse;
-import org.alvarowau.model.dto.serviceoffering.appointment.AppointmentResponse;
-import org.alvarowau.model.dto.serviceoffering.appointment.AppointmentResponseWithId;
-import org.alvarowau.model.dto.serviceoffering.serviceschedule.ServiceScheduleRequest;
+import org.alvarowau.model.dto.serviceoffering.appointment.ServiceAppointmentResponse;
+import org.alvarowau.model.dto.serviceoffering.appointment.ServiceAppointmentResponseWithId;
+import org.alvarowau.model.dto.serviceoffering.serviceschedule.ServiceOfferingScheduleRequest;
 import org.alvarowau.model.dto.serviceoffering.serviceschedule.ServiceScheduleResponse;
 import org.springframework.stereotype.Service;
 
@@ -34,7 +34,7 @@ public class AppointmentFacade {
         return serviceOfferingManagementService.createServiceOfferingForProvider(request);
     }
 
-    public ServiceScheduleResponse createServiceSchedule(ServiceScheduleRequest request) {
+    public ServiceScheduleResponse createServiceSchedule(ServiceOfferingScheduleRequest request) {
         return serviceScheduleManagementService.createServiceScheduleForProvider(request);
     }
 
@@ -42,22 +42,22 @@ public class AppointmentFacade {
         return serviceOfferingManagementService.getServiceOfferingsByProviderUsername(username);
     }
 
-    public List<AppointmentResponse> getAvailableAppointmentsByProvider(String username){
+    public List<ServiceAppointmentResponse> getAvailableAppointmentsByProvider(String username){
         return appointmentManagementService.getAvailableAppointmentsByProviderUsername(username);
     }
 
-    public List<AppointmentResponse> getAvailableAppointmentsByServiceOfferingName(String serviceOfferingName){
+    public List<ServiceAppointmentResponse> getAvailableAppointmentsByServiceOfferingName(String serviceOfferingName){
         return appointmentManagementService.getAvailableAppointmentsByServiceOfferingName(serviceOfferingName);
     }
-    public List<AppointmentResponseWithId> getAvailableAppointmentsByServiceOfferingNameWithId(String serviceOfferingName){
+    public List<ServiceAppointmentResponseWithId> getAvailableAppointmentsByServiceOfferingNameWithId(String serviceOfferingName){
         return appointmentManagementService.getAvailableAppointmentsByServiceOfferingNameWithId(serviceOfferingName);
     }
 
-    public List<AppointmentResponse> getAvailableAppointmentsByDate(LocalDate date){
+    public List<ServiceAppointmentResponse> getAvailableAppointmentsByDate(LocalDate date){
         return appointmentManagementService.getAvailableAppointmentsByDate(date);
     }
 
-    public List<AppointmentResponse> getAvailableAppointmentsByDateRange(LocalDate startDate, LocalDate endDate) {
+    public List<ServiceAppointmentResponse> getAvailableAppointmentsByDateRange(LocalDate startDate, LocalDate endDate) {
         return appointmentManagementService.getAvailableAppointmentsByDateRange(startDate,endDate);
     }
 
@@ -69,19 +69,19 @@ public class AppointmentFacade {
         return appointmentManagementService.isAppointmentAvailableById(id);
     }
 
-    public BookingResponseCreate createBookingByTrackingNumberAppointment(BookingRequestTrackingNumber bookingRequestTrackingNumber){
-        return bookingManagementService.createBookingByTrackingNumberAppointment(bookingRequestTrackingNumber);
+    public BookingCreationResponse createBookingByTrackingNumberAppointment(BookingRequestByTrackingNumber bookingRequestByTrackingNumber){
+        return bookingManagementService.createBookingByTrackingNumberAppointment(bookingRequestByTrackingNumber);
     }
 
-    public BookingResponseCreate createBookingByIdAppointment(BookingRequestId bookingRequestId){
-        return bookingManagementService.createBookingByIdAppointment(bookingRequestId);
+    public BookingCreationResponse createBookingByIdAppointment(BookingRequestById bookingRequestById){
+        return bookingManagementService.createBookingByIdAppointment(bookingRequestById);
     }
 
-    public BookingCancellationResponse cancelBookingByUser(CancelBookingRequest request) {
+    public BookingCancellationStatusResponse cancelBookingByUser(BookingCancellationRequest request) {
         return bookingManagementService.cancelBookingByUser(request);
     }
 
-    public BookingCancellationResponse cancelBookingByStaff(CancelBookingRequest request) {
+    public BookingCancellationStatusResponse cancelBookingByStaff(BookingCancellationRequest request) {
         return bookingManagementService.cancelBookingByStaff(request);
     }
 
@@ -93,19 +93,19 @@ public class AppointmentFacade {
         return bookingManagementService.getBookingHistory(startDate,endDate);
     }
 
-    public FeedbackResponse submitFeedback(FeedbackRequest request) {
+    public ServiceOfferingFeedbackResponse submitFeedback(BookingFeedbackRequest request) {
         return feedbackManagementService.submitFeedbackByCustomer(request);
     }
 
-    public List<FeedbackResponse> getAllFeedbacksByUserUsername(){
+    public List<ServiceOfferingFeedbackResponse> getAllFeedbacksByUserUsername(){
         return feedbackManagementService.getAllFeedbacksByCustomer();
     }
 
-    public List<FeedbackResponse> getFeedbacksByServiceOfferingName(String serviceOfferingName){
+    public List<ServiceOfferingFeedbackResponse> getFeedbacksByServiceOfferingName(String serviceOfferingName){
         return feedbackManagementService.getFeedbacksByServiceOfferingName(serviceOfferingName);
     }
 
-    public List<FeedbackResponse> getFeedbacksByProviderUsername(String providerUsername){
+    public List<ServiceOfferingFeedbackResponse> getFeedbacksByProviderUsername(String providerUsername){
         return feedbackManagementService.getFeedbacksByProviderUsername(providerUsername);
     }
 
@@ -113,7 +113,7 @@ public class AppointmentFacade {
         return feedbackManagementService.getAverageRatingByProviderUsername(providerUsername);
     }
 
-    public List<BookingResponseCreate> getBookingsForStaff() {
+    public List<BookingCreationResponse> getBookingsForStaff() {
         return bookingManagementService.listForStaff();
     }
 }

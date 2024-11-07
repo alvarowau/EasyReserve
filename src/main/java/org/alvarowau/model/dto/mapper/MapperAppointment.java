@@ -1,8 +1,8 @@
 package org.alvarowau.model.dto.mapper;
 
 import lombok.RequiredArgsConstructor;
-import org.alvarowau.model.dto.serviceoffering.appointment.AppointmentResponse;
-import org.alvarowau.model.dto.serviceoffering.appointment.AppointmentResponseWithId;
+import org.alvarowau.model.dto.serviceoffering.appointment.ServiceAppointmentResponse;
+import org.alvarowau.model.dto.serviceoffering.appointment.ServiceAppointmentResponseWithId;
 import org.alvarowau.model.entity.Appointment;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
@@ -13,8 +13,8 @@ public class MapperAppointment {
 
     private final ModelMapper modelMapper;
 
-    public AppointmentResponse toResponse(Appointment appointment) {
-        return new AppointmentResponse(
+    public ServiceAppointmentResponse toResponse(Appointment appointment) {
+        return new ServiceAppointmentResponse(
                 appointment.getTrackingNumber(),
                 appointment.getServiceSchedule().getServiceOffering().getName(),
                 appointment.getDate(),
@@ -23,8 +23,8 @@ public class MapperAppointment {
         );
     }
 
-    public AppointmentResponseWithId toResponseWithId(Appointment appointment) {
-        return new AppointmentResponseWithId(
+    public ServiceAppointmentResponseWithId toResponseWithId(Appointment appointment) {
+        return new ServiceAppointmentResponseWithId(
                 appointment.getId(),
                 appointment.getTrackingNumber(),
                 appointment.getServiceSchedule().getServiceOffering().getName(),

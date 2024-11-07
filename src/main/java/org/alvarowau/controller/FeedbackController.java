@@ -1,8 +1,8 @@
 package org.alvarowau.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.alvarowau.model.dto.feedback.FeedbackRequest;
-import org.alvarowau.model.dto.feedback.FeedbackResponse;
+import org.alvarowau.model.dto.feedback.BookingFeedbackRequest;
+import org.alvarowau.model.dto.feedback.ServiceOfferingFeedbackResponse;
 import org.alvarowau.model.dto.feedback.ProviderAverageRating;
 import org.alvarowau.service.AppointmentFacade;
 import org.springframework.http.ResponseEntity;
@@ -21,28 +21,28 @@ public class FeedbackController {
     // Endpoint para que un cliente cree un feedback
     @PreAuthorize("hasRole('CUSTOMER')")
     @PostMapping
-    public ResponseEntity<FeedbackResponse> createFeedback(@RequestBody FeedbackRequest feedbackRequest) {
-        return ResponseEntity.ok(appointmentFacade.submitFeedback(feedbackRequest));
+    public ResponseEntity<ServiceOfferingFeedbackResponse> createFeedback(@RequestBody BookingFeedbackRequest bookingFeedbackRequest) {
+        return ResponseEntity.ok(appointmentFacade.submitFeedback(bookingFeedbackRequest));
     }
 
     // Obtener todos los feedbacks del usuario autenticado
     @PreAuthorize("hasRole('CUSTOMER')")
     @GetMapping("/user")
-    public ResponseEntity<List<FeedbackResponse>> getAllUserFeedbacks() {
+    public ResponseEntity<List<ServiceOfferingFeedbackResponse>> getAllUserFeedbacks() {
         return ResponseEntity.ok(appointmentFacade.getAllFeedbacksByUserUsername());
     }
 
     // Obtener feedbacks de una oferta de servicio específica (nombre de la oferta como parámetro)
     @PreAuthorize("hasRole('PROVIDER')")
     @GetMapping("/service-offerings/{serviceOfferingName}")
-    public ResponseEntity<List<FeedbackResponse>> getAllFeedbacksByServiceOffering(@PathVariable String serviceOfferingName) {
+    public ResponseEntity<List<ServiceOfferingFeedbackResponse>> getAllFeedbacksByServiceOffering(@PathVariable String serviceOfferingName) {
         return ResponseEntity.ok(appointmentFacade.getFeedbacksByServiceOfferingName(serviceOfferingName));
     }
 
     // Obtener todos los feedbacks de un proveedor específico (nombre de usuario como parámetro)
     @PreAuthorize("hasRole('STAFF')")
     @GetMapping("/providers/{providerUsername}")
-    public ResponseEntity<List<FeedbackResponse>> getAllFeedbacksByProvider(@PathVariable String providerUsername) {
+    public ResponseEntity<List<ServiceOfferingFeedbackResponse>> getAllFeedbacksByProvider(@PathVariable String providerUsername) {
         return ResponseEntity.ok(appointmentFacade.getFeedbacksByProviderUsername(providerUsername));
     }
 

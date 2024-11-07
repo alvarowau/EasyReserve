@@ -21,7 +21,7 @@ public class DatabasePopulator {
     private final StaffPopulator staffPopulator;
     private final ServiceOfferingPopulator serviceOfferingPopulator;
     private final ScheduleServicePopulator scheduleServicePopulator;
-    private final BookingPopulator bookingPopulator;
+    private final BookingPopulatorService bookingPopulatorService;
     private final FeedbackPopulator feedbackPopulator;
     private final ProviderAccountService providerService;
 
@@ -36,8 +36,8 @@ public class DatabasePopulator {
             listCustomer.forEach(a -> userSignUpService.registerUser(a, RoleEnum.CUSTOMER));
             serviceOfferingPopulator.createServiceOfferings(listProvider);
             scheduleServicePopulator.createScheduleService();
-            bookingPopulator.createBooking();
-            bookingPopulator.cancelBookings();
+            bookingPopulatorService.createBooking();
+            bookingPopulatorService.cancelBookings();
             feedbackPopulator.createFeedbacks();
         }
     }

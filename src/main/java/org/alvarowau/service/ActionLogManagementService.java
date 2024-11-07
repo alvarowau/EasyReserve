@@ -3,7 +3,7 @@ package org.alvarowau.service;
 
 import lombok.RequiredArgsConstructor;
 import org.alvarowau.model.dto.action.ActionLogDTO;
-import org.alvarowau.model.dto.action.ActionLogResponseAccountStatusChange;
+import org.alvarowau.model.dto.action.AccountStatusChangeActionLogResponse;
 import org.alvarowau.model.dto.action.ActionSummary;
 import org.alvarowau.model.dto.mapper.MapperActionLog;
 import org.alvarowau.model.entity.ActionLog;
@@ -24,7 +24,7 @@ public class ActionLogManagementService {
     private final MapperActionLog mapperActionLog;
     private final UserIdFinderService userIdFinderService;
 
-    public ActionLogResponseAccountStatusChange generateActionLog(ActionLogResponseAccountStatusChange responseDelete) {
+    public AccountStatusChangeActionLogResponse generateActionLog(AccountStatusChangeActionLogResponse responseDelete) {
         return responseDelete;
     }
 
@@ -62,7 +62,7 @@ public class ActionLogManagementService {
         BaseUser user = userIdFinderService.findUserById(actionLog.getUserId());
         String initiatorUsername = user.getUsername();
         String targetUsername;
-        if (actionLog.getUserId() == actionLog.getAffectedUserId()) {
+        if (actionLog.getUserId().equals(actionLog.getAffectedUserId())) {
             targetUsername = initiatorUsername;
         } else {
             user = userIdFinderService.findUserById(actionLog.getAffectedUserId());
@@ -73,7 +73,7 @@ public class ActionLogManagementService {
                 .initiatorUsername(initiatorUsername)
                 .targetUsername(targetUsername)
                 .reason(actionLog.getReason())
-                .date(actionLog.getTimestamp().toLocalDate())
+                .actionDate(actionLog.getTimestamp().toLocalDate())
                 .build();
     }
 

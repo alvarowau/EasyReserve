@@ -1,9 +1,9 @@
 package org.alvarowau.populate;
 
 import lombok.RequiredArgsConstructor;
-import org.alvarowau.model.dto.booking.BookingRequestTrackingNumber;
-import org.alvarowau.model.dto.booking.BookingResponseCreate;
-import org.alvarowau.model.dto.booking.CancelBookingRequest;
+import org.alvarowau.model.dto.booking.BookingRequestByTrackingNumber;
+import org.alvarowau.model.dto.booking.BookingCreationResponse;
+import org.alvarowau.model.dto.booking.BookingCancellationRequest;
 import org.alvarowau.model.entity.Appointment;
 import org.alvarowau.model.entity.Booking;
 import org.alvarowau.repository.AppointmentRepository;
@@ -19,29 +19,31 @@ import java.util.Random;
 
 @Component
 @RequiredArgsConstructor
-public class BookingPopulator {
+public class BookingPopulatorService {
+
     private final BookingRepository bookingRepository;
     private final BookingManagementService bookingManagementService;
     private final AppointmentRepository appointmentRepository;
     private final CustomerRepository customerRepository;
-    private final List<String> cancellationReasons = ListReason();
+    private final List<String> cancellationReasons = listReasons();
 
-    public List<BookingResponseCreate> createBooking() {
+    private final Random random = new Random();  // Reutilizar el objeto Random
+
+    public void createBooking() {
         List<Appointment> appointments = new ArrayList<>(appointmentRepository.findAll());
         List<Customer> customers = customerRepository.findAll();
-        List<BookingRequestTrackingNumber> bookings = new ArrayList<>();
-
-        Random random = new Random();
+        List<BookingRequestByTrackingNumber> bookings = new ArrayList<>();
 
         for (Customer customer : customers) {
             for (int i = 0; i < 15; i++) {
                 if (appointments.isEmpty()) {
+                    break;  // Salir del bucle si no hay citas disponibles
                 }
 
                 int randomIndex = random.nextInt(appointments.size());
                 Appointment selectedAppointment = appointments.get(randomIndex);
 
-                BookingRequestTrackingNumber booking = new BookingRequestTrackingNumber(
+                BookingRequestByTrackingNumber booking = new BookingRequestByTrackingNumber(
                         selectedAppointment.getTrackingNumber(),
                         customer.getUsername()
                 );
@@ -50,17 +52,17 @@ public class BookingPopulator {
                 appointments.remove(randomIndex);
             }
         }
-        List<BookingResponseCreate> bookingResponseCreateList = new ArrayList<>();
-        for (BookingRequestTrackingNumber bookingRequestTrackingNumber : bookings) {
-            bookingResponseCreateList.add(bookingManagementService.createBookingByTrackingNumberAppointment(bookingRequestTrackingNumber));
+
+        List<BookingCreationResponse> bookingCreationResponseList = new ArrayList<>();
+        for (BookingRequestByTrackingNumber bookingRequestByTrackingNumber : bookings) {
+            bookingCreationResponseList.add(bookingManagementService.createBookingByTrackingNumberAppointment(bookingRequestByTrackingNumber));
         }
-        return bookingResponseCreateList;
+
     }
 
     public void cancelBookings() {
         List<Booking> bookings = bookingRepository.findAll();
-        List<CancelBookingRequest> cancelRequests = new ArrayList<>();
-        Random random = new Random();
+        List<BookingCancellationRequest> cancelRequests = new ArrayList<>();
 
         for (int i = 0; i < 130; i++) {
             if (bookings.isEmpty()) {
@@ -70,28 +72,26 @@ public class BookingPopulator {
             int randomIndex = random.nextInt(bookings.size());
             Booking selectedBooking = bookings.get(randomIndex);
             String reason = getRandomCancellationReason();
-            CancelBookingRequest cancelRequest = new CancelBookingRequest(
+            BookingCancellationRequest cancelRequest = new BookingCancellationRequest(
                     selectedBooking.getBookingNumber(),
                     selectedBooking.getCustomer().getUsername(),
                     reason
             );
 
             cancelRequests.add(cancelRequest);
-
             bookings.remove(randomIndex);
         }
 
-        for(CancelBookingRequest cancel: cancelRequests){
+        for (BookingCancellationRequest cancel : cancelRequests) {
             bookingManagementService.cancelBookingByUser(cancel);
         }
     }
 
     private String getRandomCancellationReason() {
-        Random random = new Random();
         return cancellationReasons.get(random.nextInt(cancellationReasons.size()));
     }
 
-    private List<String> ListReason(){
+    private List<String> listReasons() {
         return List.of(
                 "El cliente canceló por motivos personales.",
                 "El proveedor no está disponible en la fecha solicitada.",

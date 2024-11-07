@@ -2,8 +2,8 @@ package org.alvarowau.user.service;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.alvarowau.model.dto.action.ActionLogRequestAccountStatusChange;
-import org.alvarowau.model.dto.action.ActionLogResponseAccountStatusChange;
+import org.alvarowau.model.dto.action.AccountStatusChangeActionLogRequest;
+import org.alvarowau.model.dto.action.AccountStatusChangeActionLogResponse;
 import org.alvarowau.model.dto.action.UserAccountStatusChangeRequestByStaff;
 import org.alvarowau.user.model.dto.UserRegistrationRequest;
 import org.alvarowau.user.model.dto.AuthLoginRequest;
@@ -27,15 +27,15 @@ public class UserAccountAuthFacade {
         return userSignUpService.registerUser(request, role);
     }
 
-    public ActionLogResponseAccountStatusChange deactivateCurrentUserAccount(ActionLogRequestAccountStatusChange requestDelete) {
+    public AccountStatusChangeActionLogResponse deactivateCurrentUserAccount(AccountStatusChangeActionLogRequest requestDelete) {
         return userAccountManagementService.deactivateCurrentUserAccount(requestDelete);
     }
 
-    public ActionLogResponseAccountStatusChange deactivateUserAccountByStaff(UserAccountStatusChangeRequestByStaff requestDelete) {
+    public AccountStatusChangeActionLogResponse deactivateUserAccountByStaff(UserAccountStatusChangeRequestByStaff requestDelete) {
         return userAccountManagementService.deactivateUserAccountByStaff(requestDelete, false);
     }
 
-    public ActionLogResponseAccountStatusChange activateUserAccountByStaff(UserAccountStatusChangeRequestByStaff requestDelete) {
+    public AccountStatusChangeActionLogResponse activateUserAccountByStaff(UserAccountStatusChangeRequestByStaff requestDelete) {
         return userAccountManagementService.deactivateUserAccountByStaff(requestDelete, true);
     }
 }

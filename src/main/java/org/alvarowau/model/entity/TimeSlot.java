@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.time.LocalTime;
 
 @Getter
@@ -12,7 +14,9 @@ import java.time.LocalTime;
 @NoArgsConstructor
 @Builder
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-public class TimeSlot {
+public class TimeSlot implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
     private LocalTime startTime;
     private LocalTime endTime;
     private boolean isAvailable = true;

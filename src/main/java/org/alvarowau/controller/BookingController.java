@@ -30,39 +30,39 @@ public class BookingController {
 
     @PreAuthorize("hasAnyRole('CUSTOMER')")
     @PostMapping("/create/by-tracking-number")
-    public ResponseEntity<BookingResponseCreate> createBookingByTrackingNumber(@RequestBody BookingRequestTrackingNumber bookingRequestTrackingNumber) {
-        validateAuthenticatedUser(bookingRequestTrackingNumber.usernameCustomer());
-        BookingResponseCreate response = appointmentFacade.createBookingByTrackingNumberAppointment(bookingRequestTrackingNumber);
+    public ResponseEntity<BookingCreationResponse> createBookingByTrackingNumber(@RequestBody BookingRequestByTrackingNumber bookingRequestByTrackingNumber) {
+        validateAuthenticatedUser(bookingRequestByTrackingNumber.customerUsername());
+        BookingCreationResponse response = appointmentFacade.createBookingByTrackingNumberAppointment(bookingRequestByTrackingNumber);
         return ResponseEntity.ok(response);
     }
 
     @PreAuthorize("hasAnyRole('CUSTOMER')")
     @PostMapping("/create/by-id")
-    public ResponseEntity<BookingResponseCreate> createBookingById(@RequestBody BookingRequestId bookingRequestId) {
-        validateAuthenticatedUser(bookingRequestId.usernameCustomer());
-        BookingResponseCreate response = appointmentFacade.createBookingByIdAppointment(bookingRequestId);
+    public ResponseEntity<BookingCreationResponse> createBookingById(@RequestBody BookingRequestById bookingRequestById) {
+        validateAuthenticatedUser(bookingRequestById.usernameCustomer());
+        BookingCreationResponse response = appointmentFacade.createBookingByIdAppointment(bookingRequestById);
         return ResponseEntity.ok(response);
     }
 
     @PreAuthorize("hasAnyRole('CUSTOMER')")
     @PatchMapping("/cancel/customer")
-    public ResponseEntity<BookingCancellationResponse> cancelBookingByUser(@RequestBody CancelBookingRequest request) {
-        validateAuthenticatedUser(request.usernameCustomer());
-        BookingCancellationResponse bookingCancel = appointmentFacade.cancelBookingByUser(request);
+    public ResponseEntity<BookingCancellationStatusResponse> cancelBookingByUser(@RequestBody BookingCancellationRequest request) {
+        validateAuthenticatedUser(request.customerUsername());
+        BookingCancellationStatusResponse bookingCancel = appointmentFacade.cancelBookingByUser(request);
         return ResponseEntity.ok(bookingCancel);
     }
 
     @PreAuthorize("hasRole('STAFF')")
     @PatchMapping("/cancel/staff")
-    public ResponseEntity<BookingCancellationResponse> cancelBookingByStaff(@RequestBody CancelBookingRequest request) {
-        BookingCancellationResponse bookingCancel = appointmentFacade.cancelBookingByStaff(request);
+    public ResponseEntity<BookingCancellationStatusResponse> cancelBookingByStaff(@RequestBody BookingCancellationRequest request) {
+        BookingCancellationStatusResponse bookingCancel = appointmentFacade.cancelBookingByStaff(request);
         return ResponseEntity.ok(bookingCancel);
     }
 
     @PreAuthorize("hasRole('STAFF')")
     @GetMapping("/bookings/staff")
-    public ResponseEntity<List<BookingResponseCreate>> getBookingsForStaff() {
-        List<BookingResponseCreate> bookings = appointmentFacade.getBookingsForStaff();
+    public ResponseEntity<List<BookingCreationResponse>> getBookingsForStaff() {
+        List<BookingCreationResponse> bookings = appointmentFacade.getBookingsForStaff();
         return ResponseEntity.ok(bookings);
     }
 

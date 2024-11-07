@@ -10,10 +10,10 @@ import org.alvarowau.model.enums.ActionType;
 @NoArgsConstructor
 @Builder
 @ToString
-public class ActionLogResponseAccountStatusChange {
+public class AccountStatusChangeActionLogResponse {
         private ActionType actionType;
         private String initiatorUsername;
         private String targetUsername;
         private String reason;
-        private boolean isSuccessful;
+        private boolean successful;
 }
