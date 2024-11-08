@@ -14,4 +14,5 @@ public record ServiceOfferingRequest(
         @Positive(message = "Duration must be a positive number")
         @Schema(description = "Duración de la oferta de servicio en minutos.", example = "30")
         int duration
-) {}
+) {
+}

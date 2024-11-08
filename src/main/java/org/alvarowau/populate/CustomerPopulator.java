@@ -9,7 +9,7 @@ import java.util.List;
 @Component
 public class CustomerPopulator {
 
-    public List<UserRegistrationRequest> createCustomer(){
+    public List<UserRegistrationRequest> createCustomer() {
         List<UserRegistrationRequest> customerList = new ArrayList<>();
 
         customerList.add(new UserRegistrationRequest(

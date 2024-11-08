@@ -14,7 +14,7 @@ public class MapperServiceOffering {
     private final ModelMapper modelMapper;
 
     public ServiceOffering toEntity(ServiceOfferingRequest serviceOfferingRequest) {
-        return ServiceOffering .builder()
+        return ServiceOffering.builder()
                 .name(serviceOfferingRequest.name())
                 .duration(serviceOfferingRequest.duration())
                 .build();

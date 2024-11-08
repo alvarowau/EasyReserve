@@ -1,6 +1,7 @@
 package org.alvarowau.model.dto.serviceoffering.appointment;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -24,4 +25,5 @@ public record ServiceAppointmentResponseWithId(
 
         @Schema(description = "Hora de finalización de la cita.", example = "2024-11-10T12:00:00")
         LocalDateTime endTime
-) {}
+) {
+}

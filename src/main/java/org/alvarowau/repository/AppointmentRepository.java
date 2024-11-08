@@ -25,6 +25,7 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
     List<Appointment> findByIsAvailableTrueAndDateBetween(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
 
     boolean existsByTrackingNumberAndIsAvailableTrue(String trackingNumber);
+
     boolean existsByIdAndIsAvailableTrue(Long id);
 
     Optional<Appointment> findByTrackingNumber(String trackingNumber);

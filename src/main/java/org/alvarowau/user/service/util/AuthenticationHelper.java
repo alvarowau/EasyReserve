@@ -1,8 +1,8 @@
 package org.alvarowau.user.service.util;
 
 import org.alvarowau.exception.user.PasswordsDoNotMatchException;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.Collections;
@@ -10,7 +10,8 @@ import java.util.List;
 
 public class AuthenticationHelper {
 
-    private AuthenticationHelper() {}
+    private AuthenticationHelper() {
+    }
 
     public static void validatePasswordsMatch(String password, String passwordRepeat) {
         if (!password.equals(passwordRepeat)) {

@@ -49,7 +49,6 @@ public class AppointmentSlotManagementService {
     }
 
 
-
     // Método para validar los TimeSlots
     private void validateAndCheckForOverlappingTimeSlots(List<TimeSlot> timeSlots) {
         if (areTimeSlotsOverlapping(timeSlots)) {

@@ -1,7 +1,7 @@
 package org.alvarowau.user.model.dto;
 
-import jakarta.validation.constraints.NotBlank;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotBlank;
 
 @Schema(description = "Solicita las credenciales de inicio de sesión del usuario, incluyendo el nombre de usuario y la contraseña, además de la confirmación de la contraseña.")
 public record AuthLoginRequest(

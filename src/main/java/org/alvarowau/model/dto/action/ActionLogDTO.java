@@ -17,4 +17,5 @@ public record ActionLogDTO(
 
         @Schema(description = "Razón detallada por la cual se realizó la acción.", example = "El usuario ha solicitado la desactivación de su cuenta.")
         String reason
-) {}
+) {
+}

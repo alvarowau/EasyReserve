@@ -17,4 +17,5 @@ public record ServiceOfferingFeedbackResponse(
 
         @Schema(description = "Calificación dada por el cliente utilizando una escala predefinida.", example = "4")
         FeedbackRating rating
-) {}
+) {
+}

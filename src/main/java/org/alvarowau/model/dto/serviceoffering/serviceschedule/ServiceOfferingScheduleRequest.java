@@ -19,4 +19,5 @@ public record ServiceOfferingScheduleRequest(
                 example = "[{\"startTime\": \"2024-11-10T09:00:00\", \"endTime\": \"2024-11-10T10:00:00\"}, " +
                         "{\"startTime\": \"2024-11-10T10:30:00\", \"endTime\": \"2024-11-10T11:30:00\"}]")
         List<TimeSlotRequest> slotRequestList
-) {}
+) {
+}

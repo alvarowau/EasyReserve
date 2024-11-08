@@ -2,8 +2,8 @@ package org.alvarowau.user.config;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.alvarowau.user.config.security.filter.JwtAuthenticationFilter;
 import org.alvarowau.user.config.security.JwtTokenProvider;
+import org.alvarowau.user.config.security.filter.JwtAuthenticationFilter;
 import org.alvarowau.user.service.CustomUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -39,7 +39,7 @@ public class UserSecurityConfig {
                     csrf.disable();
                 })
                 .authorizeHttpRequests(http -> {
-                    http.requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html","/user/public-data", "/auth/**", "/user/**", "/test/public-data")
+                    http.requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html", "/user/public-data", "/auth/**", "/user/**", "/test/public-data")
                             .permitAll();
 
                     http.requestMatchers("/test/**", "/user-management/**", "/services/**", "/schedule/**",

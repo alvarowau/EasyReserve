@@ -6,7 +6,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.alvarowau.config.utils.SecurityContextUtil;
 import org.alvarowau.exception.user.InvalidCustomerException;
 import org.alvarowau.model.dto.booking.*;

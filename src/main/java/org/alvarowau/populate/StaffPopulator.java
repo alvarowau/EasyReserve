@@ -9,7 +9,7 @@ import java.util.List;
 @Component
 public class StaffPopulator {
 
-    public List<UserRegistrationRequest> createStaff(){
+    public List<UserRegistrationRequest> createStaff() {
         List<UserRegistrationRequest> staffList = new ArrayList<>();
         staffList.add(new UserRegistrationRequest(
                 "alvaro-wau", "1234", "1234", "alvaro@wau.com",

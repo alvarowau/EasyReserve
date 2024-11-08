@@ -15,14 +15,6 @@ public enum FeedbackRating {
         this.description = description;
     }
 
-    public int getValue() {
-        return value;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
     // Método para obtener el enum a partir de un número
     public static FeedbackRating fromValue(int value) {
         for (FeedbackRating rating : FeedbackRating.values()) {
@@ -31,5 +23,13 @@ public enum FeedbackRating {
             }
         }
         throw new IllegalArgumentException("Valor no válido: " + value);
+    }
+
+    public int getValue() {
+        return value;
+    }
+
+    public String getDescription() {
+        return description;
     }
 }

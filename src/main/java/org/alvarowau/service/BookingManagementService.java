@@ -180,7 +180,7 @@ public class BookingManagementService {
         );
     }
 
-    public List<Booking> findAll(){
+    public List<Booking> findAll() {
         return bookingRepository.findAll();
     }
 

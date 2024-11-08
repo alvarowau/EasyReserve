@@ -14,4 +14,5 @@ public record BookingHistoryResponse(
 
         @Schema(description = "Estado actual de la reserva en el historial.", example = "CONFIRMED")
         BookingStatus status
-) {}
+) {
+}

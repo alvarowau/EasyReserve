@@ -5,9 +5,9 @@ import lombok.RequiredArgsConstructor;
 import org.alvarowau.model.dto.action.AccountStatusChangeActionLogRequest;
 import org.alvarowau.model.dto.action.AccountStatusChangeActionLogResponse;
 import org.alvarowau.model.dto.action.UserAccountStatusChangeRequestByStaff;
-import org.alvarowau.user.model.dto.UserRegistrationRequest;
 import org.alvarowau.user.model.dto.AuthLoginRequest;
 import org.alvarowau.user.model.dto.LoginResponse;
+import org.alvarowau.user.model.dto.UserRegistrationRequest;
 import org.alvarowau.user.model.entity.enums.RoleEnum;
 import org.springframework.stereotype.Service;
 

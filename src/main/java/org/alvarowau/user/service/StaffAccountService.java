@@ -12,14 +12,14 @@ public class StaffAccountService extends AbstractUserAccountService<Staff> {
 
     private final StaffRepository repository;
 
-    @Override
-    public Optional<Staff> findByUsername(String username) {
-        return repository.findByUsername(username);
-    }
-
     public StaffAccountService(StaffRepository repository, ActionLogManagementService actionLogManagementService) {
         super(actionLogManagementService);
         this.repository = repository;
+    }
+
+    @Override
+    public Optional<Staff> findByUsername(String username) {
+        return repository.findByUsername(username);
     }
 
     public Optional<Long> findIdByUsername(String username) {

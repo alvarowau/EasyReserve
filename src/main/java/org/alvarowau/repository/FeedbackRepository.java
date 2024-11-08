@@ -10,12 +10,16 @@ import java.util.List;
 
 public interface FeedbackRepository extends JpaRepository<Feedback, Long> {
     List<Feedback> findByBookingCustomerUsername(String username);
+
     List<Feedback> findByBookingAppointmentServiceScheduleServiceOfferingName(String serviceOfferingName);
+
     List<Feedback> findByBookingAppointmentServiceScheduleServiceOfferingProviderUsername(String providerUsername);
+
     @Query("SELECT AVG(CASE WHEN f.rating IS NOT NULL THEN f.rating ELSE 0 END) " +
             "FROM Feedback f JOIN f.booking b JOIN b.appointment a JOIN a.serviceSchedule s " +
             "JOIN s.serviceOffering o WHERE o.provider.username = :providerUsername")
     BigDecimal findAverageRatingByProviderUsername(@Param("providerUsername") String providerUsername);
+
     @Query("SELECT DISTINCT f FROM Feedback f " +
             "JOIN f.booking b " +
             "JOIN b.appointment a " +

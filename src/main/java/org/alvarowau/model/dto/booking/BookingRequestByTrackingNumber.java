@@ -10,4 +10,5 @@ public record BookingRequestByTrackingNumber(
 
         @Schema(description = "Nombre de usuario del cliente asociado a la cita.", example = "johndoe")
         String customerUsername
-) {}
+) {
+}

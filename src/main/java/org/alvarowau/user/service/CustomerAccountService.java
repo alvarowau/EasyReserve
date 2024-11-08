@@ -1,8 +1,8 @@
 package org.alvarowau.user.service;
 
+import org.alvarowau.service.ActionLogManagementService;
 import org.alvarowau.user.model.entity.Customer;
 import org.alvarowau.user.repository.CustomerRepository;
-import org.alvarowau.service.ActionLogManagementService;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;

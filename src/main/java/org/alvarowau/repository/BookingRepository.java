@@ -12,8 +12,11 @@ import java.util.Optional;
 
 public interface BookingRepository extends JpaRepository<Booking, Long> {
     Optional<Booking> findByBookingNumber(String bookingNumber);
+
     List<Booking> findByCustomerUsername(String username);
+
     List<Booking> findByStatus(BookingStatus status);
+
     @Query("SELECT b FROM Booking b " +
             "JOIN b.appointment a " +
             "JOIN a.serviceSchedule ss " +

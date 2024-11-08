@@ -13,4 +13,5 @@ public record ServiceOfferingResponse(
 
         @Schema(description = "Nombre de usuario del proveedor asociado a la oferta de servicio.", example = "johndoe123")
         String providerUsername
-) {}
+) {
+}

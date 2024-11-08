@@ -27,7 +27,7 @@ public class DatabasePopulator {
 
     @PostConstruct
     public void populateDatabase() {
-        if(!providerService.existsRecords()) {
+        if (!providerService.existsRecords()) {
             List<UserRegistrationRequest> listStaff = staffPopulator.createStaff();
             listStaff.forEach(a -> userSignUpService.registerUser(a, RoleEnum.STAFF));
             List<UserRegistrationRequest> listProvider = providerPopulator.createProvider();

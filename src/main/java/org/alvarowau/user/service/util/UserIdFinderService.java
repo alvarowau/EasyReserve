@@ -17,10 +17,10 @@ public class UserIdFinderService {
 
     public BaseUser findUserById(Long id) {
         BaseUser user = customerRepository.findById(id).orElse(null);
-        if(user == null) {
+        if (user == null) {
             user = providerRepository.findById(id).orElse(null);
         }
-        if(user == null) {
+        if (user == null) {
             user = staffRepository.findById(id).orElse(null);
         }
         return user;

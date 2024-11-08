@@ -38,7 +38,7 @@ public class AppointmentManagementService {
     }
 
     public List<ServiceAppointmentResponse> getAvailableAppointmentsByDateRange(LocalDate startDate, LocalDate endDate) {
-        return appointmentRepository.findByIsAvailableTrueAndDateBetween(startDate,endDate)
+        return appointmentRepository.findByIsAvailableTrueAndDateBetween(startDate, endDate)
                 .stream().map(mapperAppointment::toResponse).toList();
     }
 
@@ -50,14 +50,13 @@ public class AppointmentManagementService {
         return appointmentRepository.existsByIdAndIsAvailableTrue(id);
     }
 
-    public Optional<Appointment> findByTrackingNumber(String trackingNumber){
+    public Optional<Appointment> findByTrackingNumber(String trackingNumber) {
         return appointmentRepository.findByTrackingNumber(trackingNumber);
     }
 
     public Optional<Appointment> findById(Long id) {
         return appointmentRepository.findById(id);
     }
-
 
 
     public void markAppointmentAsUnavailable(Appointment appointment) {

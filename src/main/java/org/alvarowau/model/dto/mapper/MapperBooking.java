@@ -18,12 +18,12 @@ public class MapperBooking {
 
     public BookingCreationResponse toResponse(Booking booking) {
         return new BookingCreationResponse(
-               booking.getAppointment().getTrackingNumber(),
-               booking.getAppointment().getDate(),
-               formatTimeRange(
-                       booking.getAppointment().getStartTime(),
-                       booking.getAppointment().getEndTime()
-               ),
+                booking.getAppointment().getTrackingNumber(),
+                booking.getAppointment().getDate(),
+                formatTimeRange(
+                        booking.getAppointment().getStartTime(),
+                        booking.getAppointment().getEndTime()
+                ),
                 booking.getBookingNumber(),
                 booking.getStatus(),
                 booking.getCustomer().getUsername()

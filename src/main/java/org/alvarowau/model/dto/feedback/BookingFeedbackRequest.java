@@ -13,4 +13,5 @@ public record BookingFeedbackRequest(
 
         @Schema(description = "Calificación de la reserva, con valores entre 1 y 5.", example = "5")
         int rating
-) {}
+) {
+}

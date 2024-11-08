@@ -1,16 +1,16 @@
 package org.alvarowau.user.model.dto.mapper;
 
 import lombok.RequiredArgsConstructor;
+import org.alvarowau.model.value.Address;
 import org.alvarowau.user.model.dto.UserRegistrationRequest;
 import org.alvarowau.user.model.entity.Customer;
 import org.alvarowau.user.model.entity.Provider;
 import org.alvarowau.user.model.entity.Staff;
+import org.alvarowau.user.model.value.ContactInfo;
+import org.alvarowau.user.model.value.PersonalInfo;
+import org.alvarowau.user.model.value.UserProfile;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-import org.alvarowau.user.model.value.UserProfile;
-import org.alvarowau.user.model.value.PersonalInfo;
-import org.alvarowau.user.model.value.ContactInfo;
-import org.alvarowau.model.value.Address;
 
 @Component
 @RequiredArgsConstructor

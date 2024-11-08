@@ -10,4 +10,5 @@ public record BookingRequestById(
 
         @Schema(description = "Nombre de usuario del cliente asociado a la reserva.", example = "johndoe")
         String usernameCustomer
-) {}
+) {
+}

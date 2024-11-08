@@ -26,14 +26,12 @@ import java.util.stream.Collectors;
 @Slf4j
 public class JwtTokenProvider {
 
-    @Value("${security.jwt.key.private}")
-    private String privateKey;
-
-    @Value("${security.jwt.user.generator}")
-    private String userGenerator;
-
     private static final long TOKEN_EXPIRATION_TIME = 1800000;
     private static final String AUTHORITIES_CLAIM = "authorities";
+    @Value("${security.jwt.key.private}")
+    private String privateKey;
+    @Value("${security.jwt.user.generator}")
+    private String userGenerator;
 
     public String createToken(Authentication authentication) {
         Algorithm algorithm = Algorithm.HMAC256(privateKey);

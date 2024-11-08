@@ -1,7 +1,7 @@
 package org.alvarowau.user.model.dto;
 
-import jakarta.validation.constraints.NotBlank;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotBlank;
 
 @Schema(description = "Solicitud de registro de usuario, que incluye todos los detalles necesarios para crear una cuenta de usuario.")
 public record UserRegistrationRequest(

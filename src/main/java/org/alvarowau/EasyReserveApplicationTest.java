@@ -34,7 +34,7 @@ public class EasyReserveApplicationTest {
         mondaySchedule.setDay(DayOfWeek.MONDAY);
         mondaySchedule.setServiceOffering(serviceOffering);
 
-        TimeSlot mondayMorningSlot = new TimeSlot( LocalTime.of(9, 0), LocalTime.of(13, 0), true);
+        TimeSlot mondayMorningSlot = new TimeSlot(LocalTime.of(9, 0), LocalTime.of(13, 0), true);
         TimeSlot mondayAfternoonSlot = new TimeSlot(LocalTime.of(15, 0), LocalTime.of(19, 0), true);
         mondaySchedule.setTimeSlots(Arrays.asList(mondayMorningSlot, mondayAfternoonSlot));
 
@@ -55,15 +55,15 @@ public class EasyReserveApplicationTest {
             System.out.println("Cita: " + appointment.getTrackingNumber() +
                     ", Inicio: " + appointment.getStartTime() +
                     ", Fin: " + appointment.getEndTime());
-                    //+ ", Servicio: " + appointment.getServiceName());
+            //+ ", Servicio: " + appointment.getServiceName());
         }
 
         System.out.println("\nCitas generadas para Martes:");
         for (Appointment appointment : tuesdayAppointments) {
             System.out.println("Cita: " + appointment.getTrackingNumber() +
                     ", Inicio: " + appointment.getStartTime() +
-                    ", Fin: " + appointment.getEndTime() );
-                    //+ ", Servicio: " + appointment.getServiceName());
+                    ", Fin: " + appointment.getEndTime());
+            //+ ", Servicio: " + appointment.getServiceName());
         }
 
         // Total de citas generadas

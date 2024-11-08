@@ -1,9 +1,9 @@
 package org.alvarowau.populate;
 
 import lombok.RequiredArgsConstructor;
-import org.alvarowau.model.dto.booking.BookingRequestByTrackingNumber;
-import org.alvarowau.model.dto.booking.BookingCreationResponse;
 import org.alvarowau.model.dto.booking.BookingCancellationRequest;
+import org.alvarowau.model.dto.booking.BookingCreationResponse;
+import org.alvarowau.model.dto.booking.BookingRequestByTrackingNumber;
 import org.alvarowau.model.entity.Appointment;
 import org.alvarowau.model.entity.Booking;
 import org.alvarowau.repository.AppointmentRepository;
