@@ -1,5 +1,10 @@
 package org.alvarowau.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,13 +23,33 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/schedule")
 @RequiredArgsConstructor
-@Slf4j
+@Tag(name = "Gestión de horarios de servicio", description = "Controlador para la creación de horarios de servicio")
 public class ServiceScheduleController {
 
     private final AppointmentFacade appointmentFacade;
     private final MapperTimeSlot timeSlotMapper;
     private final MapperServiceSchedule mapperServiceSchedule;
 
+    @Operation(
+            summary = "Crear horario de servicio",
+            description = "Permite a un proveedor crear un nuevo horario de servicio",
+            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                    description = "Datos necesarios para crear un horario de servicio",
+                    required = true,
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ServiceOfferingScheduleRequest.class)
+                    )
+            )
+    )
+    @ApiResponse(
+            responseCode = "200",
+            description = "Horario de servicio creado exitosamente",
+            content = @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(implementation = ServiceScheduleResponse.class)
+            )
+    )
     @PreAuthorize("hasRole('PROVIDER')")
     @PostMapping
     public ResponseEntity<ServiceScheduleResponse> createServiceSchedule(@Valid @RequestBody ServiceOfferingScheduleRequest request) {

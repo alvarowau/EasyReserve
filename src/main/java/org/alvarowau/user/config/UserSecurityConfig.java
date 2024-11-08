@@ -36,20 +36,15 @@ public class UserSecurityConfig {
 
         SecurityFilterChain securityFilterChain = httpSecurity
                 .csrf(csrf -> {
-                    log.info("Desactivando CSRF para permitir solicitudes sin autenticación");
                     csrf.disable();
                 })
                 .authorizeHttpRequests(http -> {
-                    log.info("Configurando reglas de autorización...");
-                    http.requestMatchers("/user/public-data", "/auth/**", "/user/**", "/test/public-data")
+                    http.requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html","/user/public-data", "/auth/**", "/user/**", "/test/public-data")
                             .permitAll();
-                    log.info("Rutas públicas: /user/public-data, /auth/**, /user/**, /test/public-data");
 
                     http.requestMatchers("/test/**", "/user-management/**", "/services/**", "/schedule/**",
                                     "/appointments/**", "/bookings/**", "/feedbacks/**", "/actions/**")
                             .authenticated();
-                    log.info("Rutas autenticadas: /test/**, /user-management/**, /services/**, /schedule/**, " +
-                            "/appointments/**, /bookings/**, /feedbacks/**");
                 })
                 .httpBasic(Customizer.withDefaults())
                 .sessionManagement(session -> {
