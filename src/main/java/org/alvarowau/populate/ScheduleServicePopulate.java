@@ -16,7 +16,7 @@ import java.util.Set;
 
 @Component
 @RequiredArgsConstructor
-public class ScheduleServicePopulator {
+public class ScheduleServicePopulate {
 
     private final ServiceScheduleManagementService serviceScheduleManagementService;
 

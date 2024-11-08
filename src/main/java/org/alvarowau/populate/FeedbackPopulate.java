@@ -14,7 +14,7 @@ import java.util.Random;
 
 @Component
 @RequiredArgsConstructor
-public class FeedbackPopulator {
+public class FeedbackPopulate {
 
     private final BookingManagementService bookingManagementService;
     private final FeedbackManagementService feedbackManagementService;

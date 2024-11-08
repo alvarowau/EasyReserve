@@ -19,7 +19,7 @@ import java.util.Random;
 
 @Component
 @RequiredArgsConstructor
-public class BookingPopulatorService {
+public class BookingPopulateService {
 
     private final BookingRepository bookingRepository;
     private final BookingManagementService bookingManagementService;

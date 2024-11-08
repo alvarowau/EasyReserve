@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class CustomerPopulator {
+public class CustomerPopulate {
 
     public List<UserRegistrationRequest> createCustomer() {
         List<UserRegistrationRequest> customerList = new ArrayList<>();

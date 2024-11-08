@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class ProviderPopulator {
+public class ProviderPopulate {
 
 
     public List<UserRegistrationRequest> createProvider() {

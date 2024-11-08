@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class StaffPopulator {
+public class StaffPopulate {
 
     public List<UserRegistrationRequest> createStaff() {
         List<UserRegistrationRequest> staffList = new ArrayList<>();

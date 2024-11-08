@@ -43,7 +43,7 @@ public class EasyReserveApplicationTest {
         tuesdaySchedule.setServiceOffering(serviceOffering);
 
         TimeSlot tuesdaySlot = new TimeSlot(LocalTime.of(9, 0), LocalTime.of(16, 0), true);
-        tuesdaySchedule.setTimeSlots(Arrays.asList(tuesdaySlot));
+        tuesdaySchedule.setTimeSlots(List.of(tuesdaySlot));
 
         // Generar citas para lunes y martes
         List<Appointment> mondayAppointments = appointmentSlotManagementService.generateAvailableAppointments(mondaySchedule);
@@ -55,7 +55,6 @@ public class EasyReserveApplicationTest {
             System.out.println("Cita: " + appointment.getTrackingNumber() +
                     ", Inicio: " + appointment.getStartTime() +
                     ", Fin: " + appointment.getEndTime());
-            //+ ", Servicio: " + appointment.getServiceName());
         }
 
         System.out.println("\nCitas generadas para Martes:");
@@ -63,7 +62,6 @@ public class EasyReserveApplicationTest {
             System.out.println("Cita: " + appointment.getTrackingNumber() +
                     ", Inicio: " + appointment.getStartTime() +
                     ", Fin: " + appointment.getEndTime());
-            //+ ", Servicio: " + appointment.getServiceName());
         }
 
         // Total de citas generadas

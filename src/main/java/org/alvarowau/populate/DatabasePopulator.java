@@ -16,29 +16,29 @@ import java.util.List;
 public class DatabasePopulator {
 
     private final UserSignUpService userSignUpService;
-    private final ProviderPopulator providerPopulator;
-    private final CustomerPopulator customerPopulator;
-    private final StaffPopulator staffPopulator;
-    private final ServiceOfferingPopulator serviceOfferingPopulator;
-    private final ScheduleServicePopulator scheduleServicePopulator;
-    private final BookingPopulatorService bookingPopulatorService;
-    private final FeedbackPopulator feedbackPopulator;
+    private final ProviderPopulate providerPopulate;
+    private final CustomerPopulate customerPopulate;
+    private final StaffPopulate staffPopulate;
+    private final ServiceOfferingPopulate serviceOfferingPopulate;
+    private final ScheduleServicePopulate scheduleServicePopulate;
+    private final BookingPopulateService bookingPopulateService;
+    private final FeedbackPopulate feedbackPopulate;
     private final ProviderAccountService providerService;
 
     @PostConstruct
     public void populateDatabase() {
         if (!providerService.existsRecords()) {
-            List<UserRegistrationRequest> listStaff = staffPopulator.createStaff();
+            List<UserRegistrationRequest> listStaff = staffPopulate.createStaff();
             listStaff.forEach(a -> userSignUpService.registerUser(a, RoleEnum.STAFF));
-            List<UserRegistrationRequest> listProvider = providerPopulator.createProvider();
+            List<UserRegistrationRequest> listProvider = providerPopulate.createProvider();
             listProvider.forEach(a -> userSignUpService.registerUser(a, RoleEnum.PROVIDER));
-            List<UserRegistrationRequest> listCustomer = customerPopulator.createCustomer();
+            List<UserRegistrationRequest> listCustomer = customerPopulate.createCustomer();
             listCustomer.forEach(a -> userSignUpService.registerUser(a, RoleEnum.CUSTOMER));
-            serviceOfferingPopulator.createServiceOfferings(listProvider);
-            scheduleServicePopulator.createScheduleService();
-            bookingPopulatorService.createBooking();
-            bookingPopulatorService.cancelBookings();
-            feedbackPopulator.createFeedbacks();
+            serviceOfferingPopulate.createServiceOfferings(listProvider);
+            scheduleServicePopulate.createScheduleService();
+            bookingPopulateService.createBooking();
+            bookingPopulateService.cancelBookings();
+            feedbackPopulate.createFeedbacks();
         }
     }
 }

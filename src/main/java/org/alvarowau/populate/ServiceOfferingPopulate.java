@@ -14,7 +14,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 @Component
 @RequiredArgsConstructor
-public class ServiceOfferingPopulator {
+public class ServiceOfferingPopulate {
 
     private final ServiceOfferingRepository serviceOfferingRepository;
     private final ProviderAccountService providerService;

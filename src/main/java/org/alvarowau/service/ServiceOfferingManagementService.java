@@ -31,9 +31,9 @@ public class ServiceOfferingManagementService {
 
         String authenticatedUsername = securityContextUtil.getAuthenticatedUsername();
         Optional<Provider> optionalProvider = providerService.findByUsername(authenticatedUsername);
-        Provider provider = optionalProvider.orElseThrow(() -> {
-            return new UserProviderNotFoundException("Proveedor no encontrado para el usuario autenticado.");
-        });
+        Provider provider = optionalProvider
+                .orElseThrow(() -> new UserProviderNotFoundException("Proveedor no encontrado para el usuario autenticado."));
+
 
         serviceOffering.setProvider(provider);
         try {
