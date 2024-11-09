@@ -37,6 +37,7 @@ public class UserSecurityConfig {
 
         SecurityFilterChain securityFilterChain = httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
+                .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(http -> {
                     http.requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html", "/user/public-data", "/auth/**", "/user/**", "/test/public-data")
                             .permitAll();
@@ -47,7 +48,7 @@ public class UserSecurityConfig {
                 })
                 .httpBasic(Customizer.withDefaults())
                 .sessionManagement(session -> {
-                    log.info("Configurando sesión sin estado (STATELESS)");
+
                     session.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
                 })
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), BasicAuthenticationFilter.class)

@@ -1,0 +1,104 @@
+@startuml
+
+class BaseUser {
+    + Long id
+    + String username
+    + String password
+    + boolean isEnabled
+    + boolean accountNoExpired
+    + boolean accountNoLocked
+    + boolean credentialNoExpired
+    + RoleEnum role
+    + Collection<GrantedAuthority> getAuthorities()
+    + boolean isAccountNonExpired()
+    + boolean isAccountNonLocked()
+    + boolean isCredentialsNonExpired()
+    + boolean isEnabled()
+}
+
+class UserEntity {
+    + String email
+    + UserProfile userProfile
+    + LocalDateTime createdAt
+}
+
+class Customer {
+    + List<Booking> bookings
+}
+
+class Provider {
+    + List<ServiceOffering> serviceOfferings
+}
+
+class Staff {
+}
+
+
+
+class TimeSlot {
+    + LocalTime startTime
+    + LocalTime endTime
+    + boolean isAvailable
+}
+
+class ServiceSchedule {
+    + Long id
+    + DayOfWeek day
+    + List<TimeSlot> timeSlots
+    + List<Appointment> appointments
+}
+
+class ServiceOffering {
+    + Long id
+    + String name
+    + int duration
+    + boolean isEnabled
+}
+
+class Feedback {
+    + Long id
+    + Booking booking
+    + String comment
+    + FeedbackRating rating
+}
+
+
+
+class Booking {
+    + Long id
+    + Appointment appointment
+    + BookingStatus status
+    + String bookingNumber
+    + Customer customer
+}
+
+class Appointment {
+    + Long id
+    + LocalDateTime startTime
+    + LocalDateTime endTime
+    + LocalDate date
+    + boolean isAvailable
+    + ServiceSchedule serviceSchedule
+    + String trackingNumber
+    + Integer version
+}
+
+' Relación de herencia
+BaseUser <|-- UserEntity
+UserEntity <|-- Customer
+UserEntity <|-- Provider
+UserEntity <|-- Staff
+
+' Relación entre las clases
+UserEntity "1" -- "1..*" Customer : has >
+UserEntity "1" -- "1..*" Provider : has >
+UserEntity "1" -- "1" Staff : has >
+Provider "1" -- "0..*" ServiceOffering : offers >
+ServiceOffering "1" -- "1..*" ServiceSchedule : has >
+ServiceSchedule "1" -- "1..*" TimeSlot : contains >
+ServiceSchedule "1" -- "0..*" Appointment : books >
+Booking "1" -- "1" Appointment : contains >
+Booking "1" -- "1" Customer : belongs >
+Feedback "1" -- "1" Booking : for >
+
+@enduml

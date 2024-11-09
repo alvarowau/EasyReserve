@@ -1,12 +1,13 @@
 package org.alvarowau;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.alvarowau.model.entity.Appointment;
 import org.alvarowau.model.entity.ServiceOffering;
 import org.alvarowau.model.entity.ServiceSchedule;
 import org.alvarowau.model.entity.TimeSlot;
 import org.alvarowau.service.AppointmentSlotManagementService;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 
 import java.time.DayOfWeek;
@@ -14,7 +15,8 @@ import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.List;
 
-@SpringBootApplication
+@Getter
+@Setter
 public class EasyReserveApplicationTest {
 
     public static void main(String[] args) {
