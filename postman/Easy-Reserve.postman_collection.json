@@ -1,0 +1,1591 @@
+{
+	"info": {
+		"_postman_id": "e50d9d07-8dfb-41f0-995c-73e0e8fb4717",
+		"name": "Easy-Reserve",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31258087"
+	},
+	"item": [
+		{
+			"name": "customer",
+			"item": [
+				{
+					"name": "auth",
+					"item": [
+						{
+							"name": "login-deactive",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"username\": \"usuario123\",\r\n    \"password\": \"password123\",\r\n    \"passwordRepeat\": \"password123\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/auth/login",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"auth",
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "test-customer-data",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJBTFZBUk9XQVUtQkFDS0VORCIsInN1YiI6InBhdWxhR2FyY2lhMTYiLCJhdXRob3JpdGllcyI6WyJST0xFX0NVU1RPTUVSIl0sImlhdCI6MTczMDg0MDU3MSwiZXhwIjoxNzMwODQyMzcxLCJqdGkiOiIyMzJmOTgyOS1lMjAyLTQ1OWQtYTE3ZC0wMjUwZmFiM2QxOWQiLCJuYmYiOjE3MzA4NDA1NzF9.0ViBh9yWQGndvjXbv728ehj9-ZwKyIf3YfiN1G9Vj1o",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/test/customer-data",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"test",
+										"customer-data"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "common-data",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJBTFZBUk9XQVUtQkFDS0VORCIsInN1YiI6InBhdWxhR2FyY2lhMTYiLCJhdXRob3JpdGllcyI6WyJST0xFX0NVU1RPTUVSIl0sImlhdCI6MTczMDg0MDY4NSwiZXhwIjoxNzMwODQyNDg1LCJqdGkiOiIwMDBhOTEyMy1mYTc5LTQwNTYtYWVjZC02NzE3MDc5N2MxODEiLCJuYmYiOjE3MzA4NDA2ODV9.IrwGcHkZ-xVGoCv7zaZiD5dLG2e5Jtlygv4V4hhKAtQ",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/test/common-data",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"test",
+										"common-data"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"username\": \"usuario123\",\r\n    \"password\": \"password123\",\r\n    \"passwordRepeat\": \"password123\",\r\n    \"email\": \"usuario@example.com\",\r\n    \"firstName\": \"Juan\",\r\n    \"lastName\": \"Pérez\",\r\n    \"idDocument\": \"12345678X\",\r\n    \"primaryPhone\": \"+123456789\",\r\n    \"secondaryPhone\": \"+987654321\", \r\n    \"additionalEmail\": \"usuario.alternativo@example.com\", \r\n    \"street\": \"Calle Falsa 123\",\r\n    \"city\": \"Ciudad Ejemplo\",\r\n    \"state\": \"Estado Ejemplo\",\r\n    \"zipCode\": \"12345\",\r\n    \"country\": \"País Ejemplo\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/user/sign-up/customer",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"user",
+										"sign-up",
+										"customer"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "deactive",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJBTFZBUk9XQVUtQkFDS0VORCIsInN1YiI6InVzdWFyaW8xMjMiLCJhdXRob3JpdGllcyI6WyJST0xFX0NVU1RPTUVSIl0sImlhdCI6MTczMDkwMjkwNCwiZXhwIjoxNzMwOTA0NzA0LCJqdGkiOiJkZGUzYjA3Yy1kZmQwLTQ2MWQtOWI0YS01YzNmOTZlNmNhYzUiLCJuYmYiOjE3MzA5MDI5MDR9.7BoQib-N8RdC0quAfMZwmg6eFM-W4QBdPeJWvbZxFJ4",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"reason\" : \"Porque quiero\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/user-management/deactivate/current",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"user-management",
+										"deactivate",
+										"current"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "service-offering",
+					"item": [
+						{
+							"name": "getServiceOfferingsByProviderUsername",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJBTFZBUk9XQVUtQkFDS0VORCIsInN1YiI6InBhdWxhR2FyY2lhMTYiLCJhdXRob3JpdGllcyI6WyJST0xFX0NVU1RPTUVSIl0sImlhdCI6MTczMTA3OTE5OSwiZXhwIjoxNzMxMDgwOTk5LCJqdGkiOiI0Yzg5OWFhZS1mYzY5LTQwMDYtYWY2MS0wZDIzM2FjOTdkMzMiLCJuYmYiOjE3MzEwNzkxOTl9.qOnC2--t44lfd9XQ2_9hTWvM0q9z2weg2XXIttzfKog",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/services/provider/juanPerez01",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"services",
+										"provider",
+										"juanPerez01"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "booking",
+					"item": [
+						{
+							"name": "createBookingByTrackingNumber",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJBTFZBUk9XQVUtQkFDS0VORCIsInN1YiI6InBhdWxhR2FyY2lhMTYiLCJhdXRob3JpdGllcyI6WyJST0xFX0NVU1RPTUVSIl0sImlhdCI6MTczMDg4ODY1NiwiZXhwIjoxNzMwODkwNDU2LCJqdGkiOiJkZjU2MmVmMi0wYTdmLTQ1YmItYWY2NS0zNzc0MDVmM2NjNTIiLCJuYmYiOjE3MzA4ODg2NTZ9.l1Kh2y4Lj0ByDMy-QtsMKsx-G5MCc7T2EtYA1dSk4Cw",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"trackingNumberAppointment\" : \"TRACK-20241218-0239\",\r\n    \"usernameCustomer\" : \"paulaGarcia16\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/bookings/create/by-tracking-number",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"bookings",
+										"create",
+										"by-tracking-number"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "createBookingById",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJBTFZBUk9XQVUtQkFDS0VORCIsInN1YiI6InBhdWxhR2FyY2lhMTYiLCJhdXRob3JpdGllcyI6WyJST0xFX0NVU1RPTUVSIl0sImlhdCI6MTczMDg4OTUzNCwiZXhwIjoxNzMwODkxMzM0LCJqdGkiOiI4YzVlZGQ0Yi1mNzYxLTQ5ZTUtYTFhNi1iYjUzZjdlZmQ5N2YiLCJuYmYiOjE3MzA4ODk1MzR9.7uBAU3RxzvHJIbKKEJPPH3aGWkPxoG__p4hV5M8l2bQ",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\" : 13,\r\n    \"usernameCustomer\" : \"paulaGarcia16\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/bookings/create/by-id",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"bookings",
+										"create",
+										"by-id"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "cancelBookingByUser",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJBTFZBUk9XQVUtQkFDS0VORCIsInN1YiI6InBhdWxhR2FyY2lhMTYiLCJhdXRob3JpdGllcyI6WyJST0xFX0NVU1RPTUVSIl0sImlhdCI6MTczMDg4OTUzNCwiZXhwIjoxNzMwODkxMzM0LCJqdGkiOiI4YzVlZGQ0Yi1mNzYxLTQ5ZTUtYTFhNi1iYjUzZjdlZmQ5N2YiLCJuYmYiOjE3MzA4ODk1MzR9.7uBAU3RxzvHJIbKKEJPPH3aGWkPxoG__p4hV5M8l2bQ",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"bookingNumber\" : \"BOOK-20241106-0452\",\r\n    \"usernameCustomer\": \"paulaGarcia16\",\r\n    \"reason\" : \"Por que me da la gana\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/bookings/cancel/customer",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"bookings",
+										"cancel",
+										"customer"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getBookingHistory",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJBTFZBUk9XQVUtQkFDS0VORCIsInN1YiI6InBhdWxhR2FyY2lhMTYiLCJhdXRob3JpdGllcyI6WyJST0xFX0NVU1RPTUVSIl0sImlhdCI6MTczMDk3NTQ1NywiZXhwIjoxNzMwOTc3MjU3LCJqdGkiOiJlMDQyZTc3Mi00NDkwLTRkZGMtODljMy1iN2NjNWU0ZTUyZDUiLCJuYmYiOjE3MzA5NzU0NTd9.i8CtPFNcKnJkuRdEQi1uT5-UVyySWPqF7wDHY1Is2js",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/bookings/history",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"bookings",
+										"history"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "feedback",
+					"item": [
+						{
+							"name": "getAllUserFeedbacks",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJBTFZBUk9XQVUtQkFDS0VORCIsInN1YiI6InBhdWxhR2FyY2lhMTYiLCJhdXRob3JpdGllcyI6WyJST0xFX0NVU1RPTUVSIl0sImlhdCI6MTczMDg5ODk2MywiZXhwIjoxNzMwOTAwNzYzLCJqdGkiOiIwYjIyODE2ZS0xYmVkLTQ3ZjktYTY3Yi05YWY2YzA0YzEwYTAiLCJuYmYiOjE3MzA4OTg5NjN9.KdlXnydCoU5Opk8NG11Xd4acoHqo8oLaDUmZT98mdHc",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/feedbacks/user",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"feedbacks",
+										"user"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "createFeedback",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"bookingNumber\": \"\",\r\n    \"feedback\": \"\",\r\n    \"rating\" : 5\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/feedbacks",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"feedbacks"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "provider",
+			"item": [
+				{
+					"name": "auth",
+					"item": [
+						{
+							"name": "test-provider-data",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJBTFZBUk9XQVUtQkFDS0VORCIsInN1YiI6Imp1YW5QZXJlejAxIiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9QUk9WSURFUiJdLCJpYXQiOjE3MzA4NDA2MDEsImV4cCI6MTczMDg0MjQwMSwianRpIjoiOGU2ZTYwYzMtOTNiNy00ODMwLTk0ZGEtZmY3ZDM0YzMxNDQzIiwibmJmIjoxNzMwODQwNjAxfQ.5M2sXYiAHjB94YFWqW4BmF6iPTN-u9uwyW_ZaxILeJw",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/test/provider-data",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"test",
+										"provider-data"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"username\": \"jose_lopez99\",\r\n    \"password\": \"StrongPass!123\",\r\n    \"passwordRepeat\": \"StrongPass!123\",\r\n    \"email\": \"jose.lopez@example.com\",\r\n    \"firstName\": \"Jose\",\r\n    \"lastName\": \"Lopez\",\r\n    \"idDocument\": \"B1234567\",\r\n    \"primaryPhone\": \"+34123456789\",\r\n    \"street\": \"Calle Real 456\",\r\n    \"city\": \"Madrid\",\r\n    \"state\": \"Madrid\",\r\n    \"zipCode\": \"28001\",\r\n    \"country\": \"Spain\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/user/sign-up/customer",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"user",
+										"sign-up",
+										"customer"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "deactive",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJBTFZBUk9XQVUtQkFDS0VORCIsInN1YiI6Impvc2VfbG9wZXo5OSIsImF1dGhvcml0aWVzIjpbIlJPTEVfQ1VTVE9NRVIiXSwiaWF0IjoxNzMwODQxNjc5LCJleHAiOjE3MzA4NDM0NzksImp0aSI6IjhkOWNiNTMzLWVmYzUtNDJiYS1iMTkyLTNiZDA4ZTllNDhkOSIsIm5iZiI6MTczMDg0MTY3OX0.0ku_Q98Annmr4Ub7xcxzwGl7W99cQ5oYJSIhicCYIkk",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"reason\" : \"Porque quiero\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/user-management/deactivate/current",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"user-management",
+										"deactivate",
+										"current"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "login-deactive",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"username\": \"jose_lopez99\",\r\n    \"password\": \"StrongPass!123\",\r\n    \"passwordRepeat\": \"StrongPass!123\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/auth/login",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"auth",
+										"login"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "service-offering",
+					"item": [
+						{
+							"name": "createServiceOffering",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJBTFZBUk9XQVUtQkFDS0VORCIsInN1YiI6Imp1YW5QZXJlejAxIiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9QUk9WSURFUiJdLCJpYXQiOjE3MzA4NDIwMDAsImV4cCI6MTczMDg0MzgwMCwianRpIjoiODZiMjI5ODQtZGMyNC00N2I0LTllNDAtMTViMmRkZWRkY2M2IiwibmJmIjoxNzMwODQyMDAwfQ.OmL1Qu-wsPAC6hWc2ey4kUf2qV39L4OZhTPXr5S7hqE",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\" : \"nuevo-creado\",\r\n    \"duration\" : \"24\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/services",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"services"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getServiceOfferingsByProviderUsername",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJBTFZBUk9XQVUtQkFDS0VORCIsInN1YiI6ImFsdmFyby13YXUiLCJhdXRob3JpdGllcyI6WyJST0xFX1NUQUZGIl0sImlhdCI6MTczMDg0MjEyOSwiZXhwIjoxNzMwODQzOTI5LCJqdGkiOiI2NDk5NGE5Yi0wYWEwLTQ2MGItYmQwZC1iNDIwM2VlNTU0ZDciLCJuYmYiOjE3MzA4NDIxMjl9.29eJBl6LEYIKnTifHqx-ykMG2mC_FMb6OSO_ph29SfE",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/services/provider/juanPerez01",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"services",
+										"provider",
+										"juanPerez01"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "ScheduleController",
+					"item": [
+						{
+							"name": "createServiceSchedule",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJBTFZBUk9XQVUtQkFDS0VORCIsInN1YiI6Imp1YW5QZXJlejAxIiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9QUk9WSURFUiJdLCJpYXQiOjE3MzA4NDIzMzMsImV4cCI6MTczMDg0NDEzMywianRpIjoiZWNkYTY2N2UtYzkzYy00NDU1LTg4NzYtN2I4MjQ5OTRhMzU4IiwibmJmIjoxNzMwODQyMzMzfQ.Vii8MA2KWvTmIt3yZDvc3iP4nBRK7Q52bToTNPdBN70",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"nameServiceOffering\": \"nuevo-creado\",\r\n  \"day\": \"MONDAY\",\r\n  \"slotRequestList\": [\r\n    {\r\n      \"startTime\": \"07:00\",\r\n      \"endTime\": \"12:00\"\r\n    },\r\n    {\r\n      \"startTime\": \"15:00\",\r\n      \"endTime\": \"17:00\"\r\n    }\r\n  ]\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/schedule",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"schedule"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "booking",
+					"item": [
+						{
+							"name": "getProviderBookingHistory",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJBTFZBUk9XQVUtQkFDS0VORCIsInN1YiI6Imp1YW5QZXJlejAxIiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9QUk9WSURFUiJdLCJpYXQiOjE3MzA4OTAyODksImV4cCI6MTczMDg5MjA4OSwianRpIjoiOTg5NGRjYTEtMTc0NC00MDJjLTgzMDctYjhiNjc0NWM0MmI0IiwibmJmIjoxNzMwODkwMjg5fQ.IREEza07FYNPFCJ40nUGbpImv_xVxg7Lg3YlAeRPqGw",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "startDate",
+										"value": "2024-01-01",
+										"type": "text"
+									},
+									{
+										"key": "endDate",
+										"value": "2024-12-31",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8080/bookings/provider/reservations?startDate=2024-01-01&endDate=2024-12-31",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"bookings",
+										"provider",
+										"reservations"
+									],
+									"query": [
+										{
+											"key": "startDate",
+											"value": "2024-01-01"
+										},
+										{
+											"key": "endDate",
+											"value": "2024-12-31"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "feedback",
+					"item": [
+						{
+							"name": "getAllFeedbacksByServiceOffering",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJBTFZBUk9XQVUtQkFDS0VORCIsInN1YiI6Imp1YW5QZXJlejAxIiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9QUk9WSURFUiJdLCJpYXQiOjE3MzA4OTkwNjksImV4cCI6MTczMDkwMDg2OSwianRpIjoiMDc5OGYxMWEtNjEyZS00MjM4LTk0YjQtNGJhNTU2MWZiYTFmIiwibmJmIjoxNzMwODk5MDY5fQ.nzig4KNHkQgVI7DoWJ5r2K6nS-cEa_AJsc1mD7xHoow",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/feedbacks/service-offerings/Consulta-General",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"feedbacks",
+										"service-offerings",
+										"Consulta-General"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "staff",
+			"item": [
+				{
+					"name": "auth",
+					"item": [
+						{
+							"name": "test-staff-data",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJBTFZBUk9XQVUtQkFDS0VORCIsInN1YiI6ImFsdmFyby13YXUiLCJhdXRob3JpdGllcyI6WyJST0xFX1NUQUZGIl0sImlhdCI6MTczMDg0MDU4NywiZXhwIjoxNzMwODQyMzg3LCJqdGkiOiJiZDBiMzNhMi1lY2FiLTRkZWMtYjdjZi0zZGNlNWI0NjJkYzMiLCJuYmYiOjE3MzA4NDA1ODd9.5W2xGRBWYjw180QGcHmm4QpVSBqhAn74OuYajzOgmFw",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/test/staff-data",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"test",
+										"staff-data"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "common-data",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJBTFZBUk9XQVUtQkFDS0VORCIsInN1YiI6ImFsdmFyby13YXUiLCJhdXRob3JpdGllcyI6WyJST0xFX1NUQUZGIl0sImlhdCI6MTczMDg0MDcxMywiZXhwIjoxNzMwODQyNTEzLCJqdGkiOiIzZDlkMTczMi1jM2ZlLTRlYjItODkyNy1lNzFjNGZkMjg0NzkiLCJuYmYiOjE3MzA4NDA3MTN9.ZOq6huU5R-lqrZ5SwvqaxLJ8tujZCoL5bRBgjMSMJSM",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/test/common-data",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"test",
+										"common-data"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"username\": \"maria2024\",\r\n    \"password\": \"securePassword!\",\r\n    \"passwordRepeat\": \"securePassword!\",\r\n    \"email\": \"maria.fernandez@example.com\",\r\n    \"firstName\": \"Maria\",\r\n    \"lastName\": \"Fernandez\",\r\n    \"idDocument\": \"A9876543\",\r\n    \"primaryPhone\": \"+11234567890\",\r\n    \"secondaryPhone\": \"+10987654321\",\r\n    \"additionalEmail\": \"maria.extra@example.com\",\r\n    \"street\": \"Av. Siempre Viva 742\",\r\n    \"city\": \"Springfield\",\r\n    \"state\": \"Illinois\",\r\n    \"zipCode\": \"62704\",\r\n    \"country\": \"USA\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/user/sign-up/customer",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"user",
+										"sign-up",
+										"customer"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "deactive",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJBTFZBUk9XQVUtQkFDS0VORCIsInN1YiI6Im1hcmlhMjAyNCIsImF1dGhvcml0aWVzIjpbIlJPTEVfQ1VTVE9NRVIiXSwiaWF0IjoxNzMwODQxNTIzLCJleHAiOjE3MzA4NDMzMjMsImp0aSI6IjZkOGMxNDdjLTY3ZWYtNDRlYS1iYzI3LTMwMzllN2NmYWUwZCIsIm5iZiI6MTczMDg0MTUyM30.9NVdlivkCCO2xNlznobfo2KoJvsVXyMfmVmVhwiQ0So",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"reason\" : \"Porque quiero\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/user-management/deactivate/current",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"user-management",
+										"deactivate",
+										"current"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "login-deactive",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"username\": \"maria2024\",\r\n    \"password\": \"securePassword!\",\r\n    \"passwordRepeat\": \"securePassword!\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/auth/login",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"auth",
+										"login"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "service-oferring",
+					"item": [
+						{
+							"name": "getServiceOfferingsByProviderUsername",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJBTFZBUk9XQVUtQkFDS0VORCIsInN1YiI6ImFsdmFyby13YXUiLCJhdXRob3JpdGllcyI6WyJST0xFX1NUQUZGIl0sImlhdCI6MTczMDg0MjEyOSwiZXhwIjoxNzMwODQzOTI5LCJqdGkiOiI2NDk5NGE5Yi0wYWEwLTQ2MGItYmQwZC1iNDIwM2VlNTU0ZDciLCJuYmYiOjE3MzA4NDIxMjl9.29eJBl6LEYIKnTifHqx-ykMG2mC_FMb6OSO_ph29SfE",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/services/provider/juanPerez01",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"services",
+										"provider",
+										"juanPerez01"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "booking",
+					"item": [
+						{
+							"name": "cancelBookingByStaff",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJBTFZBUk9XQVUtQkFDS0VORCIsInN1YiI6ImFsdmFyby13YXUiLCJhdXRob3JpdGllcyI6WyJST0xFX1NUQUZGIl0sImlhdCI6MTczMDg5MTM3NywiZXhwIjoxNzMwODkzMTc3LCJqdGkiOiI5YzQ3MWQ0My02MGE2LTRiMGMtYTczMy0yNzRiYTcwYTRiNDkiLCJuYmYiOjE3MzA4OTEzNzd9.QJ2C-lpj9N6DBe5us0Vu7scDBINLRRdejkLqUImzlmQ",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"bookingNumber\" : \"BOOK-20241106-0002\",\r\n    \"usernameCustomer\": \"paulaGarcia16\",\r\n    \"reason\" : \"Es expulsada\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/bookings/cancel/staff",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"bookings",
+										"cancel",
+										"staff"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getBookingsForStaff",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJBTFZBUk9XQVUtQkFDS0VORCIsInN1YiI6ImFsdmFyby13YXUiLCJhdXRob3JpdGllcyI6WyJST0xFX1NUQUZGIl0sImlhdCI6MTczMDg5ODU2NSwiZXhwIjoxNzMwOTAwMzY1LCJqdGkiOiJlZDY0OGZjZi00ZjM5LTRhYzgtOTQwYS02YTZkYTFmMjNkMjQiLCJuYmYiOjE3MzA4OTg1NjV9.73_iTFyqdml1DSu1hlqJkRiQUUKLRh9aZ3hM5ie_jv4",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/bookings/bookings/staff",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"bookings",
+										"bookings",
+										"staff"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "actionLog",
+					"item": [
+						{
+							"name": "List",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJBTFZBUk9XQVUtQkFDS0VORCIsInN1YiI6ImFsdmFyby13YXUiLCJhdXRob3JpdGllcyI6WyJST0xFX1NUQUZGIl0sImlhdCI6MTczMDkwNzYxNCwiZXhwIjoxNzMwOTA5NDE0LCJqdGkiOiIwMWE1MTQwNS04MWFhLTRiZTEtYTk2Yi1lZGQ0OGQ3ZjRhNmYiLCJuYmYiOjE3MzA5MDc2MTR9.CwRy2JVyynk5Y4WQ9Swix5LgGNabmGjYfDilhfkkrhA",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/actions",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"actions"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getAvailableAppointmentsForProvider",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJBTFZBUk9XQVUtQkFDS0VORCIsInN1YiI6ImFsdmFyby13YXUiLCJhdXRob3JpdGllcyI6WyJST0xFX1NUQUZGIl0sImlhdCI6MTczMDkwODUyOCwiZXhwIjoxNzMwOTEwMzI4LCJqdGkiOiI2ZDc0MzM0My05OWU3LTRhYTUtYjc3Yy1iNzk3YzVlZDAyYTgiLCJuYmYiOjE3MzA5MDg1Mjh9.PJMSEjpKLelQdqUyjgdxBlY916YjTH3cqOH_vjWcz7w",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/actions/by-action-type/CANCEL_BOOKING",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"actions",
+										"by-action-type",
+										"CANCEL_BOOKING"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "feedback",
+					"item": [
+						{
+							"name": "getAllFeedbacksByProvider",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJBTFZBUk9XQVUtQkFDS0VORCIsInN1YiI6ImFsdmFyby13YXUiLCJhdXRob3JpdGllcyI6WyJST0xFX1NUQUZGIl0sImlhdCI6MTczMDg5OTI5NywiZXhwIjoxNzMwOTAxMDk3LCJqdGkiOiJiNThmMGFjMy0xMDU0LTQzNGYtYjFhMC1jNjQ2MDU1ZGU3ODciLCJuYmYiOjE3MzA4OTkyOTd9.OyMBsu63fwuHaTmjYEBZ6hfsmg4A9H5fZHv7Bu_ykPw",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/feedbacks/providers/juanPerez01",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"feedbacks",
+										"providers",
+										"juanPerez01"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getProviderAverageRating",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJBTFZBUk9XQVUtQkFDS0VORCIsInN1YiI6ImFsdmFyby13YXUiLCJhdXRob3JpdGllcyI6WyJST0xFX1NUQUZGIl0sImlhdCI6MTczMDg5OTI5NywiZXhwIjoxNzMwOTAxMDk3LCJqdGkiOiJiNThmMGFjMy0xMDU0LTQzNGYtYjFhMC1jNjQ2MDU1ZGU3ODciLCJuYmYiOjE3MzA4OTkyOTd9.OyMBsu63fwuHaTmjYEBZ6hfsmg4A9H5fZHv7Bu_ykPw",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/feedbacks/providers/juanPerez01/average-rating",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"feedbacks",
+										"providers",
+										"juanPerez01",
+										"average-rating"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "appointment",
+			"item": [
+				{
+					"name": "getAvailableAppointmentsForProvider (STAFF, CUSTOMER, PROVIDER)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJBTFZBUk9XQVUtQkFDS0VORCIsInN1YiI6Imp1YW5QZXJlejAxIiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9QUk9WSURFUiJdLCJpYXQiOjE3MzA4ODgzOTgsImV4cCI6MTczMDg5MDE5OCwianRpIjoiYmYzNzY2OWEtMzhmMy00MzNhLThkZjItMzA5ZGQ3MzQxMTI5IiwibmJmIjoxNzMwODg4Mzk4fQ.alAGLIC4zFw6x-uoTVjLlQMGlv3Onhibj2zROaYn03A",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/appointments/available/by-provider/juanPerez01",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"appointments",
+								"available",
+								"by-provider",
+								"juanPerez01"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAvailableAppointmentsForServiceOffering (STAFF, CUSTOMER, PROVIDER)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJBTFZBUk9XQVUtQkFDS0VORCIsInN1YiI6InBhdWxhR2FyY2lhMTYiLCJhdXRob3JpdGllcyI6WyJST0xFX0NVU1RPTUVSIl0sImlhdCI6MTczMDg4NzUwNCwiZXhwIjoxNzMwODg5MzA0LCJqdGkiOiJhZmRkNmZkNy04MjdjLTRjYTMtODg5Ny1lNmJjZmQ4NmE1MTgiLCJuYmYiOjE3MzA4ODc1MDR9.A25kDdmFL_-tA2NyOcKyaeAZr6giaGJRDIhAEqN78IY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/appointments/available/by-service-offering/Consulta-General",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"appointments",
+								"available",
+								"by-service-offering",
+								"Consulta-General"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAvailableAppointmentsForServiceOfferingAndId (STAFF, CUSTOMER, PROVIDER)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJBTFZBUk9XQVUtQkFDS0VORCIsInN1YiI6InBhdWxhR2FyY2lhMTYiLCJhdXRob3JpdGllcyI6WyJST0xFX0NVU1RPTUVSIl0sImlhdCI6MTczMDkwMDE4NCwiZXhwIjoxNzMwOTAxOTg0LCJqdGkiOiJkMTMxM2Y5Yy0xNTM0LTQzNjctODBkOC1mNjIwNzQzMjdkMzgiLCJuYmYiOjE3MzA5MDAxODR9.AFN-O06k-mC-JBVZXj19yDDdaAGeLgMsJwlF25JICHE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/appointments/available/by-service-offering/id/Terapia-Fisica",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"appointments",
+								"available",
+								"by-service-offering",
+								"id",
+								"Terapia-Fisica"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAvailableAppointmentsByDate (STAFF, CUSTOMER, PROVIDER)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJBTFZBUk9XQVUtQkFDS0VORCIsInN1YiI6InBhdWxhR2FyY2lhMTYiLCJhdXRob3JpdGllcyI6WyJST0xFX0NVU1RPTUVSIl0sImlhdCI6MTczMDg0Mjg3NiwiZXhwIjoxNzMwODQ0Njc2LCJqdGkiOiJjOWU2MTJlMy0xYWQ0LTQzZjAtOGQ3NC0wY2YyMDMyYTJiMTkiLCJuYmYiOjE3MzA4NDI4NzZ9.F8lZXHplSAENjr-AIAe-b7lByfBpC7P8kVe1g8iDxls",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/appointments/available/by-date/2024-11-11",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"appointments",
+								"available",
+								"by-date",
+								"2024-11-11"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAvailableAppointmentsByDateRange (STAFF, CUSTOMER, PROVIDER)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJBTFZBUk9XQVUtQkFDS0VORCIsInN1YiI6InBhdWxhR2FyY2lhMTYiLCJhdXRob3JpdGllcyI6WyJST0xFX0NVU1RPTUVSIl0sImlhdCI6MTczMDg0Mjg3NiwiZXhwIjoxNzMwODQ0Njc2LCJqdGkiOiJjOWU2MTJlMy0xYWQ0LTQzZjAtOGQ3NC0wY2YyMDMyYTJiMTkiLCJuYmYiOjE3MzA4NDI4NzZ9.F8lZXHplSAENjr-AIAe-b7lByfBpC7P8kVe1g8iDxls",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/appointments/available/by-date-range?startDate=2024-11-06&endDate=2024-11-11",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"appointments",
+								"available",
+								"by-date-range"
+							],
+							"query": [
+								{
+									"key": "startDate",
+									"value": "2024-11-06"
+								},
+								{
+									"key": "endDate",
+									"value": "2024-11-11"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "isAppointmentAvailableByTrackingNumber (STAFF, CUSTOMER, PROVIDER)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJBTFZBUk9XQVUtQkFDS0VORCIsInN1YiI6Imp1YW5QZXJlejAxIiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9QUk9WSURFUiJdLCJpYXQiOjE3MzA4ODgzOTgsImV4cCI6MTczMDg5MDE5OCwianRpIjoiYmYzNzY2OWEtMzhmMy00MzNhLThkZjItMzA5ZGQ3MzQxMTI5IiwibmJmIjoxNzMwODg4Mzk4fQ.alAGLIC4zFw6x-uoTVjLlQMGlv3Onhibj2zROaYn03A",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/appointments/available/by-tracking-number/TRACK-20241111-0004",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"appointments",
+								"available",
+								"by-tracking-number",
+								"TRACK-20241111-0004"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "isAppointmentAvailableById (STAFF, CUSTOMER, PROVIDER)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJBTFZBUk9XQVUtQkFDS0VORCIsInN1YiI6Imp1YW5QZXJlejAxIiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9QUk9WSURFUiJdLCJpYXQiOjE3MzA4ODY3OTMsImV4cCI6MTczMDg4ODU5MywianRpIjoiNjE3YWQxMTEtNDI1Ni00ZDA3LTkyMjUtOTA2YTcwOGNlMDY3IiwibmJmIjoxNzMwODg2NzkzfQ._ZcRDgYN_C5qBXri6nV7EUK64qT_xYGRox3KSw65USw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/appointments/available/by-id/2048",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"appointments",
+								"available",
+								"by-id",
+								"2048"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "login",
+			"item": [
+				{
+					"name": "login-customer",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"paulaGarcia16\",\r\n    \"password\": \"paulaPass123\",\r\n    \"passwordRepeat\": \"paulaPass123\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login-staff",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"alvaro-wau\",\r\n    \"password\": \"1234\",\r\n    \"passwordRepeat\": \"1234\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login-provider",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"juanPerez01\",\r\n    \"password\": \"password123\",\r\n    \"passwordRepeat\": \"password123\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "test-public",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/test/public-data",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"test",
+						"public-data"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "doc",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	]
+}
